@@ -1,4 +1,4 @@
-import styles from '../../styles/SearchFilter.module.css'
+import styles from '../../styles/searchfilter/FilterSection.module.css'
 import {Card, Divider, Row, Col} from 'antd'
 
 
