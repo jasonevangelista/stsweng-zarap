@@ -1,0 +1,93 @@
+.restoCard {
+  width: 80%;
+  /* height: 25%; */
+  margin-top: 50px;
+  margin-bottom: 50px;
+  font-size: 16px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #C4C4C4;
+}
+
+/* @media screen and (min-width: 768px){
+  .restoCard{
+    background: red;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .restoCard{
+    background:blue;
+  }
+} */
+
+.restoCard p{
+  margin: 0px;
+}
+
+.restoCardHeader{
+  word-wrap: break-word;
+}
+
+.cardImage {
+  border-radius:25px;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+}
+
+.cardImageSection{
+  background: maroon;
+  min-width: 80%;
+  min-height: 100%;
+  margin-right: 15px;
+  border-radius: 10px;
+}
+
+.detailHeader {
+  color: #727272;
+}
+
+.pageLayout {
+  background: #F4F4F2;
+  padding-left: 25px;
+}
+
+.cardsLayout {
+  padding-left: 20px;
+}
+
+.filterLayout {
+  margin-top: 50px;
+}
+
+.filterSection{
+  background: white;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #C4C4C4;
+  border-width: 1px;
+  /* text-align: center; */
+}
+
+.filterSection p{
+  margin: 0px;
+}
+
+.dividerResto{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.dividerFilter{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.subFilter{
+  margin-top: 20px;
+}
+.subFilter p{
+  margin-top: 10px;
+}
