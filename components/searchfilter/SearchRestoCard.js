@@ -1,4 +1,4 @@
-import styles from '../../styles/SearchFilter.module.css'
+import styles from '../../styles/searchfilter/SearchRestoCard.module.css'
 import {Card, Divider, Rate, Row, Col, Image} from 'antd'
 
 export default function SearchRestoCard({ resto }) {
@@ -6,16 +6,19 @@ export default function SearchRestoCard({ resto }) {
     <Card hoverable className={styles.restoCard}>
 
       <Row>
-        <Col span={8}>
-          <div className={styles.cardImageSection}>
+        <Col span={8} className={styles.imageSection}>
+          <div className={styles.cardImage}>
+          {/* <Image className={styles.imagePlaceholder} height={150} placeholder={true} src="error"/> */}
           </div>
-          {/* <Image className={styles.cardImage} width={150} height={100} src="error"/> */}
         </Col>
         <Col span={16} className={styles.restoCardHeader}>
-          <p>Restaurant Name</p>
-          <Rate disabled allowHalf value={3}/><span className="ant-rate-text">3 (100 reviews)</span>
-          <p><b>City</b></p>
-          <p>AddressAddressAddressAddressAddressAddressAddressAddress</p>
+          <h1 id={styles.restoName}>{resto.name}</h1>
+          <div id={styles.stars}>
+          <Rate disabled allowHalf value={resto.averageRating}/>
+          <span className="ant-rate-text">{resto.averageRating} ({resto.reviews.length} reviews)</span>
+          </div>
+          <p><b>{resto.city}</b></p>
+          <p>{resto.fullAddress}</p>
         </Col>
       </Row>
 
@@ -29,6 +32,7 @@ export default function SearchRestoCard({ resto }) {
           <p>CONTACT NO:</p>
         </Col>
         <Col span={16}>
+          
           <p>Food</p>
           <p>PHP 100</p>
           <p>7:00AM-10:00PM (Mon-Sat)</p>
