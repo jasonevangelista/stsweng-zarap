@@ -10,8 +10,12 @@
     "antd": "^4.8.2",
     "mongodb": "^3.5.9",
     "next": "latest",
+    "next-images": "^1.6.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@svgr/webpack": "^5.4.0"
+  }
 }

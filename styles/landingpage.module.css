@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+.landing_title {
+    font-family: Permanent Marker;
+    font-size: 100px;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 30%;
+    text-align: center;
+    width: 100%;
+}
+
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.top_container {
+    height: 100%;
+    position: relative;
+}
+
+.bottom_container {
+    height: 100%;
+}
+
+.top_bg {
+    /* The image used */
+    background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../public/tempura.jpg");
+  
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    /*Make the image darker*/
+    -webkit-background-size: cover;
+    -moz-background-size:  cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.bottom_bg {
+    /* The image used */
+    background-image: url("../public/Group11.svg");
+  
+    /* Full height */
+    height: 100%;
+    
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
