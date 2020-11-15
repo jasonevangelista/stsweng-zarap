@@ -6,9 +6,23 @@
     text-align: center;
     color: white;
     position: absolute;
-    top: 30%;
+    top: 100px;
     text-align: center;
     width: 100%;
+
+    z-index: 1;
+}
+
+.search_bar {
+    font-size: 60px;
+    text-align: center;
+    position: absolute;
+    top: 300px;
+    text-align: center;
+    width: 60%;
+
+    justify-content: center;
+    z-index: 2;
 }
 
 .container {
@@ -22,6 +36,8 @@
 .top_container {
     height: 100%;
     position: relative;
+
+    /* z-index: -3; */
 }
 
 .bottom_container {
@@ -45,6 +61,10 @@
     -moz-background-size:  cover;
     -o-background-size: cover;
     background-size: cover;
+
+    /* position: absolute; */
+    top: 0;
+    z-index: -2;
 }
 
 .bottom_bg {
@@ -58,4 +78,5 @@
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+
 }
