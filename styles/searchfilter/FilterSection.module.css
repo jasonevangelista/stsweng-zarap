@@ -4,21 +4,11 @@
   border-style: solid;
   border-color: #C4C4C4;
   border-width: 1px;
-  /* text-align: center; */
+  width: 100%;
+  margin: 0;
 }
 
 .filterSection p{
   margin: 0px;
-}
-
-.dividerFilter{
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.subFilter{
-  margin-top: 20px;
-}
-.subFilter p{
-  margin-top: 10px;
+  font-size: large;
 }
