@@ -1,17 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+
 .pageLayout {
   background: #F4F4F2;
-  padding-left: 25px;
+  padding-left: 4em;
+  font-family: Open Sans;
+  padding-top: 2em;
+  align-items: center;
+}
+
+.pageLayout h1{
+  font-size: 2.5em;
 }
 
 .cardsLayout {
   padding-left: 20px;
+  margin-top: 20px;
 }
 
 .filterLayout {
-  margin-top: 50px;
+  margin-top: 20px;
 }
 
 .cardSpace{
   width: 100%;
   margin-top: 50px;
+}
+
+.searchBar{
+  width: 85%;
+  background-color: white;
+  border-color: red;
 }

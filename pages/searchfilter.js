@@ -1,7 +1,8 @@
 import styles from '../styles/searchfilter/SearchFilter.module.css'
 import SearchRestoCard from '../components/searchfilter/SearchRestoCard'
 import FilterSection from '../components/searchfilter/FilterSection'
-import {Row, Col, Space} from 'antd'
+import {Row, Col} from 'antd'
+import Search from 'antd/lib/input/Search'
 
 export default function SearchFilter({ results }) {
   const sampleResto = {
@@ -17,26 +18,30 @@ export default function SearchFilter({ results }) {
 
     <div className={styles.pageLayout}>
 
-      <p>Restaurants in CITY-NAME</p>
-      
+      <h1>Restaurants in Konoha</h1>
+
+      <Search 
+        className={styles.searchBar} 
+        placeholder="Search Restaurant" 
+        allowClear 
+        enterButton="Search"
+        size="large"
+        enterButton={false}
+      />
+
       <Row>
         <Col span={6} className={styles.filterLayout}>
           <FilterSection></FilterSection>
         </Col>
 
         <Col span={18} className={styles.cardsLayout}>
-          <Space direction="vertical" className={styles.cardSpace} size="large">
             <SearchRestoCard resto={sampleResto}></SearchRestoCard>
             <SearchRestoCard resto={sampleResto}></SearchRestoCard>
             <SearchRestoCard resto={sampleResto}></SearchRestoCard>
-          </Space>
         </Col>
         
-
       </Row>
       
     </div>
-    
-
   )
 }
