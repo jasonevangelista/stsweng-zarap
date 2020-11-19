@@ -2,8 +2,6 @@ import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
 import { Input, Row, Col, Carousel, Card  } from 'antd';  
 
-const { Meta } = Card;
-
 const RoundSearch = styled(Input.Search)`
   .ant-input {
     border-radius: 10px;
@@ -11,6 +9,9 @@ const RoundSearch = styled(Input.Search)`
 `;
 
 export default function LandingPage() {
+    var settings = {
+        pauseOnHover: false
+      };
     return (
         <div className={styles.container}>
             <div className={styles.top_container}>
@@ -32,26 +33,134 @@ export default function LandingPage() {
                     </Col>
                 </Row>
             </div>
-            <div className={styles.bottom_container}>
-                <div className={styles.bottom_bg}></div>
+            <div className={styles.bottom_bg}>
                 <h2 className={styles.landing_bottom_title}> Recommendations </h2>
 
-                <Carousel autoplay className={styles.landing_bottom_card}>
-                <Card
-                    hoverable
-                    style={{ width: 10 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-                <Card
-                    hoverable
-                    style={{ width: 10 }}
-                    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
-                >
-                    <Meta title="Europe Street beat" description="www.instagram.com" />
-                </Card>
-                </Carousel>
+                <section className={styles.card}>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                <div className={styles.card_content}></div>
+                </section>
+{/* 
+                <div className={styles.scrolling_wrapper}>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card_content}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                    <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                </div> */}
+                {/* <Row>
+                    <Col span={6} offset={1} className={styles.landing_bottom_card}>
+                        <Carousel autoplay {...settings}>
+                            <div>
+
+                                <Card title="Card title #1" bordered={false} hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                                <Card title="Card title #2" bordered={false} hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                                <Card title="Card title #3" bordered={false}hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                            </div>
+                            <div>
+
+                                <Card title="Card title #1" bordered={false} hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                                <Card title="Card title #2" bordered={false} hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                                <Card title="Card title #3" bordered={false}hoverable>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                    <p>Card content</p>
+                                </Card>
+                            </div>
+                        </Carousel>
+                    </Col>
+                    <Col  span={6} offset={9} className={styles.landing_bottom_card}>
+                        <Carousel autoplay {...settings}>
+                            <Card title="Card title #2" bordered={false} hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                            <Card title="Card title #3" bordered={false} hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                            <Card title="Card title #1" bordered={false}hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                        </Carousel>
+                    </Col>
+                    <Col  span={6} offset={17} className={styles.landing_bottom_card}>
+                        <Carousel autoplay {...settings}>
+                            <Card title="Card title #3" bordered={false} hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                            <Card title="Card title #1" bordered={false} hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                            <Card title="Card title #2" bordered={false}hoverable>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                                <p>Card content</p>
+                            </Card>
+                        </Carousel>
+                    </Col>
+                </Row> */}
             </div>
         </div>
     )

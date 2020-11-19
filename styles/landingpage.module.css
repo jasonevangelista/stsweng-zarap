@@ -40,7 +40,7 @@
 
 .bottom_container {
     height: 100%;
-    position: relative;
+    /* position: relative; */
 }
 
 .top_bg {
@@ -162,6 +162,7 @@ to {
     /* Full height */
     height: 100%;
 
+    position: relative;
     z-index: -2;
 }
 
@@ -184,10 +185,9 @@ to {
     text-align: center;
     color: white;
     position: absolute;
-    top: 2%;
+    top: 30%;
     text-align: center;
-    /* width: 100%; */
-
+    
     z-index: 1;
 }
 
@@ -204,3 +204,51 @@ to {
 .ant-carousel .slick-slide h3 {
     color: #fff;
 }
+
+/* .scrolling_wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+  
+.scrolling_wrapper .card {
+    width: 30% 
+}
+
+.scrolling-wrapper {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .scrolling_wrapper ::-webkit-scrollbar {
+      display: none;
+  }
+  .scrolling_wrapper .card::-webkit-scrollbar {
+      display: none;
+  } */
+
+  .card {
+    /* background-color: #fff; */
+    min-width: 100%;
+    min-height: 200px;
+
+    z-index: 1;
+  }
+
+  .card {display: flex}
+
+  .card_content {
+    background-color: black;
+    min-width: 200px;
+    margin-left: 25px;
+  }
+
+  .card {
+    overflow-x: scroll;
+  }
+
+  .card::-webkit-scrollbar {
+    display: none;
+  }
