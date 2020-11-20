@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-.landing_title {
+.landingTitle {
     font-family: Permanent Marker;
     font-size: 5vw;
     text-align: center;
@@ -13,7 +13,7 @@
     z-index: 1;
 }
 
-.search_bar {
+.searchBar {
     font-size: 60px;
     text-align: center;
     position: absolute;
@@ -33,17 +33,17 @@
     height: 100%;
 }
 
-.top_container {
+.topContainer {
     height: 100%;
     position: relative;
 }
 
-.bottom_container {
+.bottomContainer {
     height: 100%;
     /* position: relative; */
 }
 
-.top_bg {
+.topBG {
     /* The image used */
     background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../public/landing_top_bg.jpg");
   
@@ -67,7 +67,7 @@
 }
 
 
-.scroll_container {
+.scrollContainer {
     position: absolute;
     top: 85%;
     width: 24px;
@@ -118,22 +118,22 @@
 }
 
 @keyframes move {
-25% {
-    opacity: 1;
+    25% {
+        opacity: 1;
 
-}
-33% {
-    opacity: 1;
-    transform: translateY(30px);
-}
-67% {
-    opacity: 1;
-    transform: translateY(40px);
-}
-100% {
-    opacity: 0;
-    transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
-}
+    }
+    33% {
+        opacity: 1;
+        transform: translateY(30px);
+    }
+    67% {
+        opacity: 1;
+        transform: translateY(40px);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(55px) scale3d(0.5, 0.5, 0.5);
+    }
 }
 
 .text {
@@ -150,13 +150,12 @@
 }
 
 @keyframes pulse {
-to {
-    opacity: 1;
-}
+    to {
+        opacity: 1;
+    }
 }
 
-.bottom_bg {
-    /* The image used */
+.bottomBG {
     background-color: rgba(226, 55, 55, 1);
   
     /* Full height */
@@ -166,7 +165,7 @@ to {
     z-index: -2;
 }
 
-.landing_bottom_title {
+.landingBottomTitle {
     font-family: Permanent Marker;
     font-size: 5vw;
     text-align: center;
@@ -179,113 +178,6 @@ to {
     z-index: 1;
 }
 
-.landing_bottom_card {
-    font-family: Permanent Marker;
-    font-size: 5vw;
-    text-align: center;
-    color: white;
-    position: absolute;
-    top: 30%;
-    text-align: center;
-    
-    z-index: 1;
+.carouselTop{
+    padding-top: 15%;
 }
-
-.ant-carousel .slick-slide {
-    text-align: center;
-    height: 160px;
-    line-height: 160px;
-    background: #364d79;
-    overflow: hidden;
-    
-    z-index: 1;
-}
-
-.ant-carousel .slick-slide h3 {
-    color: #fff;
-}
-
-/* .scrolling_wrapper {
-    overflow-x: scroll;
-    overflow-y: hidden;
-    white-space: nowrap;
-
-    display: flex;
-    justify-content: space-evenly;
-}
-  
-.scrolling_wrapper .card {
-    width: 30% 
-}
-
-.scrolling-wrapper {
-    -webkit-overflow-scrolling: touch;
-  }
-
-  .scrolling_wrapper ::-webkit-scrollbar {
-      display: none;
-  }
-  .scrolling_wrapper .card::-webkit-scrollbar {
-      display: none;
-  } */
-
-  /* .card {
-    min-width: 100%;
-    min-height: 200px;
-
-    z-index: 1;
-  }
-
-  .card {display: flex}
-
-  .card_content {
-    background-color: black;
-    min-width: 200px;
-    margin-left: 25px;
-  }
-
-  .card {
-    overflow-x: scroll;
-  }
-
-  .card::-webkit-scrollbar {
-    display: none;
-  } */
-
-  /* .card::-webkit-scrollbar {
-    width: 0px;
-    display: none;
-  } */
-
-  .containerA::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .containerA {
-    width: 400px;
-    height: 200%;
-    overflow-y: auto;
-    overflow-x: hidden;
-    transform: rotate(-90deg);
-    transform-origin: right top;
-
-    position: absolute;
-    top: 10%;
-    transform:rotate(-90deg) translateY(-360px);
-    left: 0;
-  }
-  
-  .card {
-    flex-shrink: 0;
-    width: 200px;
-    height: 300px;
-    border-radius: 10px;
-    margin-left: 10px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-
-    
-  transform: rotate(90deg);
-  /* transform-origin: right top; */
-  }
