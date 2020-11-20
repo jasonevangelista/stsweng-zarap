@@ -3,15 +3,21 @@ import styled from 'styled-components';
 import { Input, Row, Col, Carousel, Card  } from 'antd';  
 
 const RoundSearch = styled(Input.Search)`
-  .ant-input {
+.ant-input {
     border-radius: 10px;
   }
-`;
-
-export default function LandingPage() {
-    var settings = {
-        pauseOnHover: false
-      };
+  `;
+  
+  export default function LandingPage() {
+      var settings = {
+          pauseOnHover: false
+        };
+    const movies = [
+    "tempura.jpg",
+    "tempura.jpg",
+    "tempura.jpg",
+    "tempura.jpg"
+    ];
     return (
         <div className={styles.container}>
             <div className={styles.top_container}>
@@ -36,7 +42,110 @@ export default function LandingPage() {
             <div className={styles.bottom_bg}>
                 <h2 className={styles.landing_bottom_title}> Recommendations </h2>
 
-                <section className={styles.card}>
+                <div className={styles.containerA}>
+                    {/* {movies.map(src => (
+                    <div
+                        key={src}
+                        className={styles.card}
+                        style={{
+                        backgroundImage: `url(${src})`
+                        }}
+                    />
+                    ))} */}
+
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+<Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                        <p>Card content</p>
+                    </Card>
+                </div>
+
+                {/* <section className={styles.card}>
                 <div className={styles.card_content}></div>
                 <div className={styles.card_content}></div>
                 <div className={styles.card_content}></div>
@@ -47,7 +156,7 @@ export default function LandingPage() {
                 <div className={styles.card_content}></div>
                 <div className={styles.card_content}></div>
                 <div className={styles.card_content}></div>
-                </section>
+                </section> */}
 {/* 
                 <div className={styles.scrolling_wrapper}>
                     <Card title="Card title #1" bordered={false} hoverable className={styles.card_content}>

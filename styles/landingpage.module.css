@@ -229,8 +229,7 @@ to {
       display: none;
   } */
 
-  .card {
-    /* background-color: #fff; */
+  /* .card {
     min-width: 100%;
     min-height: 200px;
 
@@ -251,4 +250,42 @@ to {
 
   .card::-webkit-scrollbar {
     display: none;
+  } */
+
+  /* .card::-webkit-scrollbar {
+    width: 0px;
+    display: none;
+  } */
+
+  .containerA::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .containerA {
+    width: 400px;
+    height: 200%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transform: rotate(-90deg);
+    transform-origin: right top;
+
+    position: absolute;
+    top: 10%;
+    transform:rotate(-90deg) translateY(-360px);
+    left: 0;
+  }
+  
+  .card {
+    flex-shrink: 0;
+    width: 200px;
+    height: 300px;
+    border-radius: 10px;
+    margin-left: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    
+  transform: rotate(90deg);
+  /* transform-origin: right top; */
   }
