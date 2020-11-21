@@ -1,7 +1,8 @@
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
 import { Input, Row, Col, Carousel, Card  } from 'antd';  
-import CarouselItem from '../components/carouselItem';
+import CarouselItem from '../components/CarouselItem';
+import Footer from '../components/Footer';
 
 const RoundSearch = styled(Input.Search)`
 .ant-input {
@@ -52,6 +53,10 @@ const RoundSearch = styled(Input.Search)`
                             <CarouselItem />
                         </div>
                     </Carousel>
+                </div>
+                
+                <div className={styles.footer}>
+                    <Footer/>
                 </div>
             </div>
         </div>
