@@ -1,39 +1,28 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import { Typography } from "antd";
+import { useRouter } from 'next/router'
 // import Link from 'next/link';
 
 const { Title } = Typography;
 
-export default function Header({landing}) {
+export default function Header() {
+  const router = useRouter();
+  const pathname = router.pathname;
+  console.log(pathname === '/' ? styles.notVisible : styles.imageContainer)
   return (
-    <div className={styles.header}>
-      {!landing ? (
-        <>
-          <div className={styles.imageContainer}>
-            <Image src="/text.png" width={335} height={81} />
+    <div className={`${styles.header} ${pathname === '/' ? styles.transparent :''}`}> 
+        <div className={styles.imageContainer}>
+          <Image src="/text.png" width={335} height={81}/>
+        </div>
+        <div className={styles.navLinks}>
+          <div>
+            <Title level={4} className={`${pathname === '/' ? styles.white :''}`}>Login</Title>
           </div>
-          <div className={styles.navLinks}>
-            <div>
-              <Title level={4}>Login</Title>
-            </div>
-            <div className={styles.majorButton}>
-              <Title level={4}>Sign Up</Title>
-            </div>
+          <div className={`${pathname === '/' ? '' : styles.majorButton}`}>
+            <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>Sign Up</Title>
           </div>
-        </>
-      ) : (
-        <>
-          <div className={styles.navLinks}>
-            <div>
-              <Title level={4}>Login</Title>
-            </div>
-            <div className={styles.majorButton}>
-              <Title level={4}>Sign Up</Title>
-            </div>
-          </div>
-        </>
-      )}
+        </div>
     </div>
   );
 }

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Input, Row, Col, Carousel, Typography  } from 'antd';  
 import CarouselItem from '../components/CarouselItem';
 
-const { Title } = Typography;
 const RoundSearch = styled(Input.Search)`
 .ant-input {
     border-radius: 10px;

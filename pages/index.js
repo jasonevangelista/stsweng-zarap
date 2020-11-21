@@ -1,66 +1,58 @@
 import Head from 'next/head'
 import { connectToDatabase } from '../util/mongodb'
-import LandingPage from './landingpage'
+import styles from '../styles/landingpage.module.css';
+import styled from 'styled-components';
+import { Input, Row, Col, Carousel, Typography  } from 'antd';  
+import CarouselItem from '../components/CarouselItem';
+
+const RoundSearch = styled(Input.Search)`
+.ant-input {
+    border-radius: 10px;
+  }
+  `;
 
 export default function Home({ isConnected }) {
   return (
-    <div className="container">
+    <div>
       <Head>
-        <title>Create Next App</title>
+        <title>Zarap</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+          <div className={styles.container}>
+            <div className={styles.topContainer}>
+                <div className={styles.topBG}></div>
+                <h2 className={styles.landingTitle}> Find what you like
+                    <Row className={styles.searchBar} >
+                        <Col span={8}>                
+                            <RoundSearch enterButton />
+                        </Col>
+                    </Row>
+                    </h2>
+                <Row>
+                    <Col span={4} offset={11} className={styles.scrollContainer} >  
+                        <div className={styles.chevron}></div>
+                        <div className={styles.chevron}></div>
+                        <div className={styles.chevron}></div>
+                        {/* <br></br>
+                        <span className={styles.text}>Find Out More</span> */}
+                    </Col>
+                </Row>
+            </div>
+            <div className={styles.bottomBG}>
+                <h2 className={styles.landingBottomTitle}> Recommendations </h2>
 
-      <main>
-        {
-          <LandingPage />
-        /* <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
-        </h1>
-
-        {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
-        ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
-          </h2>
-        )}
-
-        <p className="description">
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className="grid">
-          <a href="https://nextjs.org/docs" className="card">
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className="card">
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className="card"
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="card"
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div> */
-        }
-      </main>
+                <div className={styles.carouselTop}>
+                    <Carousel autoplay dots={false}>
+                        <div>
+                            <CarouselItem />
+                        </div>
+                        <div>
+                            <CarouselItem />
+                        </div>
+                    </Carousel>
+                </div>
+            </div>
+          </div>
     </div>
   )
 }
