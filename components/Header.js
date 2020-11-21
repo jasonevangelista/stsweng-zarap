@@ -9,7 +9,7 @@ const { Title } = Typography;
 export default function Header() {
   const router = useRouter();
   const pathname = router.pathname;
-  console.log(pathname === '/' ? styles.notVisible : styles.imageContainer)
+  
   return (
     <div className={`${styles.header} ${pathname === '/' ? styles.transparent :''}`}> 
         <div className={styles.imageContainer}>
