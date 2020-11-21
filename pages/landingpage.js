@@ -1,25 +1,16 @@
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Carousel, Card  } from 'antd';  
+import { Input, Row, Col, Carousel, Typography  } from 'antd';  
 import CarouselItem from '../components/CarouselItem';
-import Footer from '../components/Footer';
 
+const { Title } = Typography;
 const RoundSearch = styled(Input.Search)`
 .ant-input {
     border-radius: 10px;
   }
   `;
   
-  export default function LandingPage() {
-      var settings = {
-          pauseOnHover: false
-        };
-    // const movies = [
-    // "tempura.jpg",
-    // "tempura.jpg",
-    // "tempura.jpg",
-    // "tempura.jpg"
-    // ];
+export default function LandingPage() {
     return (
         <div className={styles.container}>
             <div className={styles.topContainer}>
@@ -53,10 +44,6 @@ const RoundSearch = styled(Input.Search)`
                             <CarouselItem />
                         </div>
                     </Carousel>
-                </div>
-                
-                <div className={styles.footer}>
-                    <Footer/>
                 </div>
             </div>
         </div>

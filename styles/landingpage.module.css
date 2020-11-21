@@ -1,5 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
+.navLinks {
+    display: flex;
+    /* height: 100%; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* text-align: center; */
+    color: white;
+    position: absolute;
+    top: 5%;
+    right: 3%;
+    z-index: 1;
+}
+  
+.navLinks div {
+    margin: 0 10px;
+    cursor: pointer;
+    background-color: white;
+    color: white;
+}
+
 .landingTitle {
     font-family: Permanent Marker;
     font-size: 5vw;
@@ -179,11 +199,5 @@
 }
 
 .carouselTop{
-    padding-top: 15%;
-}
-
-.footer {
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
+    padding-top: 12%;
 }

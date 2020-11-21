@@ -5,21 +5,21 @@ export default function carouselItem() {
     return (  
         <Row>
             <Col span={6} offset={1}>
-                <Card title="Card title #1" bordered={false} hoverable className={styles.card}>
+                <Card title="Konohotdogs" bordered={false} hoverable headStyle={{color: 'rgba(255,255,255, 255)', fontSize: '2vw', fontFamily: 'Permanent Marker', border: 0 }} className={styles.card}>
                     <p>Card content</p>
                     <p>Card content</p>
                     <p>Card content</p>
                 </Card>
             </Col>
             <Col span={6} offset={2}>
-                <Card title="Card title #2" bordered={false} hoverable className={styles.card}>
+                <Card title="Card title #1" bordered={false} hoverable headStyle={{color: 'rgba(255,255,255, 255)', border: 0 }} className={styles.card}>
                     <p>Card content</p>
                     <p>Card content</p>
                     <p>Card content</p>
                 </Card>
             </Col>
             <Col span={6} offset={2}>
-                <Card title="Card title #3" bordered={false} hoverable className={styles.card}>
+                <Card title="Card title #1" bordered={false} hoverable headStyle={{color: 'rgba(255,255,255, 255)', border: 0 }} className={styles.card}>
                     <p>Card content</p>
                     <p>Card content</p>
                     <p>Card content</p>
