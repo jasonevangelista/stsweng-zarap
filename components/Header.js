@@ -15,14 +15,14 @@ export default function Header() {
         <div className={styles.imageContainer}>
           <Image src="/text.png" width={335} height={81}/>
         </div>
-        <div className={styles.navLinks}>
+        {/* <div className={styles.navLinks}>
           <div>
             <Title level={4} className={`${pathname === '/' ? styles.white :''}`}>Login</Title>
           </div>
           <div className={`${pathname === '/' ? '' : styles.majorButton}`}>
             <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>Sign Up</Title>
           </div>
-        </div>
+        </div> */}
     </div>
   );
 }

@@ -34,11 +34,6 @@
     height: calc(100vh - 80px);
 }
 
-/* .bottomContainer {
-    height: 100%;
-    /* position: relative; */
-
-
 .topBG {
     /* The image used */
     background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../public/landing_top_bg.jpg");
@@ -136,7 +131,6 @@
 .text {
     display: block;
     margin-top: 75px;
-    /* margin-left: -20px; */
     font-family: "Helvetica Neue", "Helvetica", Arial, sans-serif;
     font-size: 12px;
     color: #fff;
