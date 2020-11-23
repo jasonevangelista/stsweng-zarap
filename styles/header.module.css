@@ -8,6 +8,8 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 10px;
+
+  z-index: 1;
 }
 
 .imageContainer {
@@ -17,6 +19,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  visibility: hidden;
 }
 
 .navLinks {
@@ -43,4 +46,12 @@
   justify-content: center;
   padding: 0 10px;
   color: black;
+}
+
+.transparent {
+  background-color: transparent;
+}
+
+.white{
+  color: white !important;
 }

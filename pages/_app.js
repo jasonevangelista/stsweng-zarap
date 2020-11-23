@@ -1,5 +1,6 @@
-import 'antd/dist/antd.css'
-import Layout from '../components/Layout'
+import 'antd/dist/antd.css';
+import '../styles/global.css'
+import Layout from '../components/Layout';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -8,3 +9,4 @@ export default function App({ Component, pageProps }) {
     </Layout>
   ) 
 }
+
