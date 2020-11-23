@@ -6,6 +6,7 @@ export default function SearchRestoCard({ resto }) {
   var cuisines = FormatDetails(resto.cuisineType, ", ")
   var contactDetails = FormatDetails(resto.contactDetails, "  |  ")
   var openHours = FormatDetails(resto.openHours, "  |  ")
+  var rating = FormatRating(resto.averageRating, resto.reviews)
 
   return(
     <Card hoverable className={styles.restoCard}>
@@ -20,7 +21,7 @@ export default function SearchRestoCard({ resto }) {
           <h1 id={styles.restoName}>{resto.name}</h1>
           <div id={styles.stars}>
           <Rate disabled allowHalf value={resto.averageRating}/>
-          <span className="ant-rate-text">{resto.averageRating} ({resto.reviews.length} reviews)</span>
+          <span className="ant-rate-text">{rating}</span>
           </div>
           <p><b>{resto.city}</b></p>
           <p>{resto.fullAddress}</p>
@@ -67,4 +68,20 @@ function FormatDetails(details, symbol){
   return (
     <p>{detailsString}</p>
   )
+}
+
+function FormatRating(rating, reviews){
+  var ratingString = ""
+  ratingString = Math.floor(rating*2)/2
+
+  if (reviews.length > 1){
+    return (
+    <p>{ratingString} ({reviews.length} reviews)</p>
+    )
+  }
+  else{
+    return (
+      <p>{ratingString} ({reviews.length} review)</p>
+    )
+  }
 }
