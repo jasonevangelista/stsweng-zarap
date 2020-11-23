@@ -1,0 +1,71 @@
+.restoCard {
+  width: 80%;
+  /* height: 25%; */
+  /* margin-top: 50px; */
+  margin-bottom: 2%;
+  font-size: 16px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #C4C4C4;
+}
+
+/* @media screen and (min-width: 768px){
+  .restoCard{
+    background: red;
+  }
+}
+
+@media screen and (max-width: 767px){
+  .restoCard{
+    background:blue;
+  }
+} */
+
+.restoCard p{
+  margin: 0px;
+}
+
+.restoCardHeader{
+  word-wrap: break-word;
+  /* width: auto; */
+}
+
+.cardImage {
+  border-radius: 10px;
+  min-width: 80%;
+  /* min-height: 100%; */
+  background: maroon;
+  height: 10em;
+  margin-right: 1em;
+  
+}
+
+.imageSection{
+  width: 50%;
+}
+
+.imagePlaceholder{
+  min-width: 100%;
+  min-height: 100%
+}
+
+.detailHeader {
+  color: #727272;
+}
+
+.dividerResto{
+  margin-top: 2em;
+  margin-bottom: 1em;
+  background-color: #928D8D;
+}
+
+#restoName{
+  margin:0;
+  color: #E23744;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+#stars{
+  margin-bottom: 0.5em;
+}
