@@ -1,3 +1,4 @@
+import 'antd/dist/antd.css'
 import Layout from '../components/Layout'
 
 export default function App({ Component, pageProps }) {
