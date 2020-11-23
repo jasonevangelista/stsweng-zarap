@@ -35,7 +35,6 @@ export default function SearchFilter({ results }) {
         className={styles.searchBar} 
         placeholder="Search Restaurant" 
         allowClear 
-        enterButton="Search"
         size="large"
         enterButton={false}
         onSearch={(value) => {
