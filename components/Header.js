@@ -1,7 +1,7 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import { Typography } from "antd";
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 import Link from 'next/link';
 
 const { Title } = Typography;
