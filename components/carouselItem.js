@@ -29,11 +29,12 @@ function FormatRating(rating, reviews){
 
 export default function carouselItem({ restoSet }) {
     restoSet.map((resto) => {
+        console.log(resto.name + " " + resto.establishmentType);
         switch (resto.establishmentType) {
-            case "Quick Bite"    : resto.icon = <FaHamburger size='20px'/>; break;
-            case "Café"          : resto.icon = <FaCoffee size='20px'/>; break;
-            case "Casual Dining" : resto.icon = <FaUtensils size='20px'/>; break;
-            default              : resto.icon = <FaUtensils size='20px'/>; break;
+            case "Quick Bite"    : {console.log("QUICK"); resto.icon = <FaHamburger size='20px'/>; break;}
+            case "Café"          : {console.log("COFFEE"); resto.icon = <FaCoffee size='20px'/>; break;}
+            case "Casual Dining" : {console.log("CASUAL"); resto.icon = <FaUtensils size='20px'/>; break;}
+            default              : {console.log("DEFF"); resto.icon = <FaUtensils size='20px'/>; break;}
         }
     });
 
