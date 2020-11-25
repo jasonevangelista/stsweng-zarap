@@ -71,8 +71,9 @@ function FormatDetails(details, symbol){
 }
 
 function FormatRating(rating, reviews){
-  var ratingString = ""
-  ratingString = Math.floor(rating*2)/2
+  var ratingString = "";
+  ratingString = Math.floor(rating * 2 ) / 2;
+  ratingString = ratingString.toFixed(1);
 
   if (reviews.length > 1){
     return (
