@@ -6,6 +6,8 @@ import { Input, Row, Col, Carousel } from "antd";
 import CarouselItem from "../components/CarouselItem";
 
 const Search = Input;
+import { useRouter } from 'next/router';
+
 const RoundSearch = styled(Input.Search)`
   .ant-input {
     border-radius: 10px;
@@ -49,8 +51,8 @@ const restoPicker = (results) => {
 }
 
 export default function Home({ results }) {
-  let cards = restoPicker(results);
-  console.log(cards);
+  let cards = restoPicker(results); 
+  const router = useRouter();
 
   return (
     <div className={styles.container}>
@@ -65,8 +67,13 @@ export default function Home({ results }) {
             Find what you like
             <Row className={styles.searchBar}>
               <Col span={8}>
-                <RoundSearch enterButton />
-                {/* <Search enterButton /> */}
+                <RoundSearch enterButton 
+                  onSearch={(value) => {
+                    if(value && value.trim()){
+                      console.log(value)
+                      router.push('searchfilter/' + value)
+                    }
+                  }}/>
               </Col>
             </Row>
           </h2>
