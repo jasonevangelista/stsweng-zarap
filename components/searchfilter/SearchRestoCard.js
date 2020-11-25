@@ -1,51 +1,57 @@
 import styles from '../../styles/searchfilter/SearchRestoCard.module.css'
 import {Card, Divider, Rate, Row, Col, Image} from 'antd'
 
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
 export default function SearchRestoCard({ resto }) {
+  const router = useRouter();
 
   var cuisines = FormatDetails(resto.cuisineType, ", ")
   var contactDetails = FormatDetails(resto.contactDetails, "  |  ")
   var openHours = FormatDetails(resto.openHours, "  |  ")
   var rating = FormatRating(resto.averageRating, resto.reviews)
-
+  var restoProfileLink = '/restaurant/' + resto._id
   return(
-    <Card hoverable className={styles.restoCard}>
+    <Link href={restoProfileLink}>
+      <Card hoverable className={styles.restoCard}>
 
-      <Row>
-        <Col span={8} className={styles.imageSection}>
-          <div className={styles.cardImage}>
-          {/* <Image className={styles.imagePlaceholder} height={150} placeholder={true} src="error"/> */}
-          </div>
-        </Col>
-        <Col span={16} className={styles.restoCardHeader}>
-          <h1 id={styles.restoName}>{resto.name}</h1>
-          <div id={styles.stars}>
-          <Rate disabled allowHalf value={resto.averageRating}/>
-          <span className="ant-rate-text">{rating}</span>
-          </div>
-          <p><b>{resto.city}</b></p>
-          <p>{resto.fullAddress}</p>
-        </Col>
-      </Row>
+        <Row>
+          <Col span={8} className={styles.imageSection}>
+            <div className={styles.cardImage}>
+            {/* <Image className={styles.imagePlaceholder} height={150} placeholder={true} src="error"/> */}
+            </div>
+          </Col>
+          <Col span={16} className={styles.restoCardHeader}>
+            <h1 id={styles.restoName}>{resto.name}</h1>
+            <div id={styles.stars}>
+            <Rate disabled allowHalf value={resto.averageRating}/>
+            <span className="ant-rate-text">{rating}</span>
+            </div>
+            <p><b>{resto.city}</b></p>
+            <p>{resto.fullAddress}</p>
+          </Col>
+        </Row>
 
-      <Divider className={styles.dividerResto}/>
+        <Divider className={styles.dividerResto}/>
 
-      <Row>
-        <Col span={8} className={styles.detailHeader}>
-          <p>CUISINES:</p>
-          <p>COST FOR TWO:</p>
-          <p>HOURS:</p>
-          <p>CONTACT NO:</p>
-        </Col>
-        <Col span={16}>
-          {cuisines}
-          <p>PHP {resto.averageCost}</p>
-          {openHours}
-          {contactDetails}
-        </Col>
-      </Row>
-      
-    </Card>
+        <Row>
+          <Col span={8} className={styles.detailHeader}>
+            <p>CUISINES:</p>
+            <p>COST FOR TWO:</p>
+            <p>HOURS:</p>
+            <p>CONTACT NO:</p>
+          </Col>
+          <Col span={16}>
+            {cuisines}
+            <p>PHP {resto.averageCost}</p>
+            {openHours}
+            {contactDetails}
+          </Col>
+        </Row>
+        
+      </Card>
+    </Link>
   )
 
 }
