@@ -1,18 +1,18 @@
-import { connectToDatabase } from "../../../util/mongodb";
+import { connectToDatabase } from '../../../util/mongodb';
 
 export default async (req, res) => {
-  const {
-    query: { id },
-  } = req;
+    const {
+        query: { id }
+    } = req;
 
-  console.log(id);
+    console.log(id);
 
-  const { db } = await connectToDatabase();
+    const { db } = await connectToDatabase();
 
-  const restaurants = await db
-    .collection("restaurant")
-    .find({ name: { $regex: id, $options: "i" } })
-    .toArray();
+    const restaurants = await db
+        .collection('restaurant')
+        .find({ name: { $regex: id, $options: 'i' } })
+        .toArray();
 
-  res.json(restaurants);
+    res.json(restaurants);
 };
