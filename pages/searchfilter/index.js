@@ -9,11 +9,9 @@ import { connectToDatabase } from '../../util/mongodb'
 import {useState} from 'react'
 import {useRouter} from 'next/router'
 
-
 export default function SearchFilter({ results }) {
   const router = useRouter();
   const [restaurants, setRestaurants] = useState(results);
-  const [resultStatus, setResultStatus] = useState('');
 
   // generate each restaurant card based on results
   const cards = []
@@ -35,24 +33,8 @@ export default function SearchFilter({ results }) {
         enterButton={false}
         onSearch={(value) => {
           if(value && value.trim()){
-            getSearchResults(value).then((result) => {
-              var restoList = result.data
-
-              if(restoList.length == 0){
-                setResultStatus('No results found')
-              }
-              else{
-                setResultStatus('')
-              }
-
-              console.log('restolist:')
-              console.log(restoList)
-              setRestaurants(restoList)
-              router.push('/searchfilter/' + value, undefined, {shallow: true})
-              
-            })
+            router.push('searchfilter/' + value)
           }
-          
         }}
       />
 
@@ -62,7 +44,6 @@ export default function SearchFilter({ results }) {
         </Col>
 
         <Col span={18} className={styles.cardsLayout}>
-          <h2>{resultStatus}</h2>
           { cards }
           
         </Col>
@@ -87,17 +68,4 @@ export async function getServerSideProps() {
       results: JSON.parse(JSON.stringify(restaurants)),
     },
   };
-}
-
-// get restaurants based on search string
-async function getSearchResults(searchString){
-  var searchRoute = 'http://localhost:3000/api/search/' + searchString
-  const res = await fetch(searchRoute)
-  const data = await res.json()
-
-  if(data){
-    return {
-      data
-    }
-  }
 }
