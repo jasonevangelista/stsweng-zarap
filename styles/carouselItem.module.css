@@ -1,11 +1,10 @@
 .card {
     border-radius: 10px;
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("../public/tempura.jpg");
+    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("../public/fried_rice.jpg");
     
     height: 60vh;
     background-size: cover;
     color: white;
-    /* color: black; */
 }      
 
 .cardContent {
@@ -15,8 +14,4 @@
 
 #stars{
     margin-bottom: 0.5em;
-}
-
-.icon > * {
-    fill: blue;
 }

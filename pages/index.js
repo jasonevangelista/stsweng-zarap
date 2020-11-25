@@ -76,7 +76,7 @@ export default function Home({ results }) {
               <div className={styles.chevron}></div>
               <div className={styles.chevron}></div>
               {/* <br></br>
-                        <span className={styles.text}>Find Out More</span> */}
+                <span className={styles.text}>Find Out More</span> */}
             </Col>
           </Row>
         </div>
