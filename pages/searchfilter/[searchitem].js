@@ -5,25 +5,17 @@ import {Row, Col} from 'antd'
 import Search from 'antd/lib/input/Search'
 
 import { connectToDatabase } from '../../util/mongodb'
-
-import {useState} from 'react'
-
-import {useRouter} from 'next/router'
-
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 
 export default function SearchFilter({ results }) {
   const router = useRouter();
+  const { searchitem } = router.query
+
   const [restaurants, setRestaurants] = useState(results);
-  const [resultStatus, setResultStatus] = useState('');
+  const [resultStatus, setResultStatus] = useState(getDefaultResultStatus(restaurants));
 
-  // generate each restaurant card based on results
-  const cards = []
-
-  for (const [index, value] of restaurants.entries()){
-    cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>)
-  }
-
-  const {searchitem} = router.query
+  const cards = generateRestaurantCards(restaurants)
 
   return (
 
@@ -41,19 +33,14 @@ export default function SearchFilter({ results }) {
           if(value && value.trim()){
             getSearchResults(value).then((result) => {
               var restoList = result.data
-
               if(restoList.length == 0){
                 setResultStatus('No results found')
               }
               else{
                 setResultStatus('')
               }
-
-              console.log('restolist:')
-              console.log(restoList)
               setRestaurants(restoList)
               router.push('/searchfilter/' + value, undefined, {shallow: true})
-              
             })
           }
           
@@ -64,18 +51,33 @@ export default function SearchFilter({ results }) {
         <Col span={6} className={styles.filterLayout}>
           <FilterSection></FilterSection>
         </Col>
-
         <Col span={18} className={styles.cardsLayout}>
           <h2>{resultStatus}</h2>
           { cards }
-          
         </Col>
-        
       </Row>
       
     </div>
   )
 }
+
+// generate each restaurant card based on results
+function generateRestaurantCards(restaurants){
+  var cards = []
+  for (const [index, value] of restaurants.entries()){
+    cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>)
+  }
+  return cards
+}
+
+// return default result status based on restaurant result length
+function getDefaultResultStatus(restaurants){
+  if(restaurants.length == 0){
+   return 'No results found'
+  }
+  return ''
+}
+
 
 export async function getServerSideProps(context) {
   const searchItem = context.params.searchitem
