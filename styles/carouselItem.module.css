@@ -5,4 +5,14 @@
     height: 60vh;
     background-size: cover;
     color: white;
+    /* color: black; */
 }      
+
+.cardContent {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 22px;
+}
+
+#stars{
+    margin-bottom: 0.5em;
+}
