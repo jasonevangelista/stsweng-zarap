@@ -16,3 +16,7 @@
 #stars{
     margin-bottom: 0.5em;
 }
+
+.icon > * {
+    fill: blue;
+}

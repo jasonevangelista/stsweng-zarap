@@ -1,6 +1,7 @@
 import styles from '../styles/carouselItem.module.css';
 import { Card, Row, Col, Rate } from 'antd';
 import { MdLocationOn } from 'react-icons/Md';  
+import {IconContext} from "react-icons";
 
 function FormatRating(rating, reviews){
     var ratingString = "";
@@ -35,7 +36,22 @@ export default function carouselItem({ restoSet }) {
                 <Col span={6} key={index}>
                     <Card title={card.name} bordered={false} hoverable headStyle={{color: 'white', fontSize: '2vw', fontFamily: 'Permanent Marker', border: 0, wordWrap: 'break-word !', whiteSpace: 'normal', height: '150px'}} className={styles.card}>
                         <p className={styles.cardContent}>{card.establishmentType}</p>
-                        <p className={styles.cardContent}><MdLocationOn />{card.city}</p>
+
+
+                        <Row>
+                            <Col>
+                                <div style={{marginTop: '5px'}}>
+                                    <MdLocationOn size='25px'/>
+                                </div>
+                            </Col>
+                            <Col>
+                                <p className={styles.cardContent}>{'    '}{card.city}</p>
+                            </Col>
+                        </Row>
+
+
+
+
                         {/* <p className={styles.cardContent}>{card.averageRating}</p> */}
                         <div id={styles.stars}>
                             <Rate disabled allowHalf value={card.averageRating}/>
