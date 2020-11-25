@@ -1,7 +1,7 @@
 import styles from '../styles/carouselItem.module.css';
 import { Card, Row, Col, Rate } from 'antd';
 import { MdLocationOn } from 'react-icons/Md';  
-import { FaHamburger } from 'react-icons/Fa';  
+import { FaHamburger, FaUtensils, FaCoffee } from 'react-icons/Fa';  
 
 function FormatRating(rating, reviews){
     var ratingString = "";
@@ -28,7 +28,15 @@ function FormatRating(rating, reviews){
 }
 
 export default function carouselItem({ restoSet }) {
-    
+    restoSet.map((resto) => {
+        switch (resto.establishmentType) {
+            case "Quick Bite"    : resto.icon = <FaHamburger size='20px'/>; break;
+            case "Café"          : resto.icon = <FaCoffee size='20px'/>; break;
+            case "Casual Dining" : resto.icon = <FaUtensils size='20px'/>; break;
+            default              : resto.icon = <FaUtensils size='20px'/>; break;
+        }
+    });
+
     return (  
         <Row justify="space-around">
             {restoSet.map ((card, index) => {
@@ -39,7 +47,7 @@ export default function carouselItem({ restoSet }) {
                             <Row>
                                 <Col>
                                     <div style={{marginTop: '7px'}}>
-                                        <FaHamburger size='20px'/>
+                                        {card.icon}
                                     </div>
                                 </Col>
                                 <Col>
