@@ -1,8 +1,8 @@
-name: Check pull request
+name: Increment version number
 
 on:
-  pull_request:
-    branches: [ develop ]
+  push:
+    branches: [ release ]
 
 
 jobs:
@@ -13,7 +13,4 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 12
-      - run: npm ci
-      - run: npm run test
-      - run: npm run lint
-      - run: npm run build
+      - run: npm version major
