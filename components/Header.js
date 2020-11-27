@@ -1,8 +1,8 @@
 import styles from "../styles/header.module.css";
 import Image from "next/image";
 import { Typography } from "antd";
-import { useRouter } from 'next/router'
-// import Link from 'next/link';
+import { useRouter } from "next/router";
+import Link from 'next/link';
 
 const { Title } = Typography;
 
@@ -13,7 +13,9 @@ export default function Header() {
   return (
     <div className={`${styles.header} ${pathname === '/' ? styles.transparent :''}`}> 
         <div className={styles.imageContainer}>
-          <Image src="/text.png" width={335} height={81}/>
+          <Link href="/">
+            <Image src="/text.png" width={335} height={81}/>
+          </Link>
         </div>
         {/* <div className={styles.navLinks}>
           <div>
