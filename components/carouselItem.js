@@ -28,7 +28,10 @@ function FormatRating(rating, reviews){
 }
 
 export default function carouselItem({ restoSet }) {
+    console.log("------------------------------------GOT IN THE COMPONENT-----------------------------");
+    console.log(restoSet.length);
     restoSet.map((resto) => {
+        console.log("------------One restaurant------------");
         console.log(resto.name + " " + resto.establishmentType);
         switch (resto.establishmentType) {
             case "Quick Bite"    : {console.log("QUICK"); resto.icon = <FaHamburger size='20px'/>; break;}
@@ -36,11 +39,20 @@ export default function carouselItem({ restoSet }) {
             case "Casual Dining" : {console.log("CASUAL"); resto.icon = <FaUtensils size='20px'/>; break;}
             default              : {console.log("DEFF"); resto.icon = <FaUtensils size='20px'/>; break;}
         }
+        console.log(resto.icon);
+        console.log("------------End restaurant------------");
+        console.log("");
     });
-
+    console.log("-----------CARD  TIME------------");
     return (  
         <Row justify="space-around">
             {restoSet.map ((card, index) => {
+                console.log("-----------CARD  One------------");
+                console.log(card.name);
+                console.log(card.establishmentType);
+                console.log(card.icon);
+                console.log("-----------CARD  DONE------------");
+                console.log("");
                 return (
                     <Col span={6} key={index}>
                         <Card title={card.name} bordered={false} hoverable headStyle={{color: 'white', fontSize: '2vw', fontFamily: 'Permanent Marker',  wordWrap: 'break-word !', whiteSpace: 'normal', height: '150px', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} className={styles.card}>

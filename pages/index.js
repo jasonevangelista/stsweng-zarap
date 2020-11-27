@@ -91,7 +91,6 @@ export default function Home({ results }) {
 
       <div className={styles.bottomBG}>
         <h2 className={styles.landingBottomTitle}> Recommendations </h2>
-
         <div className={styles.carouselTop}>
           <Carousel autoplay dots={false}>
             <div>
