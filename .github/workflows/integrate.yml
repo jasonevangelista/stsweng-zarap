@@ -20,7 +20,7 @@ jobs:
         env: 
           MONGODB_URI: db_uri
           MONGODB_DB: db
-      - name: 
+      - name: Run linting
         run: npm run lint
       - name: Build application 
         run: npm run build
