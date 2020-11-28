@@ -1,12 +1,21 @@
 import { connectToDatabase } from "../../util/mongodb";
 import { ObjectId } from "mongodb";
-import { Tabs, Typography, Rate } from "antd";
+import { Tabs, Typography, Rate, Badge, Divider } from "antd";
 
 import InfoTab from "../../components/restoprofile/InfoTab";
 import ImageHeader from "../../components/restoprofile/ImageHeader";
-import ReviewTab from "../../components/restoprofile/ReviewTab"
+import ReviewTab from "../../components/restoprofile/ReviewTab";
 
 const { Title, Text } = Typography;
+
+const formatReviews = (reviews) => {
+  let count = 0;
+  reviews.forEach((review) => {
+    if (review != null) count++;
+  });
+  console.log(count + "");
+  return <>{count + ""}</>;
+};
 
 export default function RestaurantProfile({ resto }) {
   return (
@@ -31,20 +40,23 @@ export default function RestaurantProfile({ resto }) {
 
         <div style={{ padding: "30px" }}>
           <div className="title-block">
-            <Title>Restaurant</Title>
-            <Rate allowHalf value={5} disabled />
+            <Title>{resto.name}</Title>
+            <Rate allowHalf value={resto.averageRating} disabled />
             &nbsp;&nbsp;&nbsp;
-            <Text>Based on 10 Reviews</Text>
+            <Badge
+              count={resto.averageRating}
+              style={{ backgroundColor: "#ff4d4f" }}
+            />
+            <br />
           </div>
-
-          <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
-            <Tabs.TabPane tab="Basic Information" key="1">
-              <InfoTab resto={resto} />
-            </Tabs.TabPane>
-            <Tabs.TabPane tab="Reviews" key="2">
-              <ReviewTab />
-            </Tabs.TabPane>
-          </Tabs>
+          <Divider />
+          <InfoTab resto={resto} />
+          <Divider />
+          <ReviewTab reviews={resto.reviews} />
+          {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
+            <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
+            <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>
+          </Tabs> */}
         </div>
       </div>
     </div>

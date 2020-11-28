@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Descriptions } from "antd";
+import { Row, Col, Descriptions, Typography } from "antd";
 import {
   ShopOutlined,
   ClockCircleOutlined,
@@ -8,13 +8,12 @@ import {
   EnvironmentOutlined,
 } from "@ant-design/icons";
 
+const { Title } = Typography;
+
 export default function InfoTab({ resto }) {
   return (
-    <div
-      style={{
-        padding: "30px",
-      }}
-    >
+    <div>
+      <Title level={3}>Basic Information</Title>
       <Row>
         <Col>
           <Descriptions bordered column={4}>
