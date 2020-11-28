@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Empty } from "antd";
+import { Typography, Empty, Space } from "antd";
 import Card from "./ReviewCard";
 
 const { Title } = Typography;
@@ -23,11 +23,15 @@ export default function Reviews({ reviews }) {
 
   return (
     <div>
-      <Title level={3}>
-        Reviews
-      </Title>
-      {checkReviews(reviews)}
-      <Card />
+      <Title level={3}>Reviews</Title>
+      {/* {checkReviews(reviews)} */}
+      <Space direction="vertical" style={{ margin: "10px" }}>
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </Space>
     </div>
   );
 }
