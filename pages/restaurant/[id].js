@@ -24,9 +24,9 @@ export default function RestaurantProfile({ resto }) {
         <div className={styles.contentBody}>
           <div>
             <Title>{resto.name}</Title>
-            <Rate allowHalf value={resto.averageRating} disabled />
-            &nbsp;&nbsp;&nbsp;
-            {resto.averageRating}
+//             <Rate allowHalf value={resto.averageRating} disabled />
+//             &nbsp;&nbsp;&nbsp;
+//             {resto.averageRating}
           </div>
           <Divider />
           <BasicInfo resto={resto} />
