@@ -1,5 +1,6 @@
 import React from "react";
 import { Typography, Empty } from "antd";
+import Card from "./ReviewCard";
 
 const { Title } = Typography;
 
@@ -26,6 +27,7 @@ export default function Reviews({ reviews }) {
         Reviews
       </Title>
       {checkReviews(reviews)}
+      <Card />
     </div>
   );
 }

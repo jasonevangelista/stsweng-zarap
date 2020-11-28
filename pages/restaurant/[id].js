@@ -7,31 +7,22 @@ import ImageHeader from "../../components/restoprofile/ImageHeader";
 import Reviews from "../../components/restoprofile/Reviews";
 import Gallery from "../../components/restoprofile/Gallery";
 
+import styles from "../../styles/restoprofile/restaurantprofile.module.css"
+
 const { Title } = Typography;
 
 export default function RestaurantProfile({ resto }) {
   return (
     <div
-      style={{
-        backgroundColor: "#C4C4C4",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
+      className={styles.wrapper}
     >
       <div
-        style={{
-          maxWidth: "1200px",
-          backgroundColor: "white",
-          borderRadius: "15px",
-          overflow: "hidden",
-          margin: "30px 20px",
-        }}
+        className={styles.contentContainer}
       >
         <ImageHeader />
 
-        <div style={{ padding: "30px" }}>
-          <div className="title-block">
+        <div className={styles.contentBody}>
+          <div>
             <Title>{resto.name}</Title>
             <Rate allowHalf value={resto.averageRating} disabled />
             &nbsp;&nbsp;&nbsp;

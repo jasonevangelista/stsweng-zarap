@@ -2,20 +2,22 @@ import React from "react";
 import { Carousel, Typography } from "antd";
 import GalleryItem from "./GalleryItem";
 
+import styles from "../../styles/restoprofile/gallery.module.css"
+
 const { Title } = Typography;
 
 export default function Gallery() {
   return (
     <div>
       <Title level={3}>Gallery</Title>
-      <div style={{ display: "flex", justifyContent: "center" }}>
+      <div className={styles.carouselContainer}>
         <Carousel
           focusOnSelect
           swipeToSlide
           autoplay
           dots
           arrows
-          style={{ width: "500px", height: "500px" }}
+          className={styles.carousel}
         >
           <div>
             <GalleryItem src="https://images.besttemplates.com/2431/Modern-Restaurant-07-02.jpg" />
