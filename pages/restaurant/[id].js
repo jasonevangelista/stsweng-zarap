@@ -5,6 +5,7 @@ import { Typography, Rate, Divider } from "antd";
 import BasicInfo from "../../components/restoprofile/BasicInfo";
 import ImageHeader from "../../components/restoprofile/ImageHeader";
 import Reviews from "../../components/restoprofile/Reviews";
+import Gallery from "../../components/restoprofile/Gallery";
 
 const { Title } = Typography;
 
@@ -38,6 +39,8 @@ export default function RestaurantProfile({ resto }) {
           </div>
           <Divider />
           <BasicInfo resto={resto} />
+          <Divider />
+          <Gallery />
           <Divider />
           <Reviews reviews={resto.reviews} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">

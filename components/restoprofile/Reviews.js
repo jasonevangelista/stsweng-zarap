@@ -3,13 +3,13 @@ import { Typography, Empty } from "antd";
 
 const { Title } = Typography;
 
-const countReviews = (reviews) => {
-  let count = 0;
-  reviews.forEach((review) => {
-    if (review != null) count++;
-  });
-  return count + 1;
-};
+// const countReviews = (reviews) => {
+//   let count = 0;
+//   reviews.forEach((review) => {
+//     if (review != null) count++;
+//   });
+//   return count + 1;
+// };
 
 export default function Reviews({ reviews }) {
   const checkReviews = (arr) => {
