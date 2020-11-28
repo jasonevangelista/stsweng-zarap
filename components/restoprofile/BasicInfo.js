@@ -32,7 +32,7 @@ export default function BasicInfo({ resto }) {
             label={
               <div>
                 <MoneyCollectOutlined />
-                &nbsp;Avg. Cost
+                &nbsp;Avg. Cost for Two
               </div>
             }
           >
