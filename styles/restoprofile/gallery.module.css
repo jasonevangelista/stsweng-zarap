@@ -1,0 +1,15 @@
+.carouselContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.carousel {
+  width: 500px;
+  height: 500px;
+}
+
+.carouselItem {
+  height: 500px;
+  display: flex;
+  justify-content: center;
+}
