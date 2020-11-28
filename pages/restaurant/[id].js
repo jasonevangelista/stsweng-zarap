@@ -1,21 +1,12 @@
 import { connectToDatabase } from "../../util/mongodb";
 import { ObjectId } from "mongodb";
-import { Tabs, Typography, Rate, Badge, Divider } from "antd";
+import { Typography, Rate, Divider } from "antd";
 
-import InfoTab from "../../components/restoprofile/InfoTab";
+import BasicInfo from "../../components/restoprofile/BasicInfo";
 import ImageHeader from "../../components/restoprofile/ImageHeader";
-import ReviewTab from "../../components/restoprofile/ReviewTab";
+import Reviews from "../../components/restoprofile/Reviews";
 
-const { Title, Text } = Typography;
-
-const formatReviews = (reviews) => {
-  let count = 0;
-  reviews.forEach((review) => {
-    if (review != null) count++;
-  });
-  console.log(count + "");
-  return <>{count + ""}</>;
-};
+const { Title } = Typography;
 
 export default function RestaurantProfile({ resto }) {
   return (
@@ -43,16 +34,12 @@ export default function RestaurantProfile({ resto }) {
             <Title>{resto.name}</Title>
             <Rate allowHalf value={resto.averageRating} disabled />
             &nbsp;&nbsp;&nbsp;
-            <Badge
-              count={resto.averageRating}
-              style={{ backgroundColor: "#ff4d4f" }}
-            />
-            <br />
+            {resto.averageRating}
           </div>
           <Divider />
-          <InfoTab resto={resto} />
+          <BasicInfo resto={resto} />
           <Divider />
-          <ReviewTab reviews={resto.reviews} />
+          <Reviews reviews={resto.reviews} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
             <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
             <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>

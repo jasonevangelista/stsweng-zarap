@@ -10,7 +10,7 @@ import {
 
 const { Title } = Typography;
 
-export default function InfoTab({ resto }) {
+export default function BasicInfo({ resto }) {
   return (
     <div>
       <Title level={3}>Basic Information</Title>
