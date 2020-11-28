@@ -1,24 +1,24 @@
 import { connectToDatabase } from "../../util/mongodb";
 import { ObjectId } from "mongodb";
 import { Typography, Rate, Divider } from "antd";
+import Head from "next/head";
 
 import BasicInfo from "../../components/restoprofile/BasicInfo";
 import ImageHeader from "../../components/restoprofile/ImageHeader";
 import Reviews from "../../components/restoprofile/Reviews";
 import Gallery from "../../components/restoprofile/Gallery";
 
-import styles from "../../styles/restoprofile/restaurantprofile.module.css"
+import styles from "../../styles/restoprofile/restaurantprofile.module.css";
 
 const { Title } = Typography;
 
 export default function RestaurantProfile({ resto }) {
   return (
-    <div
-      className={styles.wrapper}
-    >
-      <div
-        className={styles.contentContainer}
-      >
+    <div className={styles.wrapper}>
+      <Head>
+        <title>{resto.name}</title>
+      </Head>
+      <div className={styles.contentContainer}>
         <ImageHeader />
 
         <div className={styles.contentBody}>
