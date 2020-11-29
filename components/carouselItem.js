@@ -27,7 +27,6 @@ import Link from 'next/link';
 //         )
 //     }
 // }
-
 export default function carouselItem({ restoSet }) {
     return (  
         <Row justify="space-around">
@@ -36,7 +35,6 @@ export default function carouselItem({ restoSet }) {
                     <Col span={6} key={index}>
                         <Link href={'/restaurant/' + card._id}>
                             <Card title={card.name} bordered={false} hoverable headStyle={{color: 'white', fontSize: '2vw', fontFamily: 'Permanent Marker',  wordWrap: 'break-word !', whiteSpace: 'normal', height: '150px', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} className={styles.card}>
-                                
                                 <Row>
                                     <Col>
                                         <div style={{marginTop: '7px'}}>
@@ -47,7 +45,6 @@ export default function carouselItem({ restoSet }) {
                                         <p className={styles.cardContent}>&nbsp;{card.establishmentType}</p>
                                     </Col>
                                 </Row>
-
                                 <Row>
                                     <Col>
                                         <div style={{marginTop: '7px'}}>

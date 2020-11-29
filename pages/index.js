@@ -9,9 +9,9 @@ const Search = Input;
 import { useRouter } from 'next/router';
 
 const RoundSearch = styled(Input.Search)`
-  .ant-input {
-    border-radius: 10px;
-  }
+    .ant-input {
+        border-radius: 10px;
+    }
 `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
@@ -103,7 +103,7 @@ export default function Home({ results }) {
         </div>
       </div>
     </div>
-  );
+    );
 }
 
 // get all restaurants info when page is loaded

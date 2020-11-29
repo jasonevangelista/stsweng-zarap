@@ -1,5 +1,5 @@
-import styles from "../../styles/searchfilter/SearchRestoCard.module.css";
-import { Card, Divider, Rate, Row, Col, Image } from "antd";
+import styles from '../../styles/searchfilter/SearchRestoCard.module.css';
+import { Card, Divider, Rate, Row, Col, Image } from 'antd';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -58,19 +58,19 @@ export default function SearchRestoCard({ resto }) {
 }
 
 function FormatDetails(details, symbol) {
-  var detailsString = "";
+    var detailsString = '';
 
-  if (details.length > 1) {
-    const list = [];
-    for (var i = 0; i < details.length; i++) {
-      detailsString += details[i];
-      if (i + 1 < details.length) detailsString += symbol;
+    if (details.length > 1) {
+        const list = [];
+        for (var i = 0; i < details.length; i++) {
+            detailsString += details[i];
+            if (i + 1 < details.length) detailsString += symbol;
+        }
+    } else {
+        detailsString = details[0];
     }
-  } else {
-    detailsString = details[0];
-  }
 
-  return <p>{detailsString}</p>;
+    return <p>{detailsString}</p>;
 }
 
 function FormatRating(rating, reviews){
@@ -78,17 +78,17 @@ function FormatRating(rating, reviews){
   ratingString = Math.floor(rating * 2 ) / 2;
   ratingString = ratingString.toFixed(1);
 
-  if (reviews.length > 1) {
-    return (
-      <p>
-        {ratingString} ({reviews.length} reviews)
-      </p>
-    );
-  } else {
-    return (
-      <p>
-        {ratingString} ({reviews.length} review)
-      </p>
-    );
-  }
+    if (reviews.length > 1) {
+        return (
+            <p>
+                {ratingString} ({reviews.length} reviews)
+            </p>
+        );
+    } else {
+        return (
+            <p>
+                {ratingString} ({reviews.length} review)
+            </p>
+        );
+    }
 }
