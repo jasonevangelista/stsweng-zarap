@@ -1,7 +1,7 @@
 import styles from '../styles/carouselItem.module.css';
 import { Card, Row, Col, Rate } from 'antd';
-import { MdLocationOn } from 'react-icons/Md';  
-import { FaUtensils } from 'react-icons/Fa';  
+import { MdLocationOn } from 'react-icons/md';  
+import { FaUtensils } from 'react-icons/fa';  
 import Link from 'next/link';
 
 // function FormatRating(rating, reviews){
