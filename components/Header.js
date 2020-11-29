@@ -8,7 +8,10 @@ const { Title } = Typography;
 
 export default function Header() {
     const router = useRouter();
-    const pathname = router.pathname;
+    var pathname = null;
+    if(router) {
+      pathname = router.pathname;
+    }
 
     return (
         <div className={`${styles.header} ${pathname === '/' ? styles.transparent : ''}`}>
