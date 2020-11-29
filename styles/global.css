@@ -4,3 +4,12 @@ body {
   margin: 0; 
   height: 100%;
 }
+
+.ant-card-head-title {
+  display: inline-block;
+  flex: 1 1;
+  padding: 16px 0;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+}

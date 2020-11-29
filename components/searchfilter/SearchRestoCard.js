@@ -7,11 +7,12 @@ import Link from 'next/link';
 export default function SearchRestoCard({ resto }) {
   const router = useRouter();
 
-  var cuisines = FormatDetails(resto.cuisineType, ", ")
-  var contactDetails = FormatDetails(resto.contactDetails, "  |  ")
-  var openHours = FormatDetails(resto.openHours, "  |  ")
-  var rating = FormatRating(resto.averageRating, resto.reviews)
-  var restoProfileLink = '/restaurant/' + resto._id
+  var cuisines = FormatDetails(resto.cuisineType, ", ");
+  var contactDetails = FormatDetails(resto.contactDetails, "  |  ");
+  var openHours = FormatDetails(resto.openHours, "  |  ");
+  var rating = FormatRating(resto.averageRating, resto.reviews);
+  var restoProfileLink = '/restaurant/' + resto._id;
+  
   return(
     <Link href={restoProfileLink}>
       <Card hoverable className={styles.restoCard}>
@@ -72,9 +73,10 @@ function FormatDetails(details, symbol) {
     return <p>{detailsString}</p>;
 }
 
-function FormatRating(rating, reviews) {
-    var ratingString = '';
-    ratingString = Math.floor(rating * 2) / 2;
+function FormatRating(rating, reviews){
+  var ratingString = "";
+  ratingString = Math.floor(rating * 2 ) / 2;
+  ratingString = ratingString.toFixed(1);
 
     if (reviews.length > 1) {
         return (
