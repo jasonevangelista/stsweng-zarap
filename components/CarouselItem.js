@@ -28,6 +28,7 @@ import Link from 'next/link';
 //     }
 // }
 export default function carouselItem({ restoSet }) {
+    console.log("CAR ITEM");
     return (  
         <Row justify="space-around">
             {restoSet.map ((card, index) => {
