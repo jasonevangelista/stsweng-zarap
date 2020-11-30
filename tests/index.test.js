@@ -26,6 +26,7 @@ describe('Header Component', () => {
         const wrapper = mount(<Header />);
         // Expect a Header
         expect(wrapper.find(Header)).toHaveLength(1);
+        wrapper.unmount();
     });
 });
 
