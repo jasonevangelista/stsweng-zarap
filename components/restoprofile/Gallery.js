@@ -7,6 +7,7 @@ import styles from "../../styles/restoprofile/gallery.module.css"
 const { Title } = Typography;
 
 export default function Gallery() {
+  console.log("GALLERY");
   return (
     <div>
       <Title level={3}>Gallery</Title>
