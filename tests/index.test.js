@@ -10,10 +10,7 @@ import Gallery from '../components/restoprofile/Gallery';
 import GalleryItem from '../components/restoprofile/GalleryItem'; 
 import ImageHeader from '../components/restoprofile/ImageHeader'; 
 import ReviewCard from '../components/restoprofile/ReviewCard'; 
-import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews'; 
-import BasicInfo from '../components/restoprofile/BasicInfo';
-import Gallery from '../components/restoprofile/Gallery';
-import GalleryItem from '../components/restoprofile/GalleryItem';
+import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews';
 
 // mock window.matchMedia() method which is not implemented in JSDOM
 Object.defineProperty(window, 'matchMedia', {
