@@ -10,7 +10,7 @@ export default function SearchRestoCard({ resto }) {
   var cuisines = FormatDetails(resto.cuisineType, ", ");
   var contactDetails = FormatDetails(resto.contactDetails, "  |  ");
   var openHours = FormatDetails(resto.openHours, "  |  ");
-  var rating = FormatRating(resto.averageRating, resto.reviews);
+  // var rating = FormatRating(resto.averageRating, resto.reviews);
   var restoProfileLink = '/restaurant/' + resto._id;
   
   return(
@@ -25,10 +25,10 @@ export default function SearchRestoCard({ resto }) {
           </Col>
           <Col span={16} className={styles.restoCardHeader}>
             <h1 id={styles.restoName}>{resto.name}</h1>
-            <div id={styles.stars}>
+            {/* <div id={styles.stars}>
             <Rate disabled allowHalf value={resto.averageRating}/>
             <span className="ant-rate-text">{rating}</span>
-            </div>
+            </div> */}
             <p><b>{resto.city}</b></p>
             <p>{resto.fullAddress}</p>
           </Col>
@@ -57,7 +57,7 @@ export default function SearchRestoCard({ resto }) {
 
 }
 
-function FormatDetails(details, symbol) {
+export function FormatDetails(details, symbol) {
     var detailsString = '';
 
     if (details.length > 1) {
@@ -73,22 +73,22 @@ function FormatDetails(details, symbol) {
     return <p>{detailsString}</p>;
 }
 
-function FormatRating(rating, reviews){
-  var ratingString = "";
-  ratingString = Math.floor(rating * 2 ) / 2;
-  ratingString = ratingString.toFixed(1);
+// function FormatRating(rating, reviews){
+//   var ratingString = "";
+//   ratingString = Math.floor(rating * 2 ) / 2;
+//   ratingString = ratingString.toFixed(1);
 
-    if (reviews.length > 1) {
-        return (
-            <p>
-                {ratingString} ({reviews.length} reviews)
-            </p>
-        );
-    } else {
-        return (
-            <p>
-                {ratingString} ({reviews.length} review)
-            </p>
-        );
-    }
-}
+//     if (reviews.length > 1) {
+//         return (
+//             <p>
+//                 {ratingString} ({reviews.length} reviews)
+//             </p>
+//         );
+//     } else {
+//         return (
+//             <p>
+//                 {ratingString} ({reviews.length} review)
+//             </p>
+//         );
+//     }
+// }

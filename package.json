@@ -18,6 +18,7 @@
     "mongodb": "^3.5.9",
     "next": "latest",
     "next-images": "^1.6.2",
+    "next-page-tester": "^0.8.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-icons": "^4.1.0",
