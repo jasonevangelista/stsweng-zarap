@@ -1,9 +1,13 @@
 import { mount } from 'enzyme';
 
+import { Empty } from 'antd'; 
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CarouselItem from '../components/CarouselItem';
 import SearchRestoCard, { FormatDetails } from '../components/searchfilter/SearchRestoCard';
+import ImageHeader from '../components/restoprofile/ImageHeader'; 
+import ReviewCard from '../components/restoprofile/ReviewCard'; 
+import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews'; 
 
 // mock window.matchMedia() method which is not implemented in JSDOM
 Object.defineProperty(window, 'matchMedia', {
@@ -26,7 +30,7 @@ describe('Header Component', () => {
         const wrapper = mount(<Header />);
         // Expect a Header
         expect(wrapper.find(Header)).toHaveLength(1);
-        wrapper.unmount();
+        wrapper.unmount(); 
     });
 });
 
@@ -59,6 +63,7 @@ describe('SearchRestoCard Component', () => {
         const wrapper = mount(<SearchRestoCard resto={testProps}></SearchRestoCard>);
         // Expect a SearchFilterCard
         expect(wrapper.find(SearchRestoCard)).toHaveLength(1);
+        wrapper.unmount(); 
     });
 });
 
@@ -107,6 +112,7 @@ describe('CarouselItem Component', () => {
         const wrapper = mount(<CarouselItem restoSet={testProps} />);
         // Expect a CarouselItem
         expect(wrapper.find(CarouselItem)).toHaveLength(1);
+        wrapper.unmount(); 
     });
 });
 
@@ -125,4 +131,69 @@ describe('FormatDetails Function', () => {
         const expectedResult = details[0];
         expect(FormatDetails(details, symbol)).toEqual(<p>{expectedResult}</p>);
     });
+});
+
+// TODO: Update test to support props
+/** @test {ImageHeader Component}  */
+describe('ImageHeader Component', () => {
+    it('should render without crashing', () => {
+        const wrapper = mount(<ImageHeader />);
+        // Expect an ImageHeader component
+        expect(wrapper.find(ImageHeader)).toHaveLength(1);
+        wrapper.unmount();
+    });
+}); 
+
+// TODO: Update test to support props
+/** @test {ReviewCard Component} */
+describe('ReviewCard Component', () => {
+    it('should render without crashing', () => {
+        const wrapper = mount(<ReviewCard />);
+        // Expect a ReviewCard component
+        expect(wrapper.find(ReviewCard)).toHaveLength(1);
+        wrapper.unmount();
+    });
+});
+
+// TODO: Update test to support props
+/** @test {ReviewCard Component} */
+describe('Review Component', () => {
+    it('should render without crashing', () => {
+        // TODO update test props
+        const testProps = [
+            {reviewId: 1}, 
+            {reviewId: 2}
+        ]
+        const wrapper = mount(<Reviews reviews={testProps} />);
+        // Expect a Review component
+        expect(wrapper.find(Reviews)).toHaveLength(1);
+        wrapper.unmount();
+    });
+});
+
+/** @test {countReviews Function in ReviewCard} */
+describe('countReviews Function', () => {
+    it('If list of null reviews, should output length 1', () => {
+        const reviews = [null, null, null];
+        // Expect it to output 1
+        expect(countReviews(reviews)).toEqual(1); 
+    }); 
+
+    it('If list of reviews, should output length n+1', () => {
+        const reviews = [{id: 2}, {id: 3}, {id: 1}];
+        // Expect it to output n+1 
+        expect(countReviews(reviews)).toEqual(reviews.length+1); 
+    });
+});
+
+/** @test {checkReviews Function in ReviewCard} */
+describe('checkReviews Function', () => {
+    it('If null reviews, then output an Empty component', () => {
+        const reviews = [null]; 
+        const output = <Empty description="There are no reviews for this resturant." />; 
+        // Expect it to output an Empty component
+        expect(checkReviews(reviews)).toEqual(output); 
+    }); 
+
+    // TODO: Update test case when checkReviews is completed
 });
