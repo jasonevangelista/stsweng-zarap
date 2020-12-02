@@ -1,6 +1,6 @@
 import styles from '../../styles/searchfilter/SearchFilter.module.css';
 import SearchRestoCard from '../../components/searchfilter/SearchRestoCard';
-// import FilterSection from "../../components/searchfilter/FilterSection";
+import FilterSection from "../../components/searchfilter/FilterSection";
 import { Row, Col } from 'antd';
 import Search from 'antd/lib/input/Search';
 
@@ -45,21 +45,21 @@ export default function SearchFilter({ results }) {
                 }}
             />
 
-            {/* <Row>
-        <Col span={6} className={styles.filterLayout}>
-          <FilterSection></FilterSection>
-        </Col>
-        <Col span={18} className={styles.cardsLayout}>
-          <h2>{resultStatus}</h2>
-          {cards}
-        </Col>
-      </Row> */}
             <Row>
+                <Col span={6} className={styles.filterLayout}>
+                <FilterSection></FilterSection>
+                </Col>
+                <Col span={18} className={styles.cardsLayout}>
+                <h2>{resultStatus}</h2>
+                {cards}
+                </Col>
+            </Row>
+            {/* <Row>
                 <Col span={24} className={styles.cardsLayout}>
                     <h2>{resultStatus}</h2>
                     {cards}
                 </Col>
-            </Row>
+            </Row> */}
         </div>
     );
 }
@@ -98,15 +98,34 @@ export async function getServerSideProps(context) {
     };
 }
 
+// // get restaurants based on search string
+// async function getSearchResults(searchString) {
+//     var searchRoute = 'http://localhost:3000/api/search/' + searchString;
+//     const res = await fetch(searchRoute);
+//     const data = await res.json();
+
+//     if (data) {
+//         return {
+//             data
+//         };
+//     }
+// }
+
 // get restaurants based on search string
 async function getSearchResults(searchString) {
-    var searchRoute = 'http://localhost:3000/api/search/' + searchString;
+    var sort = 'none' // rating-hl , cost-hl, cost-lh
+    var filter = 'none' //{"location":"none", "cuisine":"none"}
+    var queryParams = '?sort=' + sort + '&filter=' + filter
+    var searchRoute = 'http://localhost:3000/api/search/' + searchString + queryParams;
     const res = await fetch(searchRoute);
     const data = await res.json();
-
+   
     if (data) {
         return {
             data
         };
     }
 }
+
+
+// url param format: http://localhost:3000/api/search/SEARCHSTRING?sort=SORT&filter=
