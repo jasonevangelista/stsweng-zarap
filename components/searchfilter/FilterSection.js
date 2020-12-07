@@ -1,59 +1,103 @@
 import styles from '../../styles/searchfilter/FilterSection.module.css';
-import { Card, Divider, Menu, Button } from 'antd';
+import { Card, Divider, Menu, Button, Modal } from 'antd';
 import SubMenu from 'antd/lib/menu/SubMenu';
 
-export default function FilterSection({}) {
+import React, { useState, useEffect, useRef } from 'react';
+
+export default function FilterSection(props) {
+    const firstTimeRender = useRef(true);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [sortOption, setSortOption] = useState(null);
+
+    useEffect(() => {
+        clearFilters();
+    }, [props.searchItem]);
+
+    useEffect(() => {
+        firstTimeRender.current = false;
+    }, []);
+
+    function setSort(value) {
+        setSortOption(value);
+        props.setSortOption(value);
+    }
+
+    const clearFilters = () => {
+        setSortOption(null);
+        props.clearFilters();
+    };
+
+    // modal methods
+    const showModal = () => {
+        setIsModalVisible(true);
+    };
+
+    const handleOk = () => {
+        setIsModalVisible(false);
+    };
+
+    const handleCancel = () => {
+        setIsModalVisible(false);
+    };
+
     return (
         <Card className={styles.filterSection}>
-            {/* <p>Filters</p>
-      <p>Clear Filter</p>
-
-      <div className={styles.subFilter}>
-        <p>Sort by</p>
-        <Divider className={styles.dividerFilter}/>
-        <p>Rating - high to low</p>
-        <p>Cost - high to low</p>
-        <p>Cost - low to high</p>
-      </div>
-
-      <div className={styles.subFilter}>
-        <p>Location</p>
-        <Divider className={styles.dividerFilter}/>
-        <p>City 1</p>
-        <p>City 2</p>
-        <p>City 3</p>
-        <p>See all locations</p>
-      </div>
-
-      <div className={styles.subFilter}>
-        <p>Cuisine</p>
-        <Divider className={styles.dividerFilter}/>
-        <p>Cuisine 1</p>
-        <p>Cuisine 2</p>
-        <p>Cuisine 3</p>
-        <p>See all cuisines</p>
-      </div> */}
-
-            <p>Filters</p>
-            <Button>Clear Filter</Button>
-
-            <Menu mode="inline" defaultOpenKeys={['sub1', 'sub2']} className={styles.filterMenu}>
-                <SubMenu key="sub1" title="Sort by">
-                    <Menu.Item key="1">Option 1</Menu.Item>
-                    <Menu.Item key="2">Option 2</Menu.Item>
-                    <Menu.Item key="3">Option 3</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub2" title="Location">
-                    <Menu.Item key="A">Option A</Menu.Item>
-                    <Menu.Item key="B">Option B</Menu.Item>
-                    <Menu.Item key="C">Option C</Menu.Item>
-                </SubMenu>
-                <SubMenu key="sub3" title="Cuisines">
-                    <Menu.Item key="X">Option X</Menu.Item>
-                    <Menu.Item key="Y">Option Y</Menu.Item>
-                    <Menu.Item key="Z">Option Z</Menu.Item>
-                </SubMenu>
+            <h2>Filters</h2>
+            <Button onClick={clearFilters}>Clear Filters</Button>
+            <h3 id="sortMenuTitle">Sort by</h3>
+            <Menu
+                onSelect={(selectedKeys) => {
+                    setSort(selectedKeys.key);
+                }}
+                selectedKeys={sortOption}>
+                <Menu.Item key="rating-hl">Rating - high to low</Menu.Item>
+                <Menu.Item key="cost-hl">Cost - high to low</Menu.Item>
+                <Menu.Item key="cost-lh">Cost - low to high</Menu.Item>
             </Menu>
+
+            {/* <h3 id="locationMenuTitle">Location</h3>
+            <Menu
+                // onSelect={(selectedKeys) => {
+                //     setSort(selectedKeys.key);
+                // }}
+                // selectedKeys={sortOption}
+            >
+                <Menu.Item key="Caloocan">Caloocan City</Menu.Item>
+                <Menu.Item key="LasPinas">Las Pinas City</Menu.Item>
+                <Menu.Item key="Marikina">Marikina City</Menu.Item>
+                <Menu.Item key="Manila">Manila</Menu.Item>
+                <Menu.Item key="Marikina">Marikina City</Menu.Item>
+                <Menu.Item key="Muntinlupa">Muntinlupa City</Menu.Item>
+                <Menu.Item key="Navotas">Navotas City</Menu.Item>
+                <Menu.Item key="Paranaque">Paranaque City</Menu.Item>
+                <Menu.Item key="Pasay">Pasay City</Menu.Item>
+                <Menu.Item key="Pasig">Pasig City</Menu.Item>
+                <Menu.Item key="Pateros">Pateros City</Menu.Item>
+                <Menu.Item key="Quezon">Quezon City</Menu.Item>
+                <Menu.Item key="SanJuan">San Juan City</Menu.Item>
+                <Menu.Item key="Taguig">Taguig City</Menu.Item>
+                <Menu.Item key="Valenzuela">Valenzuela City</Menu.Item>
+                <Menu.Item key="modalLocation" onClick={showModal}>See all locations</Menu.Item>
+                    <Modal title="Locations" visible={isModalVisible} onOk={handleOk} onCancel={handleCancel} footer={null}>
+                            <p>Location 1</p> 
+                            <p>Some contents...</p>
+                            <p>Some contents...</p>
+                    </Modal>
+            </Menu>
+            <h3 id="cuisineMenuTitle">Cuisine</h3>
+            <Menu
+                // onSelect={(selectedKeys) => {
+                //     setSort(selectedKeys.key);
+                // }}
+                // selectedKeys={sortOption}
+            >
+                <Menu.Item key="American">American</Menu.Item>
+                <Menu.Item key="American">American</Menu.Item>
+                <Menu.Item key="American">American</Menu.Item>
+                <Menu.Item key="American">American</Menu.Item>
+                <Menu.Item key="American">American</Menu.Item>
+                <Menu.Item key="American">American</Menu.Item>
+            </Menu> */}
         </Card>
     );
 }

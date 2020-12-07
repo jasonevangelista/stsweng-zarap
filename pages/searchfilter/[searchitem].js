@@ -1,21 +1,53 @@
 import styles from '../../styles/searchfilter/SearchFilter.module.css';
 import SearchRestoCard from '../../components/searchfilter/SearchRestoCard';
-// import FilterSection from "../../components/searchfilter/FilterSection";
+import FilterSection from '../../components/searchfilter/FilterSection';
 import { Row, Col } from 'antd';
 import Search from 'antd/lib/input/Search';
 
 import { connectToDatabase } from '../../util/mongodb';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 export default function SearchFilter({ results }) {
+    const firstTimeRender = useRef(true);
     const router = useRouter();
     const { searchitem } = router.query;
 
     const [restaurants, setRestaurants] = useState(results);
     const [resultStatus, setResultStatus] = useState(getDefaultResultStatus(restaurants));
+    const [sortOption, setSortOption] = useState('none');
 
     const cards = generateRestaurantCards(restaurants);
+
+    useEffect(() => {
+        firstTimeRender.current = false;
+    }, []);
+
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            // console.log("SORT OPTION SET: " + sortOption);
+            searchResults(searchitem, sortOption);
+        }
+    }, [sortOption]);
+
+    function searchResults(value, sort = 'none', filter = 'none') {
+        getSearchResults(value, sort, filter).then((result) => {
+            var restoList = result.data;
+            if (restoList.length == 0) {
+                setResultStatus('No results found');
+            } else {
+                setResultStatus('');
+            }
+            setRestaurants(restoList);
+            router.push('/searchfilter/' + value, undefined, {
+                shallow: true
+            });
+        });
+    }
+
+    function clearFilters() {
+        setSortOption('none');
+    }
 
     return (
         <div className={styles.pageLayout}>
@@ -29,33 +61,20 @@ export default function SearchFilter({ results }) {
                 enterButton={false}
                 onSearch={(value) => {
                     if (value && value.trim()) {
-                        getSearchResults(value).then((result) => {
-                            var restoList = result.data;
-                            if (restoList.length == 0) {
-                                setResultStatus('No results found');
-                            } else {
-                                setResultStatus('');
-                            }
-                            setRestaurants(restoList);
-                            router.push('/searchfilter/' + value, undefined, {
-                                shallow: true
-                            });
-                        });
+                        searchResults(value);
                     }
                 }}
             />
 
-            {/* <Row>
-        <Col span={6} className={styles.filterLayout}>
-          <FilterSection></FilterSection>
-        </Col>
-        <Col span={18} className={styles.cardsLayout}>
-          <h2>{resultStatus}</h2>
-          {cards}
-        </Col>
-      </Row> */}
             <Row>
-                <Col span={24} className={styles.cardsLayout}>
+                <Col span={6} className={styles.filterLayout}>
+                    <FilterSection
+                        setSortOption={setSortOption}
+                        clearFilters={clearFilters}
+                        searchItem={searchitem}
+                    />
+                </Col>
+                <Col span={18} className={styles.cardsLayout}>
                     <h2>{resultStatus}</h2>
                     {cards}
                 </Col>
@@ -99,8 +118,12 @@ export async function getServerSideProps(context) {
 }
 
 // get restaurants based on search string
-async function getSearchResults(searchString) {
-    var searchRoute = 'http://localhost:3000/api/search/' + searchString;
+async function getSearchResults(searchString, sort = 'none', filter = 'none') {
+    // var filter = 'none' // {"location":"none", "cuisine":"none"}
+    console.log('SEARCH STRING: ' + searchString);
+    console.log('SORT OPTION: ' + sort);
+    var queryParams = '?sort=' + sort + '&filter=' + filter;
+    var searchRoute = 'http://localhost:3000/api/search/' + searchString + queryParams;
     const res = await fetch(searchRoute);
     const data = await res.json();
 
@@ -110,3 +133,5 @@ async function getSearchResults(searchString) {
         };
     }
 }
+
+// url param format: http://localhost:3000/api/search/SEARCHSTRING?sort=SORT&filter=
