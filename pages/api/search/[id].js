@@ -4,6 +4,7 @@ export default async (req, res) => {
     const {
         query: { id, sort, filter }
     } = req;
+
     console.log('=== QUERIES ===');
     console.log('ID: ' + id);
     if (sort != '') {
@@ -18,11 +19,12 @@ export default async (req, res) => {
     }
 
     const { db } = await connectToDatabase();
+    var restaurants;
 
     // no sort and filter
     if (sort == 'none' && filter == 'none') {
         console.log('no sort and filter');
-        var restaurants = await db
+        restaurants = await db
             .collection('restaurant')
             .find({ name: { $regex: id, $options: 'i' } })
             .toArray();
@@ -30,42 +32,29 @@ export default async (req, res) => {
     // has only sort
     else if (sort != 'none' && filter == 'none') {
         console.log('has only sort');
+        var sortOption = {};
         // averageRating - high to low (-1)
         if (sort == 'rating-hl') {
-            var restaurants = await db
-                .collection('restaurant')
-                .find({ name: { $regex: id, $options: 'i' } })
-                .sort({ averageRating: -1 })
-                .toArray();
+            sortOption = { averageRating: -1 };
         }
         // averageCost - high to low (-1)
         else if (sort == 'cost-hl') {
-            var restaurants = await db
-                .collection('restaurant')
-                .find({ name: { $regex: id, $options: 'i' } })
-                .sort({ averageCost: -1 })
-                .toArray();
+            sortOption = { averageCost: -1 };
         }
         // averageCost - low to high (1)
         else if (sort == 'cost-lh') {
-            var restaurants = await db
-                .collection('restaurant')
-                .find({ name: { $regex: id, $options: 'i' } })
-                .sort({ averageCost: 1 })
-                .toArray();
+            sortOption = { averageCost: 1 };
         }
-        // if params are invalid, will perform query without any sort/filter
-        else {
-            var restaurants = await db
-                .collection('restaurant')
-                .find({ name: { $regex: id, $options: 'i' } })
-                .toArray();
-        }
+        restaurants = await db
+            .collection('restaurant')
+            .find({ name: { $regex: id, $options: 'i' } })
+            .sort(sortOption)
+            .toArray();
     }
     // has only filter
     else if (sort == 'none' && filter != 'none') {
         console.log('has only filter');
-        var restaurants = await db
+        restaurants = await db
             .collection('restaurant')
             .find({ name: { $regex: id, $options: 'i' }, city: 'Taguig' })
             // .sort({ averageCost: 1})
@@ -74,7 +63,7 @@ export default async (req, res) => {
     // has both sort and filter
     else {
         console.log('has both sort and filter');
-        var restaurants = await db
+        restaurants = await db
             .collection('restaurant')
             .find({ name: { $regex: id, $options: 'i' }, city: 'Taguig' })
             .sort({ averageCost: 1 })

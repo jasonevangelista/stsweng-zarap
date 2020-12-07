@@ -49,8 +49,7 @@ export default function FilterSection(props) {
                 onSelect={(selectedKeys) => {
                     setSort(selectedKeys.key);
                 }}
-                selectedKeys={sortOption}
-            >
+                selectedKeys={sortOption}>
                 <Menu.Item key="rating-hl">Rating - high to low</Menu.Item>
                 <Menu.Item key="cost-hl">Cost - high to low</Menu.Item>
                 <Menu.Item key="cost-lh">Cost - low to high</Menu.Item>
@@ -99,7 +98,6 @@ export default function FilterSection(props) {
                 <Menu.Item key="American">American</Menu.Item>
                 <Menu.Item key="American">American</Menu.Item>
             </Menu> */}
-
         </Card>
     );
 }
