@@ -130,39 +130,43 @@ export default function FilterSection(props) {
                     </Row>
                     <Row>
                         <Col span={8} align="center">
-                            <p
+                            <Button
+                                type="text"
                                 onClick={() => {
                                     modalsetLocation('Taguig');
                                 }}>
                                 Taguig City
-                            </p>
+                            </Button>
                         </Col>
                         <Col span={8} align="center">
-                            <p
+                            <Button
+                                type="text"
                                 onClick={() => {
                                     modalsetLocation('Manila');
                                 }}>
                                 Manila City
-                            </p>
+                            </Button>
                         </Col>
                         <Col span={8} align="center">
-                            <p
+                            <Button
+                                type="text"
                                 onClick={() => {
                                     modalsetLocation('San Juan');
                                 }}>
                                 San Juan City
-                            </p>
+                            </Button>
                         </Col>
                     </Row>
                     {/* <Divider /> */}
                     <Row>
                         <Col span={8} align="center">
-                            <p
+                            <Button
+                                type="text"
                                 onClick={() => {
                                     modalsetLocation('Pasay');
                                 }}>
                                 Pasay City
-                            </p>
+                            </Button>
                         </Col>
                         {/* <Col span={8}>
                             <p>SAMPLE_CITY</p>
@@ -208,55 +212,61 @@ export default function FilterSection(props) {
                         </Row>
                         <Row>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('American');
                                     }}>
                                     American
-                                </p>
+                                </Button>
                             </Col>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('Chinese');
                                     }}>
                                     Chinese
-                                </p>
+                                </Button>
                             </Col>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('Coffee');
                                     }}>
                                     Coffee
-                                </p>
+                                </Button>
                             </Col>
                         </Row>
 
                         <Row>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('Desserts');
                                     }}>
                                     Desserts
-                                </p>
+                                </Button>
                             </Col>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('Seafood');
                                     }}>
                                     Seafood
-                                </p>
+                                </Button>
                             </Col>
                             <Col span={8} align="center">
-                                <p
+                                <Button
+                                    type="text"
                                     onClick={() => {
                                         modalsetCuisine('Taiwanese');
                                     }}>
                                     Taiwanese
-                                </p>
+                                </Button>
                             </Col>
                         </Row>
                     </div>

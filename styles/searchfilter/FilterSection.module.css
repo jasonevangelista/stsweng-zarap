@@ -36,6 +36,10 @@
     margin-bottom: 4%;
 }
 
+.modal button {
+  margin-bottom: 5%;
+}
+
 .dividerFilter {
     background-color: #b8b1b1;
 }
