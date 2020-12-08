@@ -15,7 +15,11 @@ export default function SearchFilter({ results }) {
 
     const [restaurants, setRestaurants] = useState(results);
     const [resultStatus, setResultStatus] = useState(getDefaultResultStatus(restaurants));
-    const [sortOption, setSortOption] = useState('none');
+
+    const [sortOption, setSortOption] = useState(null);
+    const [filterOption, setFilterOption] = useState({ location: null, cuisine: null });
+    const [locationFilter, setLocationFilter] = useState(null);
+    const [cuisineFilter, setCuisineFilter] = useState(null);
 
     const cards = generateRestaurantCards(restaurants);
 
@@ -25,12 +29,28 @@ export default function SearchFilter({ results }) {
 
     useEffect(() => {
         if (!firstTimeRender.current) {
-            // console.log("SORT OPTION SET: " + sortOption);
-            searchResults(searchitem, sortOption);
+            window.scrollTo(0, 0);
         }
-    }, [sortOption]);
+    }, [restaurants]);
 
-    function searchResults(value, sort = 'none', filter = 'none') {
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            searchResults(searchitem, sortOption, filterOption);
+            window.scrollTo(0, 0);
+        }
+    }, [sortOption, filterOption]);
+
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            var filter = {
+                location: locationFilter,
+                cuisine: cuisineFilter
+            };
+            setFilterOption(filter);
+        }
+    }, [locationFilter, cuisineFilter]);
+
+    function searchResults(value, sort, filter) {
         getSearchResults(value, sort, filter).then((result) => {
             var restoList = result.data;
             if (restoList.length == 0) {
@@ -46,7 +66,9 @@ export default function SearchFilter({ results }) {
     }
 
     function clearFilters() {
-        setSortOption('none');
+        setSortOption(null);
+        setLocationFilter(null);
+        setCuisineFilter(null);
     }
 
     return (
@@ -61,7 +83,7 @@ export default function SearchFilter({ results }) {
                 enterButton={false}
                 onSearch={(value) => {
                     if (value && value.trim()) {
-                        searchResults(value);
+                        searchResults(value, null, { location: null, cuisine: null });
                     }
                 }}
             />
@@ -70,6 +92,8 @@ export default function SearchFilter({ results }) {
                 <Col span={6} className={styles.filterLayout}>
                     <FilterSection
                         setSortOption={setSortOption}
+                        setLocationFilter={setLocationFilter}
+                        setCuisineFilter={setCuisineFilter}
                         clearFilters={clearFilters}
                         searchItem={searchitem}
                     />
@@ -118,11 +142,16 @@ export async function getServerSideProps(context) {
 }
 
 // get restaurants based on search string
-async function getSearchResults(searchString, sort = 'none', filter = 'none') {
+async function getSearchResults(searchString, sort, filter) {
     // var filter = 'none' // {"location":"none", "cuisine":"none"}
+    if (!sort) {
+        sort = 'none';
+    }
     console.log('SEARCH STRING: ' + searchString);
     console.log('SORT OPTION: ' + sort);
-    var queryParams = '?sort=' + sort + '&filter=' + filter;
+    console.log('FILTER OPTION: ' + JSON.stringify(filter));
+    var queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
+
     var searchRoute = 'http://localhost:3000/api/search/' + searchString + queryParams;
     const res = await fetch(searchRoute);
     const data = await res.json();
