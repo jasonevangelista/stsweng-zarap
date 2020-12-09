@@ -7,6 +7,7 @@ import Search from 'antd/lib/input/Search';
 import { connectToDatabase } from '../../util/mongodb';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 export default function SearchFilter({ results }) {
     const firstTimeRender = useRef(true);
@@ -51,6 +52,9 @@ export default function SearchFilter({ results }) {
 
     return (
         <div className={styles.pageLayout}>
+            <Head>
+                <title>Restaurant Search</title>
+            </Head>
             <h1>Search Results on &quot;{searchitem}&quot;</h1>
 
             <Search
