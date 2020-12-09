@@ -15,6 +15,7 @@ export default function FilterSection(props) {
 
     useEffect(() => {
         clearFilters();
+        setSortOption(null);
     }, [props.searchItem]);
 
     useEffect(() => {
@@ -37,7 +38,6 @@ export default function FilterSection(props) {
     }
 
     const clearFilters = () => {
-        setSortOption(null);
         setLocationFilter(null);
         setCuisineFilter(null);
         props.clearFilters();
