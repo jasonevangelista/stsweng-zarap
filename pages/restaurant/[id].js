@@ -19,7 +19,7 @@ export default function RestaurantProfile({ resto }) {
         <title>{resto.name}</title>
       </Head>
       <div className={styles.contentContainer}>
-        <ImageHeader />
+        <ImageHeader imageURL={resto.coverPhotoURL}/>
 
         <div className={styles.contentBody}>
           <div>
@@ -31,7 +31,7 @@ export default function RestaurantProfile({ resto }) {
           <Divider />
           <BasicInfo resto={resto} />
           <Divider />
-          <Gallery />
+          <Gallery imageArray={resto.menuURLs}/>
           <Divider />
           <Reviews reviews={resto.reviews} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">

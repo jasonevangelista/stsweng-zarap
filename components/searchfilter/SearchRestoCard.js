@@ -19,9 +19,9 @@ export default function SearchRestoCard({ resto }) {
 
         <Row>
           <Col span={8} className={styles.imageSection}>
-            <div className={styles.cardImage}>
-            {/* <Image className={styles.imagePlaceholder} height={150} placeholder={true} src="error"/> */}
-            </div>
+            {/* <div className={styles.cardImage}> */}
+              <Image className={styles.cardImage} preview={false} height={150} placeholder={true} src={resto.coverPhotoURL}/>
+            {/* </div> */}
           </Col>
           <Col span={16} className={styles.restoCardHeader}>
             <h1 id={styles.restoName}>{resto.name}</h1>

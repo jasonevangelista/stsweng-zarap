@@ -32,7 +32,7 @@ export const countReviews = (reviews) => {
 export const checkReviews = (arr) => {
   if (arr.length === 1) {
     if (arr[0] === null) {
-      return <Empty description="There are no reviews for this resturant." />;
+      return <Empty description="There are no reviews for this restaurant." />;
     }
   }
 };

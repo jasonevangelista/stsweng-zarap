@@ -1,25 +1,35 @@
-import React from "react";
-import { Carousel, Typography } from "antd";
-import GalleryItem from "./GalleryItem";
+import React from 'react';
+import { Carousel, Typography, Empty } from 'antd';
+import GalleryItem from './GalleryItem';
 
-import styles from "../../styles/restoprofile/gallery.module.css"
+import styles from '../../styles/restoprofile/gallery.module.css';
 
 const { Title } = Typography;
 
-export default function Gallery() {
-  return (
-    <div>
-      <Title level={3}>Gallery</Title>
-      <div className={styles.carouselContainer}>
-        <Carousel
-          focusOnSelect
-          swipeToSlide
-          autoplay
-          dots
-          arrows
-          className={styles.carousel}
-        >
-          <div>
+export default function Gallery({ imageArray }) {
+    return (
+        <div>
+            <Title level={3}>Gallery</Title>
+            <div className={styles.carouselContainer}>
+                <Carousel
+                    focusOnSelect
+                    swipeToSlide
+                    autoplay
+                    dots
+                    arrows
+                    className={imageArray ? styles.carousel : ""}>
+                    {imageArray ? (
+                        imageArray.map((link) => {
+                            return (
+                                <div>
+                                    <GalleryItem src={link} />
+                                </div>
+                            );
+                        })
+                    ) : (
+                        <Empty description="There are no menu images for this restaurant." />
+                    )}
+                    {/* <div>
             <GalleryItem src="https://images.besttemplates.com/2431/Modern-Restaurant-07-02.jpg" />
           </div>
           <div>
@@ -27,9 +37,9 @@ export default function Gallery() {
           </div>
           <div>
             <GalleryItem src="https://fiverr-res.cloudinary.com/images/q_auto,f_auto/gigs/117520118/original/97b74413d19313b1d51958209e87e414a4ba3719/design-restaurant-menu-menu-design-food-menu-price-list-menu-catalog-pdf-flyer.jpg" />
-          </div>
-        </Carousel>
-      </div>
-    </div>
-  );
+          </div> */}
+                </Carousel>
+            </div>
+        </div>
+    );
 }
