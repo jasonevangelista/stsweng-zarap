@@ -31,13 +31,13 @@
 }
 
 .cardImage {
+  overflow: hidden;
   border-radius: 10px;
   min-width: 80%;
   /* min-height: 100%; */
   background: maroon;
   height: 10em;
   margin-right: 1em;
-  
 }
 
 .imageSection{
@@ -46,7 +46,7 @@
 
 .imagePlaceholder{
   min-width: 100%;
-  min-height: 100%
+  min-height: 100%;
 }
 
 .detailHeader {
