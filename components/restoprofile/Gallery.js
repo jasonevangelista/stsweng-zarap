@@ -19,9 +19,9 @@ export default function Gallery({ imageArray }) {
                     arrows
                     className={imageArray ? styles.carousel : ""}>
                     {imageArray ? (
-                        imageArray.map((link) => {
+                        imageArray.map((link, key) => {
                             return (
-                                <div>
+                                <div key={key}>
                                     <GalleryItem src={link} />
                                 </div>
                             );

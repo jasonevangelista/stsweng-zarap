@@ -5,56 +5,59 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function SearchRestoCard({ resto }) {
-  const router = useRouter();
+    const router = useRouter();
 
-  var cuisines = FormatDetails(resto.cuisineType, ", ");
-  var contactDetails = FormatDetails(resto.contactDetails, "  |  ");
-  var openHours = FormatDetails(resto.openHours, "  |  ");
-  var rating = FormatRating(resto.averageRating, resto.reviews);
-  var restoProfileLink = '/restaurant/' + resto._id;
-  
-  return(
-    <Link href={restoProfileLink}>
-      <Card hoverable className={styles.restoCard}>
+    var cuisines = FormatDetails(resto.cuisineType, ', ');
+    var contactDetails = FormatDetails(resto.contactDetails, '  |  ');
+    var openHours = FormatDetails(resto.openHours, '  |  ');
+    var rating = FormatRating(resto.averageRating, resto.reviews);
+    var restoProfileLink = '/restaurant/' + resto._id;
 
-        <Row>
-          <Col span={8} className={styles.imageSection}>
-            {/* <div className={styles.cardImage}> */}
-              <Image className={styles.cardImage} preview={false} height={150} placeholder={true} src={resto.coverPhotoURL}/>
-            {/* </div> */}
-          </Col>
-          <Col span={16} className={styles.restoCardHeader}>
-            <h1 id={styles.restoName}>{resto.name}</h1>
-            <div id={styles.stars}>
-            <Rate disabled allowHalf value={resto.averageRating}/>
-            <span className="ant-rate-text">{rating}</span>
-            </div>
-            <p><b>{resto.city}</b></p>
-            <p>{resto.fullAddress}</p>
-          </Col>
-        </Row>
+    return (
+        <Link href={restoProfileLink}>
+            <Card hoverable className={styles.restoCard}>
+                <Row>
+                    <Col span={8} className={styles.imageSection}>
+                        <Image
+                            className={styles.cardImage}
+                            preview={false}
+                            height={150}
+                            placeholder={true}
+                            src={resto.coverPhotoURL}
+                        />
+                    </Col>
+                    <Col span={16} className={styles.restoCardHeader}>
+                        <h1 id={styles.restoName}>{resto.name}</h1>
+                        <div id={styles.stars}>
+                            <Rate disabled allowHalf value={resto.averageRating} />
+                            <span className="ant-rate-text">{rating}</span>
+                        </div>
+                        <p>
+                            <b>{resto.city}</b>
+                        </p>
+                        <p>{resto.fullAddress}</p>
+                    </Col>
+                </Row>
 
-        <Divider className={styles.dividerResto}/>
+                <Divider className={styles.dividerResto} />
 
-        <Row>
-          <Col span={8} className={styles.detailHeader}>
-            <p>CUISINES:</p>
-            <p>COST FOR TWO:</p>
-            <p>HOURS:</p>
-            <p>CONTACT NO:</p>
-          </Col>
-          <Col span={16}>
-            {cuisines}
-            <p>PHP {resto.averageCost}</p>
-            {openHours}
-            {contactDetails}
-          </Col>
-        </Row>
-        
-      </Card>
-    </Link>
-  )
-
+                <Row>
+                    <Col span={8} className={styles.detailHeader}>
+                        <p>CUISINES:</p>
+                        <p>COST FOR TWO:</p>
+                        <p>HOURS:</p>
+                        <p>CONTACT NO:</p>
+                    </Col>
+                    <Col span={16}>
+                        {cuisines}
+                        <p>PHP {resto.averageCost}</p>
+                        {openHours}
+                        {contactDetails}
+                    </Col>
+                </Row>
+            </Card>
+        </Link>
+    );
 }
 
 export function FormatDetails(details, symbol) {
@@ -73,10 +76,10 @@ export function FormatDetails(details, symbol) {
     return <p>{detailsString}</p>;
 }
 
-function FormatRating(rating, reviews){
-  var ratingString = "";
-  ratingString = Math.floor(rating * 2 ) / 2;
-  ratingString = ratingString.toFixed(1);
+function FormatRating(rating, reviews) {
+    var ratingString = '';
+    ratingString = Math.floor(rating * 2) / 2;
+    ratingString = ratingString.toFixed(1);
 
     if (reviews.length > 1) {
         return (
