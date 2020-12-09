@@ -1,14 +1,14 @@
 import styles from '../styles/carouselItem.module.css';
 import { Card, Row, Col, Rate } from 'antd';
-import { MdLocationOn } from 'react-icons/md';  
-import { FaUtensils } from 'react-icons/fa';  
+import { MdLocationOn } from 'react-icons/md';
+import { FaUtensils } from 'react-icons/fa';
 import Link from 'next/link';
 
 // function FormatRating(rating, reviews){
 //     var ratingString = "";
 //     ratingString = Math.floor(rating * 2 ) / 2;
 //     ratingString = ratingString.toFixed(1);
-    
+
 //     if(reviews != null){
 //         if (reviews.length > 1){
 //             return (
@@ -28,27 +28,52 @@ import Link from 'next/link';
 //     }
 // }
 export default function carouselItem({ restoSet }) {
-    return (  
+    return (
         <Row justify="space-around">
-            {restoSet.map ((card, index) => {
+            {restoSet.map((card, index) => {
                 return (
                     <Col span={6} key={index}>
                         <Link href={'/restaurant/' + card._id}>
-                            <Card title={card.name} bordered={false} hoverable headStyle={{color: 'white', fontSize: '2vw', fontFamily: 'Permanent Marker',  wordWrap: 'break-word !', whiteSpace: 'normal', height: '150px', display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center'}} className={styles.card}>
+                            <Card
+                                title={card.name}
+                                bordered={false}
+                                hoverable
+                                headStyle={{
+                                    color: 'white',
+                                    fontSize: '2vw',
+                                    fontFamily: 'Permanent Marker',
+                                    wordWrap: 'break-word !',
+                                    whiteSpace: 'normal',
+                                    height: '150px',
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    textAlign: 'center'
+                                }}
+                                className={styles.card}
+                                style={
+                                    card.coverPhotoURL
+                                        ? {
+                                              backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url(${card.coverPhotoURL})`
+                                          }
+                                        : {}
+                                }>
                                 <Row>
                                     <Col>
-                                        <div style={{marginTop: '7px'}}>
-                                            <FaUtensils size='20px'/>
+                                        <div style={{ marginTop: '7px' }}>
+                                            <FaUtensils size="20px" />
                                         </div>
                                     </Col>
                                     <Col>
-                                        <p className={styles.cardContent}>&nbsp;{card.establishmentType}</p>
+                                        <p className={styles.cardContent}>
+                                            &nbsp;{card.establishmentType}
+                                        </p>
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <div style={{marginTop: '7px'}}>
-                                            <MdLocationOn size='20px'/>
+                                        <div style={{ marginTop: '7px' }}>
+                                            <MdLocationOn size="20px" />
                                         </div>
                                     </Col>
                                     <Col>
@@ -62,8 +87,8 @@ export default function carouselItem({ restoSet }) {
                             </Card>
                         </Link>
                     </Col>
-                )
+                );
             })}
         </Row>
-    )
+    );
 }
