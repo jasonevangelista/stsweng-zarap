@@ -22,25 +22,46 @@ export default function FilterSection(props) {
         firstTimeRender.current = false;
     }, []);
 
-    const setSort = (sortOption) => {
-        setSortOption(sortOption);
-        props.setSortOption(sortOption);
+    const setSort = (currSortOption) => {
+        if (currSortOption != sortOption) {
+            setSortOption(currSortOption);
+            props.setSortOption(currSortOption);
+            console.log('new sort option');
+        } else {
+            console.log('old sort option');
+            setSortOption(null);
+            props.setSortOption(null);
+        }
     };
 
     function setLocation(location) {
-        setLocationFilter(location);
-        props.setLocationFilter(location);
+        if (location != locationFilter) {
+            setLocationFilter(location);
+            props.setLocationFilter(location);
+        } else {
+            setLocationFilter(null);
+            props.setLocationFilter(null);
+        }
     }
 
     function setCuisine(cuisine) {
-        setCuisineFilter(cuisine);
-        props.setCuisineFilter(cuisine);
+        if (cuisine != cuisineFilter) {
+            setCuisineFilter(cuisine);
+            props.setCuisineFilter(cuisine);
+        } else {
+            setCuisineFilter(null);
+            props.setCuisineFilter(null);
+        }
     }
 
     const clearFilters = () => {
         setLocationFilter(null);
         setCuisineFilter(null);
         props.clearFilters();
+    };
+    const clearSort = () => {
+        setSortOption(null);
+        props.setSortOption(null);
     };
 
     // modal methods
@@ -80,37 +101,65 @@ export default function FilterSection(props) {
 
     return (
         <Card className={styles.filterSection}>
-            <h2>Filters</h2>
-            <Button onClick={clearFilters} align="right">
-                Clear Filters
-            </Button>
+            <Row>
+                <div className={styles.headerFilterSort}>
+                    <h2>Sort by</h2>
+                </div>
+                <span>
+                    <Button onClick={clearSort} className={styles.clearButton}>
+                        Clear Sort
+                    </Button>
+                </span>
+            </Row>
 
-            <Divider className={styles.dividerFilter} />
-            <h3 id="sortMenuTitle">Sort by</h3>
             <Menu
-                onSelect={(selectedKeys) => {
+                onClick={(selectedKeys) => {
                     setSort(selectedKeys.key);
                 }}
                 selectedKeys={sortOption}>
-                <Menu.Item key="rating-hl">Rating - high to low</Menu.Item>
-                <Menu.Item key="cost-hl">Cost - high to low</Menu.Item>
-                <Menu.Item key="cost-lh">Cost - low to high</Menu.Item>
+                <Menu.Item key="rating-hl" className="menuOption">
+                    Rating - high to low
+                </Menu.Item>
+                <Menu.Item key="cost-hl" className="menuOption">
+                    Cost - high to low
+                </Menu.Item>
+                <Menu.Item key="cost-lh" className="menuOption">
+                    Cost - low to high
+                </Menu.Item>
             </Menu>
 
             <Divider className={styles.dividerFilter} />
 
+            <Row>
+                <div className={styles.headerFilterSort}>
+                    <h2>Filters</h2>
+                </div>
+                <span>
+                    <Button onClick={clearFilters} className={styles.clearButton}>
+                        Clear Filters
+                    </Button>
+                </span>
+            </Row>
+
             <h3 id="locationMenuTitle">Location</h3>
             <Menu
-                onSelect={(selectedKeys) => {
+                onClick={(selectedKeys) => {
                     if (selectedKeys.key != 'modalLocation') {
                         setLocation(selectedKeys.key);
                     }
                 }}
                 selectedKeys={locationFilter}>
-                <Menu.Item key="Taguig">Taguig City</Menu.Item>
-                <Menu.Item key="San Juan">San Juan City</Menu.Item>
-                <Menu.Item key="Manila">Manila</Menu.Item>
+                <Menu.Item key="Taguig" className="menuOption">
+                    Taguig City
+                </Menu.Item>
+                <Menu.Item key="San Juan" className="menuOption">
+                    San Juan City
+                </Menu.Item>
+                <Menu.Item key="Manila" className="menuOption">
+                    Manila
+                </Menu.Item>
                 <Menu.Item
+                    className={styles.seeAllOption}
                     key="modalLocation"
                     onClick={() => {
                         showModal('location');
@@ -131,6 +180,7 @@ export default function FilterSection(props) {
                     <Row>
                         <Col span={8} align="center">
                             <Button
+                                className={locationFilter == 'Taguig' ? 'modalBtnSelected' : null}
                                 type="text"
                                 onClick={() => {
                                     modalsetLocation('Taguig');
@@ -140,6 +190,7 @@ export default function FilterSection(props) {
                         </Col>
                         <Col span={8} align="center">
                             <Button
+                                className={locationFilter == 'Manila' ? 'modalBtnSelected' : null}
                                 type="text"
                                 onClick={() => {
                                     modalsetLocation('Manila');
@@ -149,6 +200,7 @@ export default function FilterSection(props) {
                         </Col>
                         <Col span={8} align="center">
                             <Button
+                                className={locationFilter == 'San Juan' ? 'modalBtnSelected' : null}
                                 type="text"
                                 onClick={() => {
                                     modalsetLocation('San Juan');
@@ -161,6 +213,7 @@ export default function FilterSection(props) {
                     <Row>
                         <Col span={8} align="center">
                             <Button
+                                className={locationFilter == 'Pasay' ? 'modalBtnSelected' : null}
                                 type="text"
                                 onClick={() => {
                                     modalsetLocation('Pasay');
@@ -182,16 +235,23 @@ export default function FilterSection(props) {
 
             <h3 id="CuisineMenuTitle">Cuisine</h3>
             <Menu
-                onSelect={(selectedKeys) => {
+                onClick={(selectedKeys) => {
                     if (selectedKeys.key != 'modalCuisine') {
                         setCuisine(selectedKeys.key);
                     }
                 }}
                 selectedKeys={cuisineFilter}>
-                <Menu.Item key="American">American</Menu.Item>
-                <Menu.Item key="Chinese">Chinese</Menu.Item>
-                <Menu.Item key="Coffee">Coffee</Menu.Item>
+                <Menu.Item key="American" className="menuOption">
+                    American
+                </Menu.Item>
+                <Menu.Item key="Chinese" className="menuOption">
+                    Chinese
+                </Menu.Item>
+                <Menu.Item key="Coffee" className="menuOption">
+                    Coffee
+                </Menu.Item>
                 <Menu.Item
+                    className={styles.seeAllOption}
                     key="modalCuisine"
                     onClick={() => {
                         showModal('cuisine');
@@ -213,6 +273,9 @@ export default function FilterSection(props) {
                         <Row>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'American' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('American');
@@ -222,6 +285,9 @@ export default function FilterSection(props) {
                             </Col>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'Chinese' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('Chinese');
@@ -231,6 +297,9 @@ export default function FilterSection(props) {
                             </Col>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'Coffee' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('Coffee');
@@ -243,6 +312,9 @@ export default function FilterSection(props) {
                         <Row>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'Desserts' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('Desserts');
@@ -252,6 +324,9 @@ export default function FilterSection(props) {
                             </Col>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'Seafood' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('Seafood');
@@ -261,6 +336,9 @@ export default function FilterSection(props) {
                             </Col>
                             <Col span={8} align="center">
                                 <Button
+                                    className={
+                                        cuisineFilter == 'Taiwanese' ? 'modalBtnSelected' : null
+                                    }
                                     type="text"
                                     onClick={() => {
                                         modalsetCuisine('Taiwanese');

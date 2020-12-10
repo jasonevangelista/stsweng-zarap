@@ -37,10 +37,18 @@
 }
 
 .modal button {
-  margin-bottom: 5%;
-  font-size: medium;
+    margin-bottom: 5%;
+    font-size: medium;
 }
 
 .dividerFilter {
     background-color: #b8b1b1;
+}
+
+.seeAllOption {
+    font-size: 1em;
+}
+
+.headerFilterSort {
+    margin-right: 0.5em;
 }
