@@ -8,6 +8,16 @@ import { connectToDatabase } from '../../util/mongodb';
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
+var errorMessage = (
+    
+    <div className={styles.errorContainer}>
+        <h2>No restaurants were found</h2>
+        <div className={styles.searchTipContainer}>
+            <h3>Suggestion: Check the spelling of your keyword</h3>
+        </div>
+    </div>
+);
+
 export default function SearchFilter({ results }) {
     const firstTimeRender = useRef(true);
     const router = useRouter();
@@ -61,7 +71,7 @@ export default function SearchFilter({ results }) {
         getSearchResults(value, sort, filter).then((result) => {
             var restoList = result.data;
             if (restoList.length == 0) {
-                setResultStatus('No results found');
+                setResultStatus(errorMessage);
             } else {
                 setResultStatus('');
             }
@@ -125,9 +135,9 @@ function generateRestaurantCards(restaurants) {
 // return default result status based on restaurant result length
 function getDefaultResultStatus(restaurants) {
     if (restaurants.length == 0) {
-        return 'No results found';
+        return errorMessage;
     }
-    return '';
+    return null;
 }
 
 export async function getServerSideProps(context) {
