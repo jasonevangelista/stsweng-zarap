@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography, Empty, Space } from "antd";
+import React from 'react';
+import { Typography, Empty, Space } from 'antd';
 // import Card from "./ReviewCard";
 
 const { Title } = Typography;
