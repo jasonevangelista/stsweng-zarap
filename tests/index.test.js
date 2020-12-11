@@ -276,13 +276,3 @@ describe('Gallery Component', () => {
         wrapper.unmount();
     });
 });
-
-/** @test {GalleryItem Component} */
-describe('GalleryItem Component', () => {
-    it('should render without crashing', () => {
-        const wrapper = mount(<Gallery />);
-        // Expect a Header
-        expect(wrapper.find(GalleryItem)).toHaveLength(7);
-        wrapper.unmount();
-    });
-});
