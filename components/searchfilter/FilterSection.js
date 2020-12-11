@@ -13,19 +13,21 @@ export default function FilterSection(props) {
     const [locationFilter, setLocationFilter] = useState(null);
     const [cuisineFilter, setCuisineFilter] = useState(null);
 
+    var selectedCuisineFromModal;
+    var selectedLocationFromModal;
     if (
         locationFilter &&
         locationFilter != 'Manila' &&
         locationFilter != 'Taguig' &&
         locationFilter != 'San Juan'
     ) {
-        var selectedLocationFromModal = (
+        selectedLocationFromModal = (
             <Menu.Item key={locationFilter} className="menuOption">
                 {locationFilter} City
             </Menu.Item>
         );
     } else {
-        var selectedLocationFromModal = null;
+        selectedLocationFromModal = null;
     }
 
     if (
@@ -34,13 +36,13 @@ export default function FilterSection(props) {
         cuisineFilter != 'Chinese' &&
         cuisineFilter != 'Coffee'
     ) {
-        var selectedCuisineFromModal = (
+        selectedCuisineFromModal = (
             <Menu.Item key={cuisineFilter} className="menuOption">
                 {cuisineFilter}
             </Menu.Item>
         );
     } else {
-        var selectedCuisineFromModal = null;
+        selectedCuisineFromModal = null;
     }
 
     useEffect(() => {
