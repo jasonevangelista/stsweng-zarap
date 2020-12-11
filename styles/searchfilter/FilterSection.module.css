@@ -16,9 +16,9 @@
     font-weight: bolder;
 }
 
-.filterSection button {
+/* .filterSection button {
     margin-top: 2%;
-}
+} */
 
 .filterSection h3 {
     margin: 0px;
@@ -46,9 +46,23 @@
 }
 
 .seeAllOption {
-    font-size: 1em;
+    font-size: 0.8em;
 }
 
 .headerFilterSort {
-    margin-right: 0.5em;
+    /* margin-right: 1.3em; */
+    display: table-cell;
+    width:100%;
+}
+
+.spanContainer{
+    text-align: right;
+    width: 100%;
+    display: table-cell;
+}
+
+.labelContainer{
+    display: table;
+    width: 100%;
+    margin-bottom: 0.5em;
 }

@@ -13,6 +13,36 @@ export default function FilterSection(props) {
     const [locationFilter, setLocationFilter] = useState(null);
     const [cuisineFilter, setCuisineFilter] = useState(null);
 
+    if (
+        locationFilter &&
+        locationFilter != 'Manila' &&
+        locationFilter != 'Taguig' &&
+        locationFilter != 'San Juan'
+    ) {
+        var selectedLocationFromModal = (
+            <Menu.Item key={locationFilter} className="menuOption">
+                {locationFilter} City
+            </Menu.Item>
+        );
+    } else {
+        var selectedLocationFromModal = null;
+    }
+
+    if (
+        cuisineFilter &&
+        cuisineFilter != 'American' &&
+        cuisineFilter != 'Chinese' &&
+        cuisineFilter != 'Coffee'
+    ) {
+        var selectedCuisineFromModal = (
+            <Menu.Item key={cuisineFilter} className="menuOption">
+                {cuisineFilter}
+            </Menu.Item>
+        );
+    } else {
+        var selectedCuisineFromModal = null;
+    }
+
     useEffect(() => {
         clearFilters();
         setSortOption(null);
@@ -26,9 +56,7 @@ export default function FilterSection(props) {
         if (currSortOption != sortOption) {
             setSortOption(currSortOption);
             props.setSortOption(currSortOption);
-            console.log('new sort option');
         } else {
-            console.log('old sort option');
             setSortOption(null);
             props.setSortOption(null);
         }
@@ -102,14 +130,16 @@ export default function FilterSection(props) {
     return (
         <Card className={styles.filterSection}>
             <Row>
-                <div className={styles.headerFilterSort}>
-                    <h2>Sort by</h2>
+                <div className={styles.labelContainer}>
+                    <span className={styles.headerFilterSort}>
+                        <h2>Sort by</h2>
+                    </span>
+                    <span className={styles.spanContainer}>
+                        <Button onClick={clearSort} className={styles.clearButton}>
+                            Clear Sort
+                        </Button>
+                    </span>
                 </div>
-                <span>
-                    <Button onClick={clearSort} className={styles.clearButton}>
-                        Clear Sort
-                    </Button>
-                </span>
             </Row>
 
             <Menu
@@ -131,14 +161,16 @@ export default function FilterSection(props) {
             <Divider className={styles.dividerFilter} />
 
             <Row>
-                <div className={styles.headerFilterSort}>
-                    <h2>Filters</h2>
+                <div className={styles.labelContainer}>
+                    <span className={styles.headerFilterSort}>
+                        <h2>Filters</h2>
+                    </span>
+                    <span className={styles.spanContainer}>
+                        <Button onClick={clearFilters} className={styles.clearButton}>
+                            Clear Filters
+                        </Button>
+                    </span>
                 </div>
-                <span>
-                    <Button onClick={clearFilters} className={styles.clearButton}>
-                        Clear Filters
-                    </Button>
-                </span>
             </Row>
 
             <h3 id="locationMenuTitle">Location</h3>
@@ -149,6 +181,7 @@ export default function FilterSection(props) {
                     }
                 }}
                 selectedKeys={locationFilter}>
+                {selectedLocationFromModal}
                 <Menu.Item key="Taguig" className="menuOption">
                     Taguig City
                 </Menu.Item>
@@ -241,6 +274,7 @@ export default function FilterSection(props) {
                     }
                 }}
                 selectedKeys={cuisineFilter}>
+                {selectedCuisineFromModal}
                 <Menu.Item key="American" className="menuOption">
                     American
                 </Menu.Item>

@@ -25,3 +25,7 @@ body {
 .ant-btn.modalBtnSelected {
     color: #1890ff;
 }
+
+.ant-menu{
+    border-right-color: white;
+}
