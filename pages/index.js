@@ -4,6 +4,7 @@ import styles from "../styles/landingpage.module.css";
 import styled from "styled-components";
 import { Input, Row, Col, Carousel } from "antd";
 import CarouselItem from "../components/CarouselItem";
+import { useState, useEffect } from "react";
 
 const Search = Input;
 import { useRouter } from 'next/router';
@@ -51,8 +52,11 @@ const restoPicker = (results) => {
 }
 
 export default function Home({ results }) {
-  let cards = restoPicker(results); 
   const router = useRouter();
+  const [cards, setCards] = useState([]);
+  useEffect(() => {
+    setCards(restoPicker(results));
+  }, []);
 
   return (
     <div className={styles.container}>
