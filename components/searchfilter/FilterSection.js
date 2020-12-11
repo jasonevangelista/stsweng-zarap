@@ -1,68 +1,393 @@
 import styles from '../../styles/searchfilter/FilterSection.module.css';
-import { Card, Divider, Menu, Button, Modal } from 'antd';
-import SubMenu from 'antd/lib/menu/SubMenu';
+import { Card, Menu, Button, Modal, Row, Col, Divider } from 'antd';
 
 import React, { useState, useEffect, useRef } from 'react';
 
 export default function FilterSection(props) {
-  const firstTimeRender = useRef(true);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const [sortOption, setSortOption] = useState(null);
+    const firstTimeRender = useRef(true);
 
-  useEffect(() => {
-    clearFilters();
-  }, [props.searchItem]);
+    const [locationModalVisible, setLocationModalVisible] = useState(false);
+    const [cuisineModalVisible, setCuisineModalVisible] = useState(false);
+
+    const [sortOption, setSortOption] = useState(null);
+    const [locationFilter, setLocationFilter] = useState(null);
+    const [cuisineFilter, setCuisineFilter] = useState(null);
+
+    var selectedCuisineFromModal;
+    var selectedLocationFromModal;
+    if (
+        locationFilter &&
+        locationFilter != 'Manila' &&
+        locationFilter != 'Taguig' &&
+        locationFilter != 'San Juan'
+    ) {
+        selectedLocationFromModal = (
+            <Menu.Item key={locationFilter} className="menuOption">
+                {locationFilter} City
+            </Menu.Item>
+        );
+    } else {
+        selectedLocationFromModal = null;
+    }
+
+    if (
+        cuisineFilter &&
+        cuisineFilter != 'American' &&
+        cuisineFilter != 'Chinese' &&
+        cuisineFilter != 'Coffee'
+    ) {
+        selectedCuisineFromModal = (
+            <Menu.Item key={cuisineFilter} className="menuOption">
+                {cuisineFilter}
+            </Menu.Item>
+        );
+    } else {
+        selectedCuisineFromModal = null;
+    }
+
+    useEffect(() => {
+        clearFilters();
+        setSortOption(null);
+    }, [props.searchItem]);
 
   useEffect(() => {
     firstTimeRender.current = false;
   }, []);
 
-  function setSort(value) {
-    setSortOption(value);
-    props.setSortOption(value);
-  }
+    const setSort = (currSortOption) => {
+        if (currSortOption != sortOption) {
+            setSortOption(currSortOption);
+            props.setSortOption(currSortOption);
+        } else {
+            setSortOption(null);
+            props.setSortOption(null);
+        }
+    };
 
-  const clearFilters = () => {
-    setSortOption(null);
-    props.clearFilters();
-  };
+    function setLocation(location) {
+        if (location != locationFilter) {
+            setLocationFilter(location);
+            props.setLocationFilter(location);
+        } else {
+            setLocationFilter(null);
+            props.setLocationFilter(null);
+        }
+    }
 
-  // modal methods
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
+    function setCuisine(cuisine) {
+        if (cuisine != cuisineFilter) {
+            setCuisineFilter(cuisine);
+            props.setCuisineFilter(cuisine);
+        } else {
+            setCuisineFilter(null);
+            props.setCuisineFilter(null);
+        }
+    }
 
-  const handleOk = () => {
-    setIsModalVisible(false);
-  };
+    const clearFilters = () => {
+        setLocationFilter(null);
+        setCuisineFilter(null);
+        props.clearFilters();
+    };
+    const clearSort = () => {
+        setSortOption(null);
+        props.setSortOption(null);
+    };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+    // modal methods
+    const showModal = (modalType) => {
+        if (modalType == 'location') {
+            setLocationModalVisible(true);
+        } else if (modalType == 'cuisine') {
+            setCuisineModalVisible(true);
+        }
+    };
 
-  return (
-    <Card className={styles.filterSection}>
-      <h2>Filters</h2>
-      <Button onClick={clearFilters}>Clear Filters</Button>
-      <h3 id="sortMenuTitle">Sort by</h3>
-      <Menu
-        onSelect={(selectedKeys) => {
-          setSort(selectedKeys.key);
-        }}
-        selectedKeys={sortOption}>
-        <Menu.Item key="rating-hl">Rating - high to low</Menu.Item>
-        <Menu.Item key="cost-hl">Cost - high to low</Menu.Item>
-        <Menu.Item key="cost-lh">Cost - low to high</Menu.Item>
-      </Menu>
+    const handleOk = (modalType) => {
+        if (modalType == 'location') {
+            setLocationModalVisible(false);
+        } else if (modalType == 'cuisine') {
+            setCuisineModalVisible(false);
+        }
+    };
 
-      {/* <h3 id="locationMenuTitle">Location</h3>
+    const handleCancel = (modalType) => {
+        if (modalType == 'location') {
+            setLocationModalVisible(false);
+        } else if (modalType == 'cuisine') {
+            setCuisineModalVisible(false);
+        }
+    };
+
+    const modalsetLocation = (location) => {
+        handleOk('location');
+        setLocation(location);
+    };
+
+    const modalsetCuisine = (cuisine) => {
+        handleOk('cuisine');
+        setCuisine(cuisine);
+    };
+
+    return (
+        <Card className={styles.filterSection}>
+            <Row>
+                <div className={styles.labelContainer}>
+                    <span className={styles.headerFilterSort}>
+                        <h2>Sort by</h2>
+                    </span>
+                    <span className={styles.spanContainer}>
+                        <Button onClick={clearSort} className={styles.clearButton}>
+                            Clear Sort
+                        </Button>
+                    </span>
+                </div>
+            </Row>
+
             <Menu
-                // onSelect={(selectedKeys) => {
-                //     setSort(selectedKeys.key);
-                // }}
-                // selectedKeys={sortOption}
-            >
-                <Menu.Item key="Caloocan">Caloocan City</Menu.Item>
+                onClick={(selectedKeys) => {
+                    setSort(selectedKeys.key);
+                }}
+                selectedKeys={sortOption}>
+                <Menu.Item key="rating-hl" className="menuOption">
+                    Rating - high to low
+                </Menu.Item>
+                <Menu.Item key="cost-hl" className="menuOption">
+                    Cost - high to low
+                </Menu.Item>
+                <Menu.Item key="cost-lh" className="menuOption">
+                    Cost - low to high
+                </Menu.Item>
+            </Menu>
+
+            <Divider className={styles.dividerFilter} />
+
+            <Row>
+                <div className={styles.labelContainer}>
+                    <span className={styles.headerFilterSort}>
+                        <h2>Filters</h2>
+                    </span>
+                    <span className={styles.spanContainer}>
+                        <Button onClick={clearFilters} className={styles.clearButton}>
+                            Clear Filters
+                        </Button>
+                    </span>
+                </div>
+            </Row>
+
+            <h3 id="locationMenuTitle">Location</h3>
+            <Menu
+                onClick={(selectedKeys) => {
+                    if (selectedKeys.key != 'modalLocation') {
+                        setLocation(selectedKeys.key);
+                    }
+                }}
+                selectedKeys={locationFilter}>
+                {selectedLocationFromModal}
+                <Menu.Item key="Taguig" className="menuOption">
+                    Taguig City
+                </Menu.Item>
+                <Menu.Item key="San Juan" className="menuOption">
+                    San Juan City
+                </Menu.Item>
+                <Menu.Item key="Manila" className="menuOption">
+                    Manila
+                </Menu.Item>
+                <Menu.Item
+                    className={styles.seeAllOption}
+                    key="modalLocation"
+                    onClick={() => {
+                        showModal('location');
+                    }}>
+                    See all locations
+                </Menu.Item>
+
+                <Modal
+                    visible={locationModalVisible}
+                    onCancel={() => {
+                        handleCancel('location');
+                    }}
+                    footer={null}
+                    className={styles.modal}>
+                    <Row align="center" className={styles.modalHeader}>
+                        All Locations
+                    </Row>
+                    <Row>
+                        <Col span={8} align="center">
+                            <Button
+                                className={locationFilter == 'Taguig' ? 'modalBtnSelected' : null}
+                                type="text"
+                                onClick={() => {
+                                    modalsetLocation('Taguig');
+                                }}>
+                                Taguig City
+                            </Button>
+                        </Col>
+                        <Col span={8} align="center">
+                            <Button
+                                className={locationFilter == 'Manila' ? 'modalBtnSelected' : null}
+                                type="text"
+                                onClick={() => {
+                                    modalsetLocation('Manila');
+                                }}>
+                                Manila City
+                            </Button>
+                        </Col>
+                        <Col span={8} align="center">
+                            <Button
+                                className={locationFilter == 'San Juan' ? 'modalBtnSelected' : null}
+                                type="text"
+                                onClick={() => {
+                                    modalsetLocation('San Juan');
+                                }}>
+                                San Juan City
+                            </Button>
+                        </Col>
+                    </Row>
+                    {/* <Divider /> */}
+                    <Row>
+                        <Col span={8} align="center">
+                            <Button
+                                className={locationFilter == 'Pasay' ? 'modalBtnSelected' : null}
+                                type="text"
+                                onClick={() => {
+                                    modalsetLocation('Pasay');
+                                }}>
+                                Pasay City
+                            </Button>
+                        </Col>
+                        {/* <Col span={8}>
+                            <p>SAMPLE_CITY</p>
+                        </Col>
+                        <Col span={8}>
+                            <p>SAMPLE_CITY</p>
+                        </Col> */}
+                    </Row>
+                </Modal>
+            </Menu>
+
+            <Divider className={styles.dividerFilter} />
+
+            <h3 id="CuisineMenuTitle">Cuisine</h3>
+            <Menu
+                onClick={(selectedKeys) => {
+                    if (selectedKeys.key != 'modalCuisine') {
+                        setCuisine(selectedKeys.key);
+                    }
+                }}
+                selectedKeys={cuisineFilter}>
+                {selectedCuisineFromModal}
+                <Menu.Item key="American" className="menuOption">
+                    American
+                </Menu.Item>
+                <Menu.Item key="Chinese" className="menuOption">
+                    Chinese
+                </Menu.Item>
+                <Menu.Item key="Coffee" className="menuOption">
+                    Coffee
+                </Menu.Item>
+                <Menu.Item
+                    className={styles.seeAllOption}
+                    key="modalCuisine"
+                    onClick={() => {
+                        showModal('cuisine');
+                    }}>
+                    See all cuisines
+                </Menu.Item>
+
+                <Modal
+                    visible={cuisineModalVisible}
+                    onCancel={() => {
+                        handleCancel('cuisine');
+                    }}
+                    footer={null}
+                    className={styles.modal}>
+                    <div>
+                        <Row align="center" className={styles.modalHeader}>
+                            All Cuisines
+                        </Row>
+                        <Row>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'American' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('American');
+                                    }}>
+                                    American
+                                </Button>
+                            </Col>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'Chinese' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('Chinese');
+                                    }}>
+                                    Chinese
+                                </Button>
+                            </Col>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'Coffee' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('Coffee');
+                                    }}>
+                                    Coffee
+                                </Button>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'Desserts' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('Desserts');
+                                    }}>
+                                    Desserts
+                                </Button>
+                            </Col>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'Seafood' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('Seafood');
+                                    }}>
+                                    Seafood
+                                </Button>
+                            </Col>
+                            <Col span={8} align="center">
+                                <Button
+                                    className={
+                                        cuisineFilter == 'Taiwanese' ? 'modalBtnSelected' : null
+                                    }
+                                    type="text"
+                                    onClick={() => {
+                                        modalsetCuisine('Taiwanese');
+                                    }}>
+                                    Taiwanese
+                                </Button>
+                            </Col>
+                        </Row>
+                    </div>
+                </Modal>
+            </Menu>
+
+            {/* <Menu.Item key="Caloocan">Caloocan City</Menu.Item>
                 <Menu.Item key="LasPinas">Las Pinas City</Menu.Item>
                 <Menu.Item key="Marikina">Marikina City</Menu.Item>
                 <Menu.Item key="Manila">Manila</Menu.Item>
@@ -82,9 +407,9 @@ export default function FilterSection(props) {
                             <p>Location 1</p> 
                             <p>Some contents...</p>
                             <p>Some contents...</p>
-                    </Modal>
-            </Menu>
-            <h3 id="cuisineMenuTitle">Cuisine</h3>
+                    </Modal> */}
+
+            {/* <h3 id="cuisineMenuTitle">Cuisine</h3>
             <Menu
                 // onSelect={(selectedKeys) => {
                 //     setSort(selectedKeys.key);
