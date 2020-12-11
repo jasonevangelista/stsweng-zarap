@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography, Empty, Space } from 'antd';
+import React from "react";
+import { Typography, Empty, Space } from "antd";
 // import Card from "./ReviewCard";
 
 const { Title } = Typography;
@@ -32,7 +32,7 @@ export const countReviews = (reviews) => {
 export const checkReviews = (arr) => {
   if (arr.length === 1) {
     if (arr[0] === null) {
-      return <Empty description="There are no reviews for this restaurant." />;
+      return <Empty description="There are no reviews for this resturant." />;
     }
   }
 };

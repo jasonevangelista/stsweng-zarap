@@ -1,6 +1,6 @@
-import React from 'react';
-import { Image } from 'antd';
-import styles from '../../styles/restoprofile/gallery.module.css';
+import React from "react";
+import { Image } from "antd";
+import styles from "../../styles/restoprofile/gallery.module.css";
 
 export default function GalleryItem({ src }) {
   return (
