@@ -7,34 +7,41 @@ import Link from 'next/link';
 export default function SearchRestoCard({ resto }) {
   const router = useRouter();
 
-  var cuisines = FormatDetails(resto.cuisineType, ", ");
-  var contactDetails = FormatDetails(resto.contactDetails, "  |  ");
-  var openHours = FormatDetails(resto.openHours, "  |  ");
+  var cuisines = FormatDetails(resto.cuisineType, ', ');
+  var contactDetails = FormatDetails(resto.contactDetails, '  |  ');
+  var openHours = FormatDetails(resto.openHours, '  |  ');
   var rating = FormatRating(resto.averageRating, resto.reviews);
   var restoProfileLink = '/restaurant/' + resto._id;
-  
-  return(
+
+  return (
     <Link href={restoProfileLink}>
       <Card hoverable className={styles.restoCard}>
-
         <Row>
           <Col span={8} className={styles.imageSection}>
             <div className={styles.cardImage}>
-            {/* <Image className={styles.imagePlaceholder} height={150} placeholder={true} src="error"/> */}
+              <Image
+                className={styles.imagePlaceholder}
+                preview={false}
+                width="100%"
+                placeholder={true}
+                src={resto.coverPhotoURL}
+              />
             </div>
           </Col>
           <Col span={16} className={styles.restoCardHeader}>
             <h1 id={styles.restoName}>{resto.name}</h1>
             <div id={styles.stars}>
-            <Rate disabled allowHalf value={resto.averageRating}/>
-            <span className="ant-rate-text">{rating}</span>
+              <Rate disabled allowHalf value={resto.averageRating} />
+              <span className="ant-rate-text">{rating}</span>
             </div>
-            <p><b>{resto.city}</b></p>
+            <p>
+              <b>{resto.city}</b>
+            </p>
             <p>{resto.fullAddress}</p>
           </Col>
         </Row>
 
-        <Divider className={styles.dividerResto}/>
+        <Divider className={styles.dividerResto} />
 
         <Row>
           <Col span={8} className={styles.detailHeader}>
@@ -50,45 +57,43 @@ export default function SearchRestoCard({ resto }) {
             {contactDetails}
           </Col>
         </Row>
-        
       </Card>
     </Link>
-  )
-
+  );
 }
 
 export function FormatDetails(details, symbol) {
-    var detailsString = '';
+  var detailsString = '';
 
-    if (details.length > 1) {
-        const list = [];
-        for (var i = 0; i < details.length; i++) {
-            detailsString += details[i];
-            if (i + 1 < details.length) detailsString += symbol;
-        }
-    } else {
-        detailsString = details[0];
+  if (details.length > 1) {
+    const list = [];
+    for (var i = 0; i < details.length; i++) {
+      detailsString += details[i];
+      if (i + 1 < details.length) detailsString += symbol;
     }
+  } else {
+    detailsString = details[0];
+  }
 
-    return <p>{detailsString}</p>;
+  return <p>{detailsString}</p>;
 }
 
-function FormatRating(rating, reviews){
-  var ratingString = "";
-  ratingString = Math.floor(rating * 2 ) / 2;
+function FormatRating(rating, reviews) {
+  var ratingString = '';
+  ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 
-    if (reviews.length > 1) {
-        return (
-            <p>
-                {ratingString} ({reviews.length} reviews)
-            </p>
-        );
-    } else {
-        return (
-            <p>
-                {ratingString} ({reviews.length} review)
-            </p>
-        );
-    }
+  if (reviews.length > 1) {
+    return (
+      <p>
+        {ratingString} ({reviews.length} reviews)
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        {ratingString} ({reviews.length} review)
+      </p>
+    );
+  }
 }

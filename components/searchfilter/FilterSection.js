@@ -50,9 +50,9 @@ export default function FilterSection(props) {
         setSortOption(null);
     }, [props.searchItem]);
 
-    useEffect(() => {
-        firstTimeRender.current = false;
-    }, []);
+  useEffect(() => {
+    firstTimeRender.current = false;
+  }, []);
 
     const setSort = (currSortOption) => {
         if (currSortOption != sortOption) {
@@ -423,6 +423,6 @@ export default function FilterSection(props) {
                 <Menu.Item key="American">American</Menu.Item>
                 <Menu.Item key="American">American</Menu.Item>
             </Menu> */}
-        </Card>
-    );
+    </Card>
+  );
 }

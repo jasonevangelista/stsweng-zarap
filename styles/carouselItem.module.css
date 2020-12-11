@@ -1,6 +1,6 @@
 .card {
     border-radius: 10px;
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("../public/fried_rice.jpg");
+    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("https://via.placeholder.com/500/A9A9A9/A9A9A9");
     
     height: 60vh;
     background-size: cover;

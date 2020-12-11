@@ -1,9 +1,9 @@
 import { connectToDatabase } from '../../../util/mongodb';
 
 export default async (req, res) => {
-    const {
-        query: { id, sort, filter }
-    } = req;
+  const {
+    query: { id, sort, filter },
+  } = req;
 
     var filterQuery = JSON.parse(filter);
     // console.log('=== QUERIES ===');
@@ -18,9 +18,9 @@ export default async (req, res) => {
     // } else {
     //     console.log('NO FILTER OPTION');
     // }
-
-    const { db } = await connectToDatabase();
-    var restaurants;
+  
+  const { db } = await connectToDatabase();
+  var restaurants;
 
     // no sort and filter
     if (sort == 'none' && filterQuery.location == null && filterQuery.cuisine == null) {
