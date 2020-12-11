@@ -37,6 +37,7 @@ module.exports = {
         ],
         'react/prop-types': 'off',
         'no-unused-vars': 'warn',
-        'no-empty-pattern': 'warn'
+        'no-empty-pattern': 'warn',
+        'indent': [2, 2]
     }
 };
