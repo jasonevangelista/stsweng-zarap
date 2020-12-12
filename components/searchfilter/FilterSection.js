@@ -19,7 +19,8 @@ export default function FilterSection(props) {
         locationFilter &&
         locationFilter != 'Manila' &&
         locationFilter != 'Taguig' &&
-        locationFilter != 'San Juan'
+        locationFilter != 'San Juan' &&
+        locationFilter != 'Makati'
     ) {
         selectedLocationFromModal = (
             <Menu.Item key={locationFilter} className="menuOption">
@@ -191,7 +192,10 @@ export default function FilterSection(props) {
                     San Juan City
                 </Menu.Item>
                 <Menu.Item key="Manila" className="menuOption">
-                    Manila
+                    Manila City
+                </Menu.Item>
+                <Menu.Item key="Makati" className="menuOption">
+                    Makati City
                 </Menu.Item>
                 <Menu.Item
                     className={styles.seeAllOption}
@@ -246,6 +250,16 @@ export default function FilterSection(props) {
                     </Row>
                     {/* <Divider /> */}
                     <Row>
+                        <Col span={8} align="center">
+                            <Button
+                                className={locationFilter == 'Makati' ? 'modalBtnSelected' : null}
+                                type="text"
+                                onClick={() => {
+                                    modalsetLocation('Makati');
+                                }}>
+                                Makati City
+                            </Button>
+                        </Col>
                         <Col span={8} align="center">
                             <Button
                                 className={locationFilter == 'Pasay' ? 'modalBtnSelected' : null}
