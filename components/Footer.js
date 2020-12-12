@@ -9,15 +9,15 @@ export default function Footer() {
                 Contact us through
                 {'   '}
                 <a
-                    href="https://www.messenger.com/t/neil.lua"
+                    href="https://www.messenger.com/"
                     target="_blank"
                     rel="noreferrer noopener">
                     <FacebookFilled />
                 </a>
                 {'   '}
-                Neil Matthew Lua:
+                TeamPura Tech Solutions Ltd.:
                 {'   '}
-                <span style={{ textDecoration: 'underline' }}>neil_matthew_lua@dlsu.edu.ph</span>
+                <span style={{ textDecoration: 'underline' }}>zarap@gmail.com</span>
             </p>
         </footer>
     );
