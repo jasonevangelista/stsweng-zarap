@@ -1,6 +1,6 @@
-import React from "react";
-import { Card, Typography, Rate, Space } from "antd";
-import { HeartOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Card, Typography, Rate, Space } from 'antd';
+import { HeartOutlined } from '@ant-design/icons';
 
 const { Text, Paragraph } = Typography;
 
@@ -18,8 +18,7 @@ export default function ReviewCard() {
             <div>
               <Space>
                 <Paragraph
-                  ellipsis={{ rows: 4, expandable: true, symbol: "more" }}
-                >
+                  ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
                   Situation admitting promotion at or to perceived be. Mr
                   acuteness we as estimable enjoyment up. An held late as felt
                   know. Learn do allow solid to grave. Middleton suspicion age
@@ -43,13 +42,12 @@ export default function ReviewCard() {
 
           <div
             style={{
-              display: "flex",
-              textAlign: "center",
-              flexDirection: "column",
-              width: "75px",
-            }}
-          >
-            <HeartOutlined style={{ fontSize: "1.5rem" }} />
+              display: 'flex',
+              textAlign: 'center',
+              flexDirection: 'column',
+              width: '75px',
+            }}>
+            <HeartOutlined style={{ fontSize: '1.5rem' }} />
             <Text>420 Likes</Text>
           </div>
         </Space>

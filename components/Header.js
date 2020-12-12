@@ -7,20 +7,23 @@ import Link from 'next/link';
 const { Title } = Typography;
 
 export default function Header() {
-    const router = useRouter();
-    var pathname = null;
-    if(router) {
-      pathname = router.pathname;
-    }
+  const router = useRouter();
+  var pathname = null;
+  if (router) {
+    pathname = router.pathname;
+  }
 
-    return (
-        <div className={`${styles.header} ${pathname === '/' ? styles.transparent : ''}`}>
-            <div className={styles.imageContainer}>
-                <Link href="/">
-                    <Image src="/text.png" width={335} height={81} />
-                </Link>
-            </div>
-            {/* <div className={styles.navLinks}>
+  return (
+    <div
+      className={`${styles.header} ${
+        pathname === '/' ? styles.transparent : ''
+      }`}>
+      <div className={styles.imageContainer}>
+        <Link href="/">
+          <Image src="/text.png" width={335} height={81} />
+        </Link>
+      </div>
+      {/* <div className={styles.navLinks}>
           <div>
             <Title level={4} className={`${pathname === '/' ? styles.white :''}`}>Login</Title>
           </div>
@@ -28,6 +31,6 @@ export default function Header() {
             <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>Sign Up</Title>
           </div>
         </div> */}
-        </div>
-    );
+    </div>
+  );
 }

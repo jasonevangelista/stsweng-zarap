@@ -9,6 +9,16 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
+var errorMessage = (
+    
+    <div className={styles.errorContainer}>
+        <h2>No restaurants were found</h2>
+        <div className={styles.searchTipContainer}>
+            <h3>Suggestion: Check the spelling of your keyword</h3>
+        </div>
+    </div>
+);
+
 export default function SearchFilter({ results }) {
     const firstTimeRender = useRef(true);
     const router = useRouter();
@@ -16,7 +26,11 @@ export default function SearchFilter({ results }) {
 
     const [restaurants, setRestaurants] = useState(results);
     const [resultStatus, setResultStatus] = useState(getDefaultResultStatus(restaurants));
-    const [sortOption, setSortOption] = useState('none');
+
+    const [sortOption, setSortOption] = useState(null);
+    const [filterOption, setFilterOption] = useState({ location: null, cuisine: null });
+    const [locationFilter, setLocationFilter] = useState(null);
+    const [cuisineFilter, setCuisineFilter] = useState(null);
 
     const cards = generateRestaurantCards(restaurants);
 
@@ -26,16 +40,39 @@ export default function SearchFilter({ results }) {
 
     useEffect(() => {
         if (!firstTimeRender.current) {
-            // console.log("SORT OPTION SET: " + sortOption);
-            searchResults(searchitem, sortOption);
+            window.scrollTo(0, 0);
+            setSortOption(null);
+        }
+    }, [searchitem]);
+
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            searchResults(searchitem, sortOption, filterOption);
+            window.scrollTo(0, 0);
+        }
+    }, [filterOption]);
+
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            searchResults(searchitem, sortOption, filterOption);
         }
     }, [sortOption]);
 
-    function searchResults(value, sort = 'none', filter = 'none') {
+    useEffect(() => {
+        if (!firstTimeRender.current) {
+            var filter = {
+                location: locationFilter,
+                cuisine: cuisineFilter
+            };
+            setFilterOption(filter);
+        }
+    }, [locationFilter, cuisineFilter]);
+
+    function searchResults(value, sort, filter) {
         getSearchResults(value, sort, filter).then((result) => {
             var restoList = result.data;
             if (restoList.length == 0) {
-                setResultStatus('No results found');
+                setResultStatus(errorMessage);
             } else {
                 setResultStatus('');
             }
@@ -47,14 +84,12 @@ export default function SearchFilter({ results }) {
     }
 
     function clearFilters() {
-        setSortOption('none');
+        setLocationFilter(null);
+        setCuisineFilter(null);
     }
 
     return (
         <div className={styles.pageLayout}>
-            <Head>
-                <title>Restaurant Search</title>
-            </Head>
             <h1>Search Results on &quot;{searchitem}&quot;</h1>
 
             <Search
@@ -65,7 +100,7 @@ export default function SearchFilter({ results }) {
                 enterButton={false}
                 onSearch={(value) => {
                     if (value && value.trim()) {
-                        searchResults(value);
+                        searchResults(value, null, { location: null, cuisine: null });
                     }
                 }}
             />
@@ -74,6 +109,8 @@ export default function SearchFilter({ results }) {
                 <Col span={6} className={styles.filterLayout}>
                     <FilterSection
                         setSortOption={setSortOption}
+                        setLocationFilter={setLocationFilter}
+                        setCuisineFilter={setCuisineFilter}
                         clearFilters={clearFilters}
                         searchItem={searchitem}
                     />
@@ -89,44 +126,49 @@ export default function SearchFilter({ results }) {
 
 // generate each restaurant card based on results
 function generateRestaurantCards(restaurants) {
-    var cards = [];
-    for (const [index, value] of restaurants.entries()) {
-        cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
-    }
-    return cards;
+  var cards = [];
+  for (const [index, value] of restaurants.entries()) {
+    cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
+  }
+  return cards;
 }
 
 // return default result status based on restaurant result length
 function getDefaultResultStatus(restaurants) {
     if (restaurants.length == 0) {
-        return 'No results found';
+        return errorMessage;
     }
-    return '';
+    return null;
 }
 
 export async function getServerSideProps(context) {
-    const searchItem = context.params.searchitem;
-    console.log('search item: ' + searchItem);
-    const { db } = await connectToDatabase();
+  const searchItem = context.params.searchitem;
+  console.log('search item: ' + searchItem);
+  const { db } = await connectToDatabase();
 
-    const restaurants = await db
-        .collection('restaurant')
-        .find({ name: { $regex: searchItem, $options: 'i' } })
-        .toArray();
+  const restaurants = await db
+    .collection('restaurant')
+    .find({ name: { $regex: searchItem, $options: 'i' } })
+    .toArray();
 
-    return {
-        props: {
-            results: JSON.parse(JSON.stringify(restaurants))
-        }
-    };
+  return {
+    props: {
+      results: JSON.parse(JSON.stringify(restaurants)),
+    },
+  };
 }
 
 // get restaurants based on search string
-async function getSearchResults(searchString, sort = 'none', filter = 'none') {
+async function getSearchResults(searchString, sort, filter) {
     // var filter = 'none' // {"location":"none", "cuisine":"none"}
+    if (!sort) {
+        sort = 'none';
+    }
     console.log('SEARCH STRING: ' + searchString);
     console.log('SORT OPTION: ' + sort);
-    var queryParams = '?sort=' + sort + '&filter=' + filter;
+    console.log('FILTER OPTION: ' + JSON.stringify(filter));
+    var queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
+
     var searchRoute = 'http://localhost:3000/api/search/' + searchString + queryParams;
     const res = await fetch(searchRoute);
     const data = await res.json();

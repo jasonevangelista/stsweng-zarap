@@ -1,14 +1,14 @@
-import { connectToDatabase } from "../../util/mongodb";
-import { ObjectId } from "mongodb";
-import { Typography, Rate, Divider } from "antd";
-import Head from "next/head";
+import { connectToDatabase } from '../../util/mongodb';
+import { ObjectId } from 'mongodb';
+import { Typography, Rate, Divider } from 'antd';
+import Head from 'next/head';
 
-import BasicInfo from "../../components/restoprofile/BasicInfo";
-import ImageHeader from "../../components/restoprofile/ImageHeader";
-import Reviews from "../../components/restoprofile/Reviews";
-import Gallery from "../../components/restoprofile/Gallery";
+import BasicInfo from '../../components/restoprofile/BasicInfo';
+import ImageHeader from '../../components/restoprofile/ImageHeader';
+import Reviews from '../../components/restoprofile/Reviews';
+import Gallery from '../../components/restoprofile/Gallery';
 
-import styles from "../../styles/restoprofile/restaurantprofile.module.css";
+import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
 const { Title } = Typography;
 
@@ -19,19 +19,19 @@ export default function RestaurantProfile({ resto }) {
         <title>{resto.name}</title>
       </Head>
       <div className={styles.contentContainer}>
-        <ImageHeader imageURL={resto.coverPhotoURL}/>
+        <ImageHeader imageURL={resto.coverPhotoURL} />
 
         <div className={styles.contentBody}>
           <div>
             <Title>{resto.name}</Title>
-             {/* <Rate allowHalf value={resto.averageRating} disabled />
+            {/* <Rate allowHalf value={resto.averageRating} disabled />
              &nbsp;&nbsp;&nbsp;
              {resto.averageRating} */}
           </div>
           <Divider />
           <BasicInfo resto={resto} />
           <Divider />
-          <Gallery imageArray={resto.menuURLs}/>
+          <Gallery imageArray={resto.menuURLs} />
           <Divider />
           <Reviews reviews={resto.reviews} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
@@ -50,14 +50,14 @@ function isHex(str) {
 
 export async function getServerSideProps(context) {
   const restaurantID = context.params.id;
-  console.log("restaurant id: " + restaurantID);
+  console.log('restaurant id: ' + restaurantID);
 
   // check if params is in valid form (24-character hex string)
   if (restaurantID.length != 24 || !isHex(restaurantID)) {
-    console.log("invalid params!!!");
+    console.log('invalid params!!!');
     return {
       redirect: {
-        destination: "/404",
+        destination: '/404',
         permanent: false,
       },
     };
@@ -66,14 +66,14 @@ export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurant = await db
-    .collection("restaurant")
+    .collection('restaurant')
     .find({ _id: ObjectId(restaurantID) })
     .limit(1)
     .toArray();
 
   if (restaurant.length > 0) {
     var results = JSON.parse(JSON.stringify(restaurant));
-    console.log("resto:");
+    console.log('resto:');
     console.log(results[0]);
     return {
       props: {
@@ -86,7 +86,7 @@ export async function getServerSideProps(context) {
   else {
     return {
       redirect: {
-        destination: "/404",
+        destination: '/404',
         permanent: false,
       },
     };
