@@ -169,7 +169,7 @@ async function getSearchResults(searchString, sort, filter) {
     console.log('FILTER OPTION: ' + JSON.stringify(filter));
     var queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
 
-    var searchRoute = 'http://localhost:3000/api/search/' + searchString + queryParams;
+    var searchRoute = '/api/search/' + searchString + queryParams;
     const res = await fetch(searchRoute);
     const data = await res.json();
 
