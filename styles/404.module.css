@@ -1,0 +1,14 @@
+.container {
+  min-height:82.5vh;
+  text-align: center;
+}
+
+.errorHeader {
+  padding-top: 2.5%;
+  margin-bottom: 0%;
+  font-size: 20vh;
+}
+.errorMessage {
+  font-size: 3.5vh;
+  margin: 0;
+}

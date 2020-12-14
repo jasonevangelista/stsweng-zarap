@@ -1,0 +1,68 @@
+.filterSection {
+    background: white;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: #c4c4c4;
+    border-width: 1px;
+    width: 100%;
+    margin: 0;
+    margin-top: 3%;
+}
+
+.filterSection h2 {
+    margin: 0px;
+    /* font-size: large; */
+    /* font; */
+    font-weight: bolder;
+}
+
+/* .filterSection button {
+    margin-top: 2%;
+} */
+
+.filterSection h3 {
+    margin: 0px;
+    margin-top: 5%;
+    font-weight: bolder;
+}
+
+.modal p:hover {
+    cursor: pointer;
+}
+
+.modalHeader {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-bottom: 4%;
+}
+
+.modal button {
+    margin-bottom: 5%;
+    font-size: medium;
+}
+
+.dividerFilter {
+    background-color: #b8b1b1;
+}
+
+.seeAllOption {
+    font-size: 0.8em;
+}
+
+.headerFilterSort {
+    /* margin-right: 1.3em; */
+    display: table-cell;
+    width:100%;
+}
+
+.spanContainer{
+    text-align: right;
+    width: 100%;
+    display: table-cell;
+}
+
+.labelContainer{
+    display: table;
+    width: 100%;
+    margin-bottom: 0.5em;
+}

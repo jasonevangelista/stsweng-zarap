@@ -1,0 +1,24 @@
+.footer {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #6c5656;
+  color: white;
+}
+
+.footer img {
+  margin-left: 0.5rem;
+}
+
+.footer p {
+  margin: 0;
+}
+
+.footer a {
+  color: inherit;
+  text-decoration: none;
+}
