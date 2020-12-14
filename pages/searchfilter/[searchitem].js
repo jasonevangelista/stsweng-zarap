@@ -10,7 +10,7 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 
 var errorMessage = (
-    
+
     <div className={styles.errorContainer}>
         <h2>No restaurants were found</h2>
         <div className={styles.searchTipContainer}>
@@ -90,6 +90,9 @@ export default function SearchFilter({ results }) {
 
     return (
         <div className={styles.pageLayout}>
+            <Head>
+                <title>Restaurant Search</title>
+            </Head>
             <h1>Search Results on &quot;{searchitem}&quot;</h1>
 
             <Search
@@ -126,11 +129,11 @@ export default function SearchFilter({ results }) {
 
 // generate each restaurant card based on results
 function generateRestaurantCards(restaurants) {
-  var cards = [];
-  for (const [index, value] of restaurants.entries()) {
-    cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
-  }
-  return cards;
+    var cards = [];
+    for (const [index, value] of restaurants.entries()) {
+        cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
+    }
+    return cards;
 }
 
 // return default result status based on restaurant result length
@@ -142,20 +145,20 @@ function getDefaultResultStatus(restaurants) {
 }
 
 export async function getServerSideProps(context) {
-  const searchItem = context.params.searchitem;
-  console.log('search item: ' + searchItem);
-  const { db } = await connectToDatabase();
+    const searchItem = context.params.searchitem;
+    console.log('search item: ' + searchItem);
+    const { db } = await connectToDatabase();
 
-  const restaurants = await db
-    .collection('restaurant')
-    .find({ name: { $regex: searchItem, $options: 'i' } })
-    .toArray();
+    const restaurants = await db
+        .collection('restaurant')
+        .find({ name: { $regex: searchItem, $options: 'i' } })
+        .toArray();
 
-  return {
-    props: {
-      results: JSON.parse(JSON.stringify(restaurants)),
-    },
-  };
+    return {
+        props: {
+            results: JSON.parse(JSON.stringify(restaurants)),
+        },
+    };
 }
 
 // get restaurants based on search string
