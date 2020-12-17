@@ -84,22 +84,22 @@ export default function Home({ results }) {
               </Col>
             </Row>
           </h2>
-          <Row>
+          {/* <Row>
             <Col span={4} offset={11} className={styles.scrollContainer}>
               <div className={styles.chevron}></div>
               <div className={styles.chevron}></div>
               <div className={styles.chevron}></div>
-              {/* <br></br>
-                <span className={styles.text}>Find Out More</span> */}
+               <br></br>
+                <span className={styles.text}>Find Out More</span> }
             </Col>
-          </Row>
+          </Row> */}
         </div>
       </div>
 
       <div className={styles.bottomBG}>
         <h2 className={styles.landingBottomTitle}> Recommendations </h2>
         <div className={styles.carouselTop}>
-          <Carousel autoplay dots={false}>
+          <Carousel autoplay>
             <div>
               <CarouselItem restoSet={cards.slice(0, 3)} />
             </div>

@@ -2,7 +2,7 @@
 
 .landingTitle {
     font-family: Permanent Marker;
-    font-size: 5vw;
+    font-size: 2vw;
     text-align: center;
     color: white;
     position: absolute;
@@ -32,7 +32,8 @@
 
 .topContainer {
     position: relative;
-    height: calc(100vh - 80px);
+    /* height: calc(100vh - 80px); */
+    height: 18vh;
 }
 
 .topBG {
@@ -40,7 +41,7 @@
     background: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("../public/landing_top_bg.jpg");
   
     /* Full height */
-    height: 100vh;
+    height: 30vh;
     width: 100%;
 
     /* Center and scale the image nicely */
@@ -151,14 +152,14 @@
     background-color: rgba(226, 55, 55, 1);
   
     /* Full height */
-    height: 90vh;
+    height: 60vh;
 
     position: relative;
 }
 
 .landingBottomTitle {
     font-family: Permanent Marker;
-    font-size: 5vw;
+    font-size: 3vw;
     text-align: center;
     color: white;
     position: absolute;
@@ -168,5 +169,5 @@
 }
 
 .carouselTop{
-    padding-top: 12%;
+    padding-top: 8%;
 }

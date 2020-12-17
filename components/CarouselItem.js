@@ -3,30 +3,32 @@ import { Card, Row, Col, Rate } from 'antd';
 import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
+// import { Card } from '@material-ui/core';
 
-// function FormatRating(rating, reviews){
-//     var ratingString = "";
-//     ratingString = Math.floor(rating * 2 ) / 2;
-//     ratingString = ratingString.toFixed(1);
+function FormatRating(rating, reviews){
+    var ratingString = "";
+    ratingString = Math.floor(rating * 2 ) / 2;
+    ratingString = ratingString.toFixed(1);
 
-//     if(reviews != null){
-//         if (reviews.length > 1){
-//             return (
-//                 <p>{ratingString} ({reviews.length} reviews)</p>
-//             )
-//         }
-//         else{
-//             return (
-//                 <p>{ratingString} ({reviews.length} review)</p>
-//             )
-//         }
-//     }
-//     else {
-//         return (
-//             <p>{ratingString} (0 review)</p>
-//         )
-//     }
-// }
+    if(reviews != null){
+        if (reviews.length > 1){
+            return (
+                <p>{ratingString} ({reviews.length} reviews)</p>
+            )
+        }
+        else{
+            return (
+                <p>{ratingString} ({reviews.length} review)</p>
+            )
+        }
+    }
+    else {
+        return (
+            <p>{ratingString} (0 review)</p>
+        )
+    }
+}
+
 export default function carouselItem({ restoSet }) {
   //set up icons for the restaurants
   restoSet.map((card, index) => {
@@ -95,10 +97,10 @@ export default function carouselItem({ restoSet }) {
                     <p className={styles.cardContent}>&nbsp;{card.city}</p>
                   </Col>
                 </Row>
-                {/* <div id={styles.stars}>
+                <div id={styles.stars}>
                                     <Rate disabled allowHalf value={card.averageRating}/>
                                     <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
-                                </div> */}
+                                </div>
               </Card>
             </Link>
           </Col>
