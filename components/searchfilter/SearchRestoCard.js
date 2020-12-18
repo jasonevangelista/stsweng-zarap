@@ -1,5 +1,11 @@
 import styles from '../../styles/searchfilter/SearchRestoCard.module.css';
 import { Card, Divider, Rate, Row, Col, Image } from 'antd';
+import {
+  ShopOutlined,
+  ClockCircleOutlined,
+  MoneyCollectOutlined,
+  PhoneOutlined
+} from '@ant-design/icons';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -30,7 +36,7 @@ export default function SearchRestoCard({ resto }) {
           </Col>
           <Col span={16} className={styles.restoCardHeader}>
             <h1 id={styles.restoName}>{resto.name}</h1>
-            <div id={styles.stars}>
+            <div id={styles.stars} className={styles.ratingDiv}>
               <Rate disabled allowHalf value={resto.averageRating} />
               <span className="ant-rate-text">{rating}</span>
             </div>
@@ -45,10 +51,21 @@ export default function SearchRestoCard({ resto }) {
 
         <Row>
           <Col span={8} className={styles.detailHeader}>
-            <p>CUISINES:</p>
-            <p>COST FOR TWO:</p>
-            <p>HOURS:</p>
-            <p>CONTACT NO:</p>
+            <p>
+              <ShopOutlined/>
+              &nbsp;Cuisines
+            </p>
+            <p>
+              <MoneyCollectOutlined/>
+              &nbsp;Avg. Cost For Two
+            </p>
+            <p>
+              <ClockCircleOutlined/>
+              &nbsp;Open Hours
+              </p>
+            <p>
+              <PhoneOutlined/>
+              &nbsp;Contact Details</p>
           </Col>
           <Col span={16}>
             {cuisines}

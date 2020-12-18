@@ -69,3 +69,7 @@
 #stars{
   margin-bottom: 0.5em;
 }
+
+.ratingDiv :hover{
+  cursor: pointer;
+}
