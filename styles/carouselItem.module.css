@@ -1,17 +1,29 @@
 .card {
     border-radius: 10px;
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("https://via.placeholder.com/500/A9A9A9/A9A9A9");
+    /* background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("https://via.placeholder.com/500/A9A9A9/A9A9A9"); */
     
     height: 40vh;
     background-size: cover;
-    color: white;
+    color: black;
+    background-color: white;
 }      
 
 .cardContent {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 22px;
+    font-family: Helvetica, sans-serif;
+    font-size: 16px;
+    padding-top: 7px;
 }
 
-#stars{
+.cardTitle {
+    font-family: Helvetica, sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+#stars {
     margin-bottom: 0.5em;
+}
+
+.ant-card-body {
+    padding-top: 10px;
 }

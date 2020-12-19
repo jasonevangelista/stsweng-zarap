@@ -1,19 +1,19 @@
 import styles from '../styles/carouselItem.module.css';
-// import { Card, Row, Col, Rate } from 'antd';
-import { Row, Col, Rate } from 'antd';
+import { Card, Row, Col, Rate } from 'antd';
+// import { Row, Col, Rate } from 'antd';
 import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Avatar from '@material-ui/core/Avatar';
-import Chip from '@material-ui/core/Chip';
+// import { makeStyles } from '@material-ui/core/styles';
+// import Card from '@material-ui/core/Card';
+// import CardActionArea from '@material-ui/core/CardActionArea';
+// import CardActions from '@material-ui/core/CardActions';
+// import CardContent from '@material-ui/core/CardContent';
+// import CardMedia from '@material-ui/core/CardMedia';
+// import Button from '@material-ui/core/Button';
+// import Typography from '@material-ui/core/Typography';
+// import Avatar from '@material-ui/core/Avatar';
+// import Chip from '@material-ui/core/Chip';
 
 function FormatRating(rating, reviews){
     var ratingString = "";
@@ -39,34 +39,34 @@ function FormatRating(rating, reviews){
     }
 }
 
-const useStyles = makeStyles({
-  root: {
-    maxWidth: 345,
-  },
-  media: {
-    height: 140,
-  },
-});
+// const useStyles = makeStyles({
+//   root: {
+//     maxWidth: 345,
+//   },
+//   media: {
+//     height: 140,
+//   },
+// });
 
 export default function carouselItem({ restoSet }) {
   //set up icons for the restaurants
   restoSet.map((card, index) => {
     switch (card.establishmentType) {
     case 'Casual Dining':
-      card.icon = <FaUtensils size="5px" />;
+      card.icon = <FaUtensils size="20px" />;
       break;
     case 'Quick Bite':
-      card.icon = <FaHamburger size="5px" />;
+      card.icon = <FaHamburger size="20px" />;
       break;
     case 'Café':
-      card.icon = <FaCoffee size="15px" />;
+      card.icon = <FaCoffee size="20px" />;
       break;
     default:
-      card.icon = <FaUtensils size="15px" />;
+      card.icon = <FaUtensils size="20px" />;
     }
   });
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   return (
     <Row justify="space-around">
@@ -74,7 +74,7 @@ export default function carouselItem({ restoSet }) {
         return (
           <Col span={6} key={index}>
             <Link href={'/restaurant/' + card._id}>
-            <Card className={classes.root}>
+            {/* <Card className={classes.root}>
               <CardActionArea>
                 <CardMedia
                   className={classes.media}
@@ -99,42 +99,34 @@ export default function carouselItem({ restoSet }) {
                   {/* <Typography variant="body2" color="textSecondary" component="p">
                     Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
                     across all continents except Antarctica
-                  </Typography> */}
+                  </Typography>
                 </CardContent>
               </CardActionArea>
-              {/* <CardActions>
+              <CardActions>
                 <Button size="small" color="primary">
                   Share
                 </Button>
                 <Button size="small" color="primary">
                   Learn More
                 </Button>
-              </CardActions> */}
-            </Card> 
-              {/* <Card
-                title={card.name}
+              </CardActions> 
+            </Card>  */}
+              <Card
+                title={' '}
                 bordered={false}
                 hoverable
                 headStyle={{
-                  color: 'white',
-                  fontSize: '2vw',
-                  fontFamily: 'Permanent Marker',
-                  wordWrap: 'break-word !',
-                  whiteSpace: 'normal',
                   height: '150px',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
+                  backgroundImage: `url(${card.coverPhotoURL})`,
+                  backgroundSize: 'cover',
+                  backgroundRepeat: 'no-repeat'
                 }}
                 className={styles.card}
-                style={
-                  card.coverPhotoURL
-                    ? {
-                      backgroundImage: `linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url(${card.coverPhotoURL})`,
-                    }
-                    : {}
-                }>
+                >
+                <div className={styles.cardTitle}>
+                  {card.name}
+                </div>
+
                 <Row>
                   <Col>
                     <div style={{ marginTop: '7px' }}>{card.icon}</div>
@@ -159,7 +151,7 @@ export default function carouselItem({ restoSet }) {
                                     <Rate disabled allowHalf value={card.averageRating}/>
                                     <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
                                 </div>
-              </Card> */}
+              </Card> 
             </Link>
           </Col>
         );
