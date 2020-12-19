@@ -11,7 +11,7 @@ export default function Footer() {
 
     return (
         <footer className={`${styles.footer} ${
-            pathname === '/' ? '' : ''
+            pathname === '/' ? styles.transparent : ''
           }`}>
             <p>© 2020 TeamPura. All Rights Reserved</p>
             <p>

@@ -32,8 +32,7 @@
 
 .topContainer {
     position: relative;
-    /* height: calc(100vh - 80px); */
-    height: 18vh;
+    height: 11.2vh;  
 }
 
 .topBG {
@@ -60,8 +59,33 @@
     left: 0;
 }
 
+.bottomBG {
+    background-color: rgba(226, 55, 55, 1);
+  
+    /* Full height */
+    height: 60vh;
 
-.scrollContainer {
+    position: relative;
+}
+
+.landingBottomTitle {
+    font-family: Permanent Marker;
+    font-size: 3vw;
+    text-align: center;
+    color: white;
+    position: absolute;
+    top: 2%;
+    text-align: center;
+    width: 100%;
+}
+
+.carouselTop{
+    padding-top: 8%;
+}
+
+
+
+/* .scrollContainer {
     position: absolute;
     bottom: 8%;
     width: 24px;
@@ -146,28 +170,4 @@
     to {
         opacity: 1;
     }
-}
-
-.bottomBG {
-    background-color: rgba(226, 55, 55, 1);
-  
-    /* Full height */
-    height: 60vh;
-
-    position: relative;
-}
-
-.landingBottomTitle {
-    font-family: Permanent Marker;
-    font-size: 3vw;
-    text-align: center;
-    color: white;
-    position: absolute;
-    top: 2%;
-    text-align: center;
-    width: 100%;
-}
-
-.carouselTop{
-    padding-top: 8%;
-}
+} */
