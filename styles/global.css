@@ -59,7 +59,7 @@ body {
 
 .searchBar .ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{
     border-color:#E23744;
-    border-color: white;
+    /* border-color: white; */
     -webkit-box-shadow: 0 0 5px #e65662;
     box-shadow: 0 0 5px #e65662;
 }
@@ -78,3 +78,9 @@ body {
     border-color:#E23744;
 }
 
+/* Landing Page-Specific Style Overrides */
+.landingSearchBar .ant-input:hover, .landingSearchBar .ant-input:active, .landingSearchBar .ant-input:focus{
+    border-color: #E23744 !important;
+    -webkit-box-shadow: 0 0 5px #e65662;
+    box-shadow: 0 0 5px #e65662;
+}
