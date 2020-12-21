@@ -96,7 +96,7 @@ export default function SearchFilter({ results }) {
             <h1>Search Results on &quot;{searchitem}&quot;</h1>
 
             <Search
-                className={styles.searchBar}
+                className={[styles.searchBar, "searchBar"]}
                 placeholder="Search Restaurant"
                 allowClear
                 size="large"

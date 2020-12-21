@@ -5,15 +5,17 @@ import styled from 'styled-components';
 import { Input, Row, Col, Carousel } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
+import Search from 'antd/lib/input/Search';
 
-const Search = Input;
+
+// const Search = Input;
 import { useRouter } from 'next/router';
 
-const RoundSearch = styled(Input.Search)`
-  .ant-input {
-    border-radius: 10px;
-  }
-`;
+// const RoundSearch = styled(Input.Search)`
+//   .ant-input {
+//     border-radius: 10px;
+//   }
+// `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
 function shuffle(array) {
@@ -72,7 +74,21 @@ export default function Home({ results }) {
             Find what you like
             <Row className={styles.searchBar}>
               <Col span={8}>
-                <RoundSearch
+                {/* <RoundSearch
+                  className={"searchBar"}
+                  enterButton
+                  onSearch={(value) => {
+                    if (value && value.trim()) {
+                      console.log(value);
+                      router.push('searchfilter/' + value);
+                    }
+                  }}
+                /> */}
+                <Search
+                  className={["searchBar", "landingSearchBar"]}
+                  placeholder="Search Restaurant"
+                  // allowClear
+                  size="large"
                   enterButton
                   onSearch={(value) => {
                     if (value && value.trim()) {
