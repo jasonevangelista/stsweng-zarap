@@ -1,0 +1,32 @@
+.form{
+  /* background: green; */
+  text-align: center;
+  /* min-width: 20vw; */
+}
+
+.btnSubmit{
+  width: 100%;
+  border-radius: 7px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  /* background-color: #E23744; */
+}
+
+.submitFormItem{
+  margin-bottom: 0;
+}
+
+.btnRedirect{
+  /* background:red; */
+  padding: 0;
+  color: #E23744;
+}
+
+.btnRedirect:hover{
+  background:white;
+  color: #d8606a;
+}
+
+.footerMessage{
+  margin-bottom: 0;
+}
