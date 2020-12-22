@@ -37,7 +37,7 @@
     left:0;
 
     width: 100%; */
-    /* position: relative; */
+    position: relative;
     height: 100%;
 }
 
@@ -76,9 +76,13 @@
     /* background-color: white; */
   
     /* Full height */
-    height: 75%;
+    height: 210%;
+
+    background-color: green;
     
-    position: relative;
+    position: absolute;
+    top: 170px;
+    width: 100%;
 }
 
 .landingBottomTitle {
@@ -98,5 +102,5 @@
     position: absolute;          
     /* top: 50%;                         */
     width: 100%;
-    transform: translateY(-12%);
+    transform: translateY(-10%);
 }
