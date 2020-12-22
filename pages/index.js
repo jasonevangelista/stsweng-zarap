@@ -96,18 +96,10 @@ export default function Home({ results }) {
       </div>
 
       <div className={styles.bottomBG}>
-        {/* <h2 className={styles.landingBottomTitle}> Recommendations </h2> */}
-        {/* <div className={styles.landingBottomTitle}>  <Title> Recommendations </Title>
-        </div> */}
         <div className={styles.carouselTop}>
-          {/* <Carousel autoplay  className={styles.bigHeight}> */}
             <div>
               <CarouselItem restoSet={cards.slice(0, 3)} />
             </div>
-            {/* <div>
-              <CarouselItem restoSet={cards.slice(3, 6)} />
-            </div>
-          </Carousel>  */}
         </div>
       </div>
     </div>

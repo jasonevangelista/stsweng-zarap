@@ -5,17 +5,6 @@ import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
 
-// import { makeStyles } from '@material-ui/core/styles';
-// import Card from '@material-ui/core/Card';
-// import CardActionArea from '@material-ui/core/CardActionArea';
-// import CardActions from '@material-ui/core/CardActions';
-// import CardContent from '@material-ui/core/CardContent';
-// import CardMedia from '@material-ui/core/CardMedia';
-// import Button from '@material-ui/core/Button';
-// import Typography from '@material-ui/core/Typography';
-// import Avatar from '@material-ui/core/Avatar';
-// import Chip from '@material-ui/core/Chip';
-
 function FormatRating(rating, reviews){
     var ratingString = "";
     ratingString = Math.floor(rating * 2 ) / 2;
@@ -40,15 +29,6 @@ function FormatRating(rating, reviews){
     }
 }
 
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//   },
-//   media: {
-//     height: 140,
-//   },
-// });
-
 export default function carouselItem({ restoSet }) {
   //set up icons for the restaurants
   restoSet.map((card, index) => {
@@ -66,8 +46,6 @@ export default function carouselItem({ restoSet }) {
       card.icon = <FaUtensils size="12px" />;
     }
   });
-
-  // const classes = useStyles();
 
   return (
     <Row justify="space-around" type="flex">
@@ -88,9 +66,6 @@ export default function carouselItem({ restoSet }) {
                   borderTopRightRadius: '10px'
                 }}
                 className={styles.card}
-                // style={
-                //   {boxShadow:`8px 8px rgb(175, 167, 167)`}
-                // }
                 >
                 <div className={`${styles.cardTitle} ${styles.paddBottom}`}>
                     {card.name}
@@ -98,25 +73,7 @@ export default function carouselItem({ restoSet }) {
 
                 <Row style={{paddingBottom: '4px'}}>
                   <Tag icon={card.icon}> {card.establishmentType} </Tag>
-                  {/* <Col>
-                    <div style={{ marginTop: '7px' }}>{card.icon}</div>
-                  </Col>
-                  <Col>
-                    <p className={styles.cardContent}>
-                      &nbsp;{card.establishmentType}
-                    </p>
-                  </Col> */}
-                {/* </Row>
-                <Row> */}
                   <Tag icon={<MdLocationOn size="12px" />}> {card.city} </Tag>
-                  {/* <Col>
-                    <div style={{ marginTop: '7px' }}>
-                      <MdLocationOn size="20px" />
-                      </div>
-                      </Col>
-                      <Col>
-                      <p className={styles.cardContent}>&nbsp;{card.city}</p>
-                    </Col> */}
                 </Row>
                   <div id={styles.stars}>
                     <Rate disabled allowHalf value={card.averageRating}/>
@@ -125,9 +82,6 @@ export default function carouselItem({ restoSet }) {
                   <div className={styles.featured}>
                     Featured
                   </div>
-                  {/* <div className={styles.featured}>
-                    <img src='featured.png' width='70' height='40'/>
-                  </div> */}
               </Card> 
             </Link>
           </Col>
