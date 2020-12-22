@@ -76,7 +76,7 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <h2 className={styles.landingTitle}>
             {' '}
-              <WhiteTitle>Find what you like</WhiteTitle>
+              <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"

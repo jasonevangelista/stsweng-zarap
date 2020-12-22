@@ -7,6 +7,8 @@
     color: black;
     background-color: white;
     box-shadow:0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+
+    position: relative;
 }
 
 /* .card :hover {
@@ -20,7 +22,7 @@
 
 .cardTitle {
     font-family: Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 1.8vw;
     font-weight: bold;
     line-height: 100%;
 }
@@ -33,3 +35,14 @@
     padding-bottom: 10px;
 }
 
+.featured {
+    display: flex;
+    justify-content: center;
+    text-align: center; 
+    position: absolute; 
+    bottom: 2px;
+    left: 50%;
+    right: 50%;
+    font-weight: bold;
+    font-size: 1.2vw;
+}

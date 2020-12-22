@@ -4,6 +4,7 @@ import { Card, Row, Col, Rate, Tag, Divider } from 'antd';
 import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
+
 // import { makeStyles } from '@material-ui/core/styles';
 // import Card from '@material-ui/core/Card';
 // import CardActionArea from '@material-ui/core/CardActionArea';
@@ -121,6 +122,12 @@ export default function carouselItem({ restoSet }) {
                     <Rate disabled allowHalf value={card.averageRating}/>
                     <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
                   </div>
+                  <div className={styles.featured}>
+                    Featured
+                  </div>
+                  {/* <div className={styles.featured}>
+                    <img src='featured.png' width='70' height='40'/>
+                  </div> */}
               </Card> 
             </Link>
           </Col>
