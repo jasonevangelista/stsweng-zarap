@@ -34,10 +34,10 @@
     margin:0;
 
     top:0;
-    left:0;
+    left:0; */
 
-    width: 100%; */
-    /* position: relative; */
+    width: 100%; 
+    position: absolute;
     height: 100%;
 }
 
@@ -76,8 +76,8 @@
     /* background-color: white; */
   
     /* Full height */
-    height: 210%;
-
+    height: 60%;
+    transform: translateY(-80px);
     background-color: green;
     
     position: relative;
@@ -99,9 +99,9 @@
 .carouselTop{
     background-color: red;
     margin: 0;
-    position: absolute;          
-    top: -6px;
-    /* top: 50%;                         */
+    position: absolute;
+    top: 50%;
     width: 100%;
-    transform: translateY(-10%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
 }
