@@ -24,5 +24,7 @@
 }
 
 .transparent {
-  background-color: rgba(226, 55, 55, 1);
+  background-color: #2C2F33;
+  /* position: absolute;
+  bottom: 0; */
 }

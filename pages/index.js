@@ -2,10 +2,11 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Carousel } from 'antd';
+import { Input, Row, Col, Carousel, Typography } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 
+const { Title } = Typography;
 const Search = Input;
 import { useRouter } from 'next/router';
 
@@ -13,6 +14,12 @@ const RoundSearch = styled(Input.Search)`
   .ant-input {
     border-radius: 10px;
   }
+`;
+
+const WhiteTitle = styled(Title)`
+  &.ant-typography {
+      color: white;
+    }
 `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
@@ -69,10 +76,11 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <h2 className={styles.landingTitle}>
             {' '}
-            Find what you like
-            <Row className={styles.searchBar}>
-              <Col span={8}>
-                <RoundSearch
+              <WhiteTitle>Find what you like</WhiteTitle>
+            <Row className={styles.searchBar} type="flex">
+              <Col span={12} height="100%">
+                <RoundSearch size="large"
+                  placeholder="Search for restaurants"
                   enterButton
                   onSearch={(value) => {
                     if (value && value.trim()) {
@@ -80,33 +88,26 @@ export default function Home({ results }) {
                       router.push('searchfilter/' + value);
                     }
                   }}
-                />
+                  />
               </Col>
             </Row>
           </h2>
-          {/* <Row>
-            <Col span={4} offset={11} className={styles.scrollContainer}>
-              <div className={styles.chevron}></div>
-              <div className={styles.chevron}></div>
-              <div className={styles.chevron}></div>
-               <br></br>
-                <span className={styles.text}>Find Out More</span> }
-            </Col>
-          </Row> */}
         </div>
       </div>
 
       <div className={styles.bottomBG}>
-        <h2 className={styles.landingBottomTitle}> Recommendations </h2>
+        {/* <h2 className={styles.landingBottomTitle}> Recommendations </h2> */}
+        {/* <div className={styles.landingBottomTitle}>  <Title> Recommendations </Title>
+        </div> */}
         <div className={styles.carouselTop}>
-          <Carousel autoplay>
+          {/* <Carousel autoplay  className={styles.bigHeight}> */}
             <div>
               <CarouselItem restoSet={cards.slice(0, 3)} />
             </div>
-            <div>
+            {/* <div>
               <CarouselItem restoSet={cards.slice(3, 6)} />
             </div>
-          </Carousel>
+          </Carousel>  */}
         </div>
       </div>
     </div>

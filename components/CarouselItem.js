@@ -69,10 +69,10 @@ export default function carouselItem({ restoSet }) {
   // const classes = useStyles();
 
   return (
-    <Row justify="space-around">
+    <Row justify="space-around" type="flex">
       {restoSet.map((card, index) => {
         return (
-          <Col span={6} key={index}>
+          <Col span={6} key={index} height="100%">
             <Link href={'/restaurant/' + card._id}>
               <Card
                 title={' '}
@@ -87,6 +87,9 @@ export default function carouselItem({ restoSet }) {
                   borderTopRightRadius: '10px'
                 }}
                 className={styles.card}
+                // style={
+                //   {boxShadow:`8px 8px rgb(175, 167, 167)`}
+                // }
                 >
                 <div className={`${styles.cardTitle} ${styles.paddBottom}`}>
                     {card.name}
@@ -108,11 +111,11 @@ export default function carouselItem({ restoSet }) {
                   {/* <Col>
                     <div style={{ marginTop: '7px' }}>
                       <MdLocationOn size="20px" />
-                    </div>
-                  </Col>
-                  <Col>
-                    <p className={styles.cardContent}>&nbsp;{card.city}</p>
-                  </Col> */}
+                      </div>
+                      </Col>
+                      <Col>
+                      <p className={styles.cardContent}>&nbsp;{card.city}</p>
+                    </Col> */}
                 </Row>
                   <div id={styles.stars}>
                     <Rate disabled allowHalf value={card.averageRating}/>
