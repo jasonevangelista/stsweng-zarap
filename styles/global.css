@@ -29,3 +29,8 @@ body {
 .ant-menu{
     border-right-color: white;
 }
+
+.ant-modal-content{
+    border-radius: 10px;
+    /* width: 30vw; */
+}
