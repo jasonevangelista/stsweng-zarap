@@ -45,7 +45,7 @@ export default function Header() {
       }`}>
       <div className={styles.imageContainer}>
         <Link href="/">
-          <Image src="/text.png" width={335} height={81} />
+          <Image src="/text.png" width={130} height={35} />
         </Link>
       </div>
       <div className={styles.navLinks}>
