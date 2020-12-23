@@ -30,14 +30,26 @@
   /* width: auto; */
 }
 
-.cardImage {
+/* .cardImage {
   overflow: hidden;
   border-radius: 10px;
-  min-width: 80%;
-  /* min-height: 100%; */
+  max-width:100%;
+  object-fit: contain;
   background: maroon;
+  min-height: 10em;
+  margin-right: 1em;
+} */
+
+.imageDiv{
   height: 10em;
   margin-right: 1em;
+  background: maroon;
+  overflow: hidden;
+  border-radius: 10px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .imageSection{

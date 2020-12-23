@@ -24,14 +24,16 @@ export default function SearchRestoCard({ resto }) {
       <Card hoverable className={styles.restoCard}>
         <Row>
           <Col span={8} className={styles.imageSection}>
-            <div className={styles.cardImage}>
-              <Image
-                className={styles.imagePlaceholder}
+            <div className={styles.imageDiv}
+              style={{backgroundImage: `url(${resto.coverPhotoURL})`}}>
+              {/* <Image
+                // className={styles.imagePlaceholder}
+                className={styles.cardImage}
                 preview={false}
-                width="100%"
+                // width="50%"
                 placeholder={true}
                 src={resto.coverPhotoURL}
-              />
+              /> */}
             </div>
           </Col>
           <Col span={16} className={styles.restoCardHeader}>
