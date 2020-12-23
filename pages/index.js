@@ -7,6 +7,7 @@ import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 
 const { Title } = Typography;
+
 const Search = Input;
 import { useRouter } from 'next/router';
 
@@ -80,6 +81,7 @@ export default function Home({ results }) {
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"
+                  className={["searchBar", "landingSearchBar"]}
                   placeholder="Search for restaurants"
                   enterButton
                   onSearch={(value) => {
