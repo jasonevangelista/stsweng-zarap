@@ -30,6 +30,7 @@ body {
     color:  #E23744;
 }
 
+/* SearchFilter Menu Overrides */
 .ant-menu{
     border-right-color: white;
 }
@@ -56,14 +57,14 @@ body {
     border-color:#E23744;
 }
 
-.searchBar .ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{
+.searchBar .ant-input-affix-wrapper:focus, .searchBar .ant-input-affix-wrapper-focused{
     border-color:#E23744;
     /* border-color: white; */
     -webkit-box-shadow: 0 0 5px #e65662;
     box-shadow: 0 0 5px #e65662;
 }
 
-.searchBar .ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{
+.searchBar .ant-input-search .ant-input:hover, .searchBar .ant-input-search .ant-input:focus{
     border-color:#E23744;
 }
 
@@ -86,6 +87,4 @@ body {
 
 .ant-modal-content{
     border-radius: 10px;
-    /* width: 30vw; */
-/* SearchFilter Menu Overrides */
 }
