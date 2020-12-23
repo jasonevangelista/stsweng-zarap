@@ -1,7 +1,7 @@
 .form{
   /* background: green; */
   text-align: center;
-  /* min-width: 20vw; */
+  /* min-width: 50vw; */
 }
 
 .btnSubmit{
@@ -10,10 +10,6 @@
   margin-top: 10px;
   margin-bottom: 10px;
   /* background-color: #E23744; */
-}
-
-.submitFormItem{
-  margin-bottom: 0;
 }
 
 .btnRedirect{
@@ -27,6 +23,6 @@
   color: #d8606a;
 }
 
-.footerMessage{
+.registerHeader, .registerFooter, .submitFormItem{
   margin-bottom: 0;
 }

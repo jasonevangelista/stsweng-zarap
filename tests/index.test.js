@@ -1,21 +1,18 @@
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 
 import { Empty } from 'antd';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CarouselItem from '../components/CarouselItem';
-import SearchRestoCard, {
-  FormatDetails,
-} from '../components/searchfilter/SearchRestoCard';
+import RegisterModal, {util} from '../components/RegisterModal';
+
+import SearchRestoCard, { FormatDetails } from '../components/searchfilter/SearchRestoCard';
 import BasicInfo from '../components/restoprofile/BasicInfo';
 import Gallery from '../components/restoprofile/Gallery';
 import GalleryItem from '../components/restoprofile/GalleryItem';
 import ImageHeader from '../components/restoprofile/ImageHeader';
 import ReviewCard from '../components/restoprofile/ReviewCard';
-import Reviews, {
-  countReviews,
-  checkReviews,
-} from '../components/restoprofile/Reviews';
+import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews';
 
 // mock window.matchMedia() method which is not implemented in JSDOM
 Object.defineProperty(window, 'matchMedia', {
@@ -28,8 +25,8 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+    dispatchEvent: jest.fn()
+  }))
 });
 
 /** @test {Header Component} */
@@ -65,12 +62,10 @@ describe('SearchRestoCard Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
-    const wrapper = mount(
-      <SearchRestoCard resto={testProps}></SearchRestoCard>
-    );
+    const wrapper = mount(<SearchRestoCard resto={testProps}></SearchRestoCard>);
     // Expect a SearchFilterCard
     expect(wrapper.find(SearchRestoCard)).toHaveLength(1);
     wrapper.unmount();
@@ -91,7 +86,7 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
+        reviews: []
       },
       {
         name: 'Golden Fortune',
@@ -103,7 +98,7 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
+        reviews: []
       },
       {
         name: 'Golden Fortune',
@@ -115,8 +110,8 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
-      },
+        reviews: []
+      }
     ];
 
     const wrapper = mount(<CarouselItem restoSet={testProps} />);
@@ -156,7 +151,7 @@ describe('BasicInfo Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
     const wrapper = mount(<BasicInfo resto={testProps} />);
@@ -240,9 +235,7 @@ describe('countReviews Function', () => {
 describe('checkReviews Function', () => {
   it('If null reviews, then output an Empty component', () => {
     const reviews = [null];
-    const output = (
-      <Empty description="There are no reviews for this restaurant." />
-    );
+    const output = <Empty description="There are no reviews for this restaurant." />;
     // Expect it to output an Empty component
     expect(checkReviews(reviews)).toEqual(output);
   });
@@ -263,7 +256,7 @@ describe('BasicInfo Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
     const wrapper = mount(<BasicInfo resto={testProps} />);
@@ -281,4 +274,116 @@ describe('Gallery Component', () => {
     expect(wrapper.find(Gallery)).toHaveLength(1);
     wrapper.unmount();
   });
+});
+
+/** @test {RegisterModal Component} */
+describe('RegisterModal Component', () => {
+  let wrapper;
+  // const onFinish = jest.fn().mockImplementation(() => console.log('Form submitted!'));
+  const onFinish = jest.fn();
+  beforeEach(() => {
+    wrapper = mount(
+      <RegisterModal
+        registerModalVisible={true}
+        handleCancel={jest.fn()}
+        redirectToLoginModal={jest.fn()}
+        onFinish={onFinish}
+      />
+    );
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  it('should render without crashing', () => {
+    // Expect a RegisterModal
+    expect(wrapper.find(RegisterModal)).toHaveLength(1);
+  });
+
+  it('should have proper input fields', () => {
+    var receivedNamesList = wrapper
+      .find(RegisterModal)
+      .find('form')
+      .children()
+      .map((node) => node.props().name);
+    const expectedNamesList = ['firstName', 'lastName', 'email', 'password', 'confirm'];
+    expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+  });
+
+  // it('Form Input Submission', () => {
+  //   const testInput = {
+  //     firstName: 'John',
+  //     lastName: 'Smith',
+  //     email: 'johnsmith@email.com',
+  //     password: '123',
+  //     confirm: '123'
+  //   };
+
+  //   wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+  //   wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+  //   wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+  //   wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+  //   wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+
+
+  //   console.log("firstName: " + wrapper.find('input#firstName').getElement().props.value)
+  //   console.log("lastName: " + wrapper.find('input#lastName').getElement().props.value)
+  //   console.log("email: " + wrapper.find('input#email').getElement().props.value)
+  //   console.log("password: " + wrapper.find('input#password').getElement().props.value)
+  //   console.log("confirm: " + wrapper.find('input#confirm').getElement().props.value)
+
+
+  //   wrapper.find('form').simulate('submit');
+  //   // expect(onFinish).toBeCalledTimes(1);
+  //   expect(OnFinish).toHaveBeenCalled();
+  //   // expect(spy).toHaveBeenCalled()
+  // });
+});
+
+/** @test {Gallery Component} */
+describe('REGISTER MODAL',  () => {
+  it('INPUT TEST',async () => {
+  
+    const mockOnFinish = jest.fn()
+    const defaultProps = {
+      registerModalVisible: true,
+      handleCancel: jest.fn(),
+      redirectToLoginModal: jest.fn(),
+      onFinish: mockOnFinish
+    }
+    const wrapper = mount(<RegisterModal {...defaultProps}/>);
+    
+    const testInput = {
+      // firstName: 'John',
+      // lastName: 'Smith',
+      // email: 'johnsmith@gmail.com',
+      // password: '123',
+      // confirm: '123'
+      firstName: 'John',
+      lastName: 'as',
+      email: 'aaa@g.com',
+      password: '123',
+      confirm: '444'
+    };
+
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+
+    wrapper.find('form').simulate('submit')
+    await tick();
+    
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+
+    wrapper.unmount();
+  });
+
+  function tick() {
+    return new Promise(resolve => {
+      setTimeout(resolve, 0);
+    })
+  }
 });
