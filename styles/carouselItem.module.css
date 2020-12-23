@@ -1,17 +1,44 @@
 .card {
     border-radius: 10px;
-    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("https://via.placeholder.com/500/A9A9A9/A9A9A9");
+    /* background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url("https://via.placeholder.com/500/A9A9A9/A9A9A9"); */
     
-    height: 60vh;
+    height: 45vh;
     background-size: cover;
-    color: white;
-}      
+    color: black;
+    background-color: white;
+    box-shadow:0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 
-.cardContent {
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 22px;
+    position: relative;
 }
 
-#stars{
+.cardContent {
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+}
+
+.cardTitle {
+    font-family: Helvetica, sans-serif;
+    font-size: 1.8vw;
+    font-weight: bold;
+    line-height: 100%;
+}
+
+#stars {
     margin-bottom: 0.5em;
+}
+
+.paddBottom {
+    padding-bottom: 10px;
+}
+
+.featured {
+    display: flex;
+    justify-content: center;
+    text-align: center; 
+    position: absolute; 
+    bottom: 2px;
+    left: 50%;
+    right: 50%;
+    font-weight: bold;
+    font-size: 1.2vw;
 }

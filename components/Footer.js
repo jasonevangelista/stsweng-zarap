@@ -1,9 +1,18 @@
 import styles from '../styles/footer.module.css';
 import { FacebookFilled } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
 export default function Footer() {
+    const router = useRouter();
+    var pathname = null;
+    if (router) {
+      pathname = router.pathname;
+    }
+
     return (
-        <footer className={styles.footer}>
+        <footer className={`${styles.footer} ${
+            pathname === '/' ? styles.transparent : ''
+          }`}>
             <p>© 2020 TeamPura. All Rights Reserved</p>
             <p>
                 Contact us through
