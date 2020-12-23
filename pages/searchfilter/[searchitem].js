@@ -40,7 +40,7 @@ export default function SearchFilter({ results }) {
 
     useEffect(() => {
         if (!firstTimeRender.current) {
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
             setSortOption(null);
         }
     }, [searchitem]);
@@ -48,7 +48,7 @@ export default function SearchFilter({ results }) {
     useEffect(() => {
         if (!firstTimeRender.current) {
             searchResults(searchitem, sortOption, filterOption);
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
         }
     }, [filterOption]);
 
