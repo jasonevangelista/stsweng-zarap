@@ -52,8 +52,8 @@ export default function carouselItem({ restoSet }) {
       {restoSet.map((card, index) => {
         return (
           <Col span={6} key={index} height="100%">
-            <Link href={'/restaurant/' + card._id}>
-              <Badge.Ribbon text="Featured" color="rgb(199, 66, 66)">
+            <Badge.Ribbon text="Featured" color="rgb(199, 66, 66)">
+              <Link href={'/restaurant/' + card._id}>
                 <Card
                   title={' '}
                   bordered={false}
@@ -81,49 +81,11 @@ export default function carouselItem({ restoSet }) {
                       <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
                     </div>
                 </Card> 
-              </Badge.Ribbon>
-            </Link>
+              </Link>
+            </Badge.Ribbon>
           </Col>
         );
       })}
     </Row>
   );
 }
-
-{/* <Card className={classes.root}>
-  <CardActionArea>
-    <CardMedia
-      className={classes.media}
-      image={card.coverPhotoURL}
-      title={card.name}
-    />
-    <CardContent>
-      <Typography gutterBottom variant="h5" component="h2">
-        {card.name}
-      </Typography>
-      <Chip
-        avatar={card.icon}
-        label={card.establishmentType}
-        variant="outlined"
-        className={styles.MuiChipAvatar}
-      />
-      <Chip
-        avatar={<MdLocationOn size="20px" />}
-        label={card.city}
-        variant="outlined"
-      />
-      {/* <Typography variant="body2" color="textSecondary" component="p">
-        Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging
-        across all continents except Antarctica
-      </Typography>
-    </CardContent>
-  </CardActionArea>
-  <CardActions>
-    <Button size="small" color="primary">
-      Share
-    </Button>
-    <Button size="small" color="primary">
-      Learn More
-    </Button>
-  </CardActions> 
-</Card>  */}
