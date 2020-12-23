@@ -1,5 +1,5 @@
 import styles from '../styles/carouselItem.module.css';
-import { Card, Row, Col, Rate, Tag, Divider } from 'antd';
+import { Card, Row, Col, Rate, Tag, Badge } from 'antd';
 // import { Row, Col, Rate } from 'antd';
 import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
@@ -53,36 +53,35 @@ export default function carouselItem({ restoSet }) {
         return (
           <Col span={6} key={index} height="100%">
             <Link href={'/restaurant/' + card._id}>
-              <Card
-                title={' '}
-                bordered={false}
-                hoverable
-                headStyle={{
-                  height: '20vh',
-                  backgroundImage: `url(${card.coverPhotoURL})`,
-                  backgroundSize: 'cover',
-                  backgroundRepeat: 'no-repeat',
-                  borderTopLeftRadius: '10px',
-                  borderTopRightRadius: '10px'
-                }}
-                className={styles.card}
-                >
-                <div className={`${styles.cardTitle} ${styles.paddBottom}`}>
-                    {card.name}
-                </div>
+              <Badge.Ribbon text="Featured" color="rgb(199, 66, 66)">
+                <Card
+                  title={' '}
+                  bordered={false}
+                  hoverable
+                  headStyle={{
+                    height: '20vh',
+                    backgroundImage: `url(${card.coverPhotoURL})`,
+                    backgroundSize: 'cover',
+                    backgroundRepeat: 'no-repeat',
+                    borderTopLeftRadius: '10px',
+                    borderTopRightRadius: '10px'
+                  }}
+                  className={styles.card}
+                  >
+                  <div className={`${styles.cardTitle} ${styles.paddBottom}`}>
+                      {card.name}
+                  </div>
 
-                <Row style={{paddingBottom: '4px'}}>
-                  <Tag icon={card.icon}> {card.establishmentType} </Tag>
-                  <Tag icon={<MdLocationOn size="12px" />}> {card.city} </Tag>
-                </Row>
-                  <div id={styles.stars}>
-                    <Rate disabled allowHalf value={card.averageRating}/>
-                    <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
-                  </div>
-                  <div className={styles.featured}>
-                    Featured
-                  </div>
-              </Card> 
+                  <Row style={{paddingBottom: '4px'}}>
+                    <Tag icon={card.icon}> {card.establishmentType} </Tag>
+                    <Tag icon={<MdLocationOn size="12px" />}> {card.city} </Tag>
+                  </Row>
+                    <div id={styles.stars}>
+                      <Rate disabled allowHalf value={card.averageRating}/>
+                      <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
+                    </div>
+                </Card> 
+              </Badge.Ribbon>
             </Link>
           </Col>
         );
