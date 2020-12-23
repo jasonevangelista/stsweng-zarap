@@ -40,7 +40,7 @@ export default function SearchFilter({ results }) {
 
     useEffect(() => {
         if (!firstTimeRender.current) {
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
             setSortOption(null);
         }
     }, [searchitem]);
@@ -48,7 +48,7 @@ export default function SearchFilter({ results }) {
     useEffect(() => {
         if (!firstTimeRender.current) {
             searchResults(searchitem, sortOption, filterOption);
-            window.scrollTo(0, 0);
+            // window.scrollTo(0, 0);
         }
     }, [filterOption]);
 
@@ -96,7 +96,7 @@ export default function SearchFilter({ results }) {
             <h1>Search Results on &quot;{searchitem}&quot;</h1>
 
             <Search
-                className={styles.searchBar}
+                className={[styles.searchBar, "searchBar"]}
                 placeholder="Search Restaurant"
                 allowClear
                 size="large"
