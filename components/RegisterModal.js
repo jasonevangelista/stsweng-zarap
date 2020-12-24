@@ -13,7 +13,7 @@ export default function RegisterModal(props) {
   // called when form content is valid
   const onFinish = (values) => {
     console.log('Received values of form: ', values); // values.firstName | values.lastName | values.email | values.password
-      // props.onFinish();
+      props.onFinish();
   };
 
   return (
@@ -26,7 +26,7 @@ export default function RegisterModal(props) {
       width={400}
       footer={null}>
       <Form form={form} 
-      onFinish={props.onFinish}
+      onFinish={onFinish}
       className={styles.form}>
 
           <h1>Register</h1>
