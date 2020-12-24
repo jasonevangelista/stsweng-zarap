@@ -1,10 +1,10 @@
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 
 import { Empty } from 'antd';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CarouselItem from '../components/CarouselItem';
-import RegisterModal, {util} from '../components/RegisterModal';
+import RegisterModal from '../components/RegisterModal';
 
 import SearchRestoCard, { FormatDetails } from '../components/searchfilter/SearchRestoCard';
 import BasicInfo from '../components/restoprofile/BasicInfo';
@@ -310,75 +310,26 @@ describe('RegisterModal Component', () => {
     const expectedNamesList = ['firstName', 'lastName', 'email', 'password', 'confirm'];
     expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
   });
-
-  // it('Form Input Submission', () => {
-  //   const testInput = {
-  //     firstName: 'John',
-  //     lastName: 'Smith',
-  //     email: 'johnsmith@email.com',
-  //     password: '123',
-  //     confirm: '123'
-  //   };
-
-  //   wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-  //   wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-  //   wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-  //   wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-  //   wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-
-
-  //   console.log("firstName: " + wrapper.find('input#firstName').getElement().props.value)
-  //   console.log("lastName: " + wrapper.find('input#lastName').getElement().props.value)
-  //   console.log("email: " + wrapper.find('input#email').getElement().props.value)
-  //   console.log("password: " + wrapper.find('input#password').getElement().props.value)
-  //   console.log("confirm: " + wrapper.find('input#confirm').getElement().props.value)
-
-
-  //   wrapper.find('form').simulate('submit');
-  //   // expect(onFinish).toBeCalledTimes(1);
-  //   expect(OnFinish).toHaveBeenCalled();
-  //   // expect(spy).toHaveBeenCalled()
-  // });
 });
 
-/** @test {Gallery Component} */
-describe('REGISTER MODAL',  () => {
-  it('INPUT TEST',async () => {
-  
-    const mockOnFinish = jest.fn()
-    const defaultProps = {
-      registerModalVisible: true,
-      handleCancel: jest.fn(),
-      redirectToLoginModal: jest.fn(),
-      onFinish: mockOnFinish
-    }
-    const wrapper = mount(<RegisterModal {...defaultProps}/>);
+/** @test {Register Modal Inputs} */
+describe('Register Modal Inputs',  () => {
+  let wrapper;
+  const mockOnFinish = jest.fn()
+  const defaultProps = {
+    registerModalVisible: true,
+    handleCancel: jest.fn(),
+    redirectToLoginModal: jest.fn(),
+    onFinish: mockOnFinish
+  }
     
-    const testInput = {
-      // firstName: 'John',
-      // lastName: 'Smith',
-      // email: 'johnsmith@gmail.com',
-      // password: '123',
-      // confirm: '123'
-      firstName: 'John',
-      lastName: 'as',
-      email: 'aaa@g.com',
-      password: '123',
-      confirm: '444'
-    };
+  beforeEach(() => {
+    wrapper = mount(<RegisterModal {...defaultProps}/>);
+  });
 
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-
-    wrapper.find('form').simulate('submit')
-    await tick();
-    
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
-
+  afterEach(() => {
     wrapper.unmount();
+    jest.clearAllMocks();
   });
 
   function tick() {
@@ -386,4 +337,245 @@ describe('REGISTER MODAL',  () => {
       setTimeout(resolve, 0);
     })
   }
+
+  // VALID INPUT PASS
+  
+  it('if valid inputs, form should submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(1);
+  });
+
+  // FIRST NAME VALIDATION CHECK
+
+  it('if firstName is blank, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: '',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  it('if firstName is full of whitespace, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: '    ',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  // LAST NAME VALIDATION CHECK
+
+  it('if lastName is blank, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: '',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  it('if lastName is full of whitespace, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: '   ',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  // E-MAIL VALIDATION CHECK
+
+  it('if email has invalid format, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'ThisIsNotAValidEmail',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  it('if email has already been previously registered, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password123'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  // PASSWORD VALIDATION CHECK
+
+  it('if password is not alphanumeric, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password',
+      confirm: 'password'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  it('if password is less than 6 characters, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'pw1',
+      confirm: 'pw1'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
+  it('if confirm password does not match password, form should not submit', async () => {
+    // test data
+    const testInput = {
+      firstName: 'John',
+      lastName: 'Smith',
+      email: 'johnsmith@gmail.com',
+      password: 'password123',
+      confirm: 'password456'
+    };
+    // place inputs in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
+    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
+    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
+    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
+    // submit form
+    wrapper.find('form').simulate('submit')
+    // wait for all validation checks to finish
+    await tick();
+    // mockOnFinish method should be called
+    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+  });
+
 });
