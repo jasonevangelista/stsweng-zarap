@@ -315,6 +315,9 @@ describe('RegisterModal Component', () => {
 /** @test {Register Modal Inputs} */
 describe('Register Modal Inputs',  () => {
   let wrapper;
+  var errorMsg = 'ant-form-item-has-error'
+  var successMsg = 'ant-form-item-has-success'
+
   const mockOnFinish = jest.fn()
   const defaultProps = {
     registerModalVisible: true,
@@ -338,244 +341,198 @@ describe('Register Modal Inputs',  () => {
     })
   }
 
-  // VALID INPUT PASS
+  // ----------- FIRST NAME INPUT ----------- 
+
+  it('if firstName is valid, no error message', async () => {
+    // test data
+    const firstName = 'John'
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
+  });
+
+  it('if firstName is empty, has error message', async () => {
+    // test data
+    const firstName = ''
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
   
-  it('if valid inputs, form should submit', async () => {
+  it('if firstName is only whitespace, has error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const firstName = '  '
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(1);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
 
-  // FIRST NAME VALIDATION CHECK
+  // ----------- LAST NAME INPUT ----------- 
 
-  it('if firstName is blank, form should not submit', async () => {
+  it('if lastName is valid, no error message', async () => {
     // test data
-    const testInput = {
-      firstName: '',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const lastName = 'Smith'
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
   });
 
-  it('if firstName is full of whitespace, form should not submit', async () => {
+  it('if lastName is blank, has error message', async () => {
     // test data
-    const testInput = {
-      firstName: '    ',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const lastName = ''
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
 
-  // LAST NAME VALIDATION CHECK
-
-  it('if lastName is blank, form should not submit', async () => {
+  it('if lastName is only whitespace, has error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: '',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const lastName = '  '
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
 
-  it('if lastName is full of whitespace, form should not submit', async () => {
+  // ----------- E-MAIL INPUT ----------- 
+  // it('if e-mail is valid, no error message', async () => {
+  //   // test data
+  //   const email = "john@smith.com"
+  //   // place input in wrapper
+  //   wrapper.find('input#email').simulate('change', { target: { value: email } });
+  //   // wait for all validation checks to finish
+  //   wrapper.update()
+  //   await tick();
+  //   // check for presence of success message
+  //   var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+  //   expect(currentNodeHTML).toContain(successMsg)
+  // });
+
+  // it('if e-mail has invalid format, no error message', async () => {
+  //   // test data
+  //   const email = "notanemail"
+  //   // place input in wrapper
+  //   wrapper.find('input#email').simulate('change', { target: { value: email } });
+  //   // wait for all validation checks to finish
+  //   wrapper.update()
+  //   await tick();
+  //   // check for presence of error message
+  //   var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+  //   expect(currentNodeHTML).toContain(errorMsg)
+  // });
+
+  // ----------- PASSWORD INPUT ----------- 
+
+  it('if password is valid, no error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: '   ',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const password = "password123"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
   });
 
-  // E-MAIL VALIDATION CHECK
 
-  it('if email has invalid format, form should not submit', async () => {
+  it('if password is not alphanumeric, has error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'ThisIsNotAValidEmail',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const password = "password!!!"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
 
-  it('if email has already been previously registered, form should not submit', async () => {
+  it('if password is not alphanumeric, has error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password123'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    const password = "password!!!"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+   });
+
+  it('if password is less than 6 characters, has error message', async () => {
+    // test data
+    const password = "abc"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
 
-  // PASSWORD VALIDATION CHECK
+  // ----------- CONFIRM PASSWORD INPUT ----------- 
 
-  it('if password is not alphanumeric, form should not submit', async () => {
+  it('if confirm password matches with password, no error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password',
-      confirm: 'password'
-    };
+    const password = "password123"
+    const confirm = "password123"
     // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: confirm } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('form').html()
+    expect(currentNodeHTML).toContain(successMsg)
   });
 
-  it('if password is less than 6 characters, form should not submit', async () => {
+  it('if confirm password does not match with password, no error message', async () => {
     // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'pw1',
-      confirm: 'pw1'
-    };
+    const password = "password456"
+    const confirm = "password123"
     // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: confirm } });
     // wait for all validation checks to finish
+    wrapper.update()
     await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('form').html()
+    expect(currentNodeHTML).toContain(errorMsg)
   });
-
-  it('if confirm password does not match password, form should not submit', async () => {
-    // test data
-    const testInput = {
-      firstName: 'John',
-      lastName: 'Smith',
-      email: 'johnsmith@gmail.com',
-      password: 'password123',
-      confirm: 'password456'
-    };
-    // place inputs in wrapper
-    wrapper.find('input#firstName').simulate('change', { target: { value: testInput.firstName } });
-    wrapper.find('input#lastName').simulate('change', { target: { value: testInput.lastName } });
-    wrapper.find('input#email').simulate('change', { target: { value: testInput.email } });
-    wrapper.find('input#password').simulate('change', { target: { value: testInput.password } });
-    wrapper.find('input#confirm').simulate('change', { target: { value: testInput.confirm } });
-    // submit form
-    wrapper.find('form').simulate('submit')
-    // wait for all validation checks to finish
-    await tick();
-    // mockOnFinish method should be called
-    expect(mockOnFinish).toHaveBeenCalledTimes(0);
-  });
-
-});
