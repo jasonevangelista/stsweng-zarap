@@ -73,7 +73,7 @@ body {
     border-color:#E23744;
 }
 
-.searchBar .ant-btn-primary, .ant-btn-primary:hover, .ant-btn-primary:focus, .ant-btn-primary:active{
+.searchBar .ant-btn-primary, .searchBar .ant-btn-primary:hover, .searchBar .ant-btn-primary:focus,.searchBar .ant-btn-primary:active{
     background: #E23744;
     border-color:#E23744;
 }
