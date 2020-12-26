@@ -13,14 +13,15 @@
 }
 
 .btnRedirect{
-  /* background:red; */
   padding: 0;
-  color: #E23744;
+  /* color: #E23744; */
+  color: #1890ff;
 }
 
 .btnRedirect:hover{
   background:white;
-  color: #d8606a;
+  /* color: #d8606a; */
+  color: #459df0;
 }
 
 .registerHeader, .registerFooter, .submitFormItem{
