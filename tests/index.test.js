@@ -1,3 +1,4 @@
+/*eslint no-undef: 0*/
 import { mount } from 'enzyme';
 
 import { Empty } from 'antd';
@@ -496,7 +497,7 @@ describe('Register Modal Inputs',  () => {
     // check for presence of error message
     var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
     expect(currentNodeHTML).toContain(errorMsg)
-   });
+  });
 
   it('if password is less than 6 characters, has error message', async () => {
     // test data

@@ -56,10 +56,12 @@ export default function Header() {
           </Title>
         </div>
         <div
+          aria-hidden="true"
           className={`${pathname === '/' ? '' : styles.majorButton}`}
           onClick={() => {
             showModal();
-          }}>
+          }}
+        >
           <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>
             Sign Up
           </Title>

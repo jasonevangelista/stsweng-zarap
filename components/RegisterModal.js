@@ -1,3 +1,5 @@
+/*eslint no-undef: 0*/
+
 import styles from '../styles/registerModal.module.css';
 import { Input, Button, Form, Modal, Tooltip } from 'antd';
 import { InfoCircleOutlined } from '@ant-design/icons';
