@@ -536,3 +536,4 @@ describe('Register Modal Inputs',  () => {
     var currentNodeHTML = wrapper.find('form').html()
     expect(currentNodeHTML).toContain(errorMsg)
   });
+});
