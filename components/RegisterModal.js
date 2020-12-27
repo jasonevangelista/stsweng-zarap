@@ -19,7 +19,6 @@ export default function RegisterModal(props) {
       setLoading(false);
       form.resetFields();
     }, 2000);
-    
   };
 
   function isAlphaNumeric(str) {
@@ -110,51 +109,46 @@ export default function RegisterModal(props) {
             // })
             {
               validator: async (rule, value) => {
-                if (value){
+                if (value) {
                   var emailStatus = await checkEmailDuplicate(value);
                   return emailStatus;
                 }
-                return Promise.resolve()
+                return Promise.resolve();
               }
             }
           ]}>
           <Input id="email" placeholder="e-mail" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
-        <Form.Item
-          name="password"
-          hasFeedback
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!'
-            },
-            () => ({
-              validator(rule, value) {
-                if (!value || value.length >= 6) {
-                  if (value && !isAlphaNumeric(value)) {
-                    return Promise.reject('Password is not alphanumeric!');
+        <Tooltip
+          title="Password must be atleast 6 characters and alphanumeric!"
+          placement="top"
+          trigger={["focus"]}>
+          <Form.Item
+            name="password"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Please input your password!'
+              },
+              () => ({
+                validator(rule, value) {
+                  if (!value || value.length >= 6) {
+                    if (value && !isAlphaNumeric(value)) {
+                      return Promise.reject('Password is not alphanumeric!');
+                    }
+                    return Promise.resolve();
+                  } else if (value.length > 0) {
+                    return Promise.reject('Password is too short!');
                   }
                   return Promise.resolve();
-                } else if (value.length > 0) {
-                  return Promise.reject('Password is too short!');
                 }
-                return Promise.resolve();
-              }
-            })
-          ]}>
-          <Input.Password
-            id="password"
-            placeholder="password"
-            style={{ borderRadius: '7px' }}
-            prefix={
-              <Tooltip title="Password must be atleast 6 characters and alphanumeric!">
-                <InfoCircleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />
-              </Tooltip>
-            }
-          />
-        </Form.Item>
-
+              })
+            ]}>
+            <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
+          </Form.Item>
+        </Tooltip>
         <Form.Item
           name="confirm"
           hasFeedback
@@ -183,7 +177,12 @@ export default function RegisterModal(props) {
 
         {/* <Form.Item > */}
         <div className={styles.submitFormItem}>
-          <Button type="primary" htmlType="submit" id="btnSubmit" className={styles.btnSubmit} loading={loading}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            id="btnSubmit"
+            className={styles.btnSubmit}
+            loading={loading}>
             SIGN UP
           </Button>
         </div>
@@ -208,8 +207,8 @@ export default function RegisterModal(props) {
 async function checkEmailDuplicate(emailInput) {
   const res = await fetch('/api/emails/');
   const results = await res.json();
-  console.log('results')
-  console.log(results)
+  console.log('results');
+  console.log(results);
 
   var emailAlreadyRegistered = false;
   results.forEach((user) => {
@@ -223,4 +222,3 @@ async function checkEmailDuplicate(emailInput) {
   }
   return Promise.resolve();
 }
-
