@@ -297,7 +297,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Caloocan');
                 }}
-                >
+              >
                 Caloocan City
               </Button>
             </Col>
@@ -305,13 +305,13 @@ export default function FilterSection(props) {
 
           <Row>
             <Col span={8} align="center">
-            <Button
+              <Button
                 className={locationFilter == 'Las Pinas' ? 'modalBtnSelected' : null}
                 type="text"
                 onClick={() => {
                   modalsetLocation('Las Pinas');
                 }}
-                >
+              >
                 Las Pinas City
               </Button>
             </Col>
@@ -322,7 +322,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Marikina');
                 }}
-                >
+              >
                 Marikina City
               </Button>
             </Col>
@@ -334,7 +334,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Muntinlupa');
                 }}
-                >
+              >
                 Muntinlupa City
               </Button>
             </Col>
@@ -347,7 +347,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Navotas');
                 }}
-                >
+              >
                 Navotas City
               </Button>
             </Col>
@@ -358,7 +358,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Paranaque');
                 }}
-                >
+              >
                 Paranaque City
               </Button>
             </Col>
@@ -369,7 +369,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Pasig');
                 }}
-                >
+              >
                 Pasig City
               </Button>
             </Col>
@@ -382,7 +382,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Pateros');
                 }}
-                >
+              >
                 Pateros City
               </Button>
             </Col>
@@ -393,7 +393,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Quezon');
                 }}
-                >
+              >
                 Quezon City
               </Button>
             </Col>
@@ -404,7 +404,7 @@ export default function FilterSection(props) {
                 onClick={() => {
                   modalsetLocation('Valenzuela');
                 }}
-                >
+              >
                 Valenzuela City
               </Button>
             </Col>

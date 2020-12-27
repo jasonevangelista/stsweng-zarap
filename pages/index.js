@@ -77,7 +77,7 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <h2 className={styles.landingTitle}>
             {' '}
-              <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"
@@ -90,7 +90,7 @@ export default function Home({ results }) {
                       router.push('searchfilter/' + value);
                     }
                   }}
-                  />
+                />
               </Col>
             </Row>
           </h2>
@@ -99,9 +99,9 @@ export default function Home({ results }) {
 
       <div className={styles.bottomBG}>
         <div className={styles.carouselTop}>
-            <div>
-              <CarouselItem restoSet={cards.slice(0, 3)} />
-            </div>
+          <div>
+            <CarouselItem restoSet={cards.slice(0, 3)} />
+          </div>
         </div>
       </div>
     </div>

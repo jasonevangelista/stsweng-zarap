@@ -64,7 +64,7 @@ export default function SearchRestoCard({ resto }) {
             <p>
               <ClockCircleOutlined/>
               &nbsp;Open Hours
-              </p>
+            </p>
             <p>
               <PhoneOutlined/>
               &nbsp;Contact Details</p>
