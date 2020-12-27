@@ -307,8 +307,14 @@ describe('RegisterModal Component', () => {
       .find('form')
       .children()
       .map((node) => node.props().name);
+    var updatedReceivedNamesList = []
+    receivedNamesList.forEach((value)=>{
+      if(value){
+        updatedReceivedNamesList.push(value);
+      }
+    })
     const expectedNamesList = ['firstName', 'lastName', 'email', 'password', 'confirm'];
-    expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+    expect(updatedReceivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
   });
 });
 
