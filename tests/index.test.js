@@ -314,7 +314,7 @@ describe('RegisterModal Component', () => {
       }
     })
     const expectedNamesList = ['firstName', 'lastName', 'email', 'password', 'confirm'];
-    expect(updatedReceivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+    expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
   });
 });
 
