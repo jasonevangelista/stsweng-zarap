@@ -69,7 +69,7 @@ body {
 }
 
 /* Search Bar Button Style Overrides */
-.searchBar .ant-btn:hover, .ant-btn:focus, .ant-btn:active{
+.searchBar .ant-btn:hover,.searchBar .ant-btn:focus,.searchBar .ant-btn:active{
     border-color:#E23744;
 }
 
