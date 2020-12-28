@@ -46,7 +46,7 @@ export default function RegisterModal(props) {
       visible={props.registerModalVisible}
       onCancel={() => {
         form.resetFields();
-        props.handleCancel();
+        props.closeModal();
       }}
       width={400}
       footer={null}>

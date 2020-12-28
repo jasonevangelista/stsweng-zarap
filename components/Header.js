@@ -20,21 +20,18 @@ export default function Header() {
   const showModal = () => {
     setRegisterModalVisible(true);
   };
-  // const handleOk = () => {
-  //   setRegisterModalVisible(true);
-  // };
 
-  const handleCancel = () => {
+  const closeModal = () => {
     setRegisterModalVisible(false);
   };
 
   const validRegister = () => {
     console.log("account registered!")
-    setRegisterModalVisible(false);
+    closeModal();
   };
 
   const redirectToLoginModal = () => {
-    setRegisterModalVisible(false);
+    closeModal();
     // redirect login modal here
   };
 
@@ -68,7 +65,7 @@ export default function Header() {
         </div>
         <RegisterModal
           registerModalVisible={registerModalVisible}
-          handleCancel={handleCancel}
+          closeModal={closeModal}
           redirectToLoginModal={redirectToLoginModal}
           onFinish={validRegister}
         />
