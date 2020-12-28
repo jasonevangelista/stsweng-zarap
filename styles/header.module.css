@@ -49,6 +49,10 @@
   color: black;
 }
 
+h4.signup, h4.login{
+  margin: 0;
+}
+
 .transparent {
   background-color: transparent;
 }

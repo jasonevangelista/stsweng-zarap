@@ -1,6 +1,6 @@
 import styles from '../styles/header.module.css';
 import Image from 'next/image';
-import { Typography, Modal } from 'antd';
+import { Typography } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -48,7 +48,10 @@ export default function Header() {
       </div>
       <div className={styles.navLinks}>
         <div>
-          <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>
+          <Title level={4} 
+          // className={`${pathname === '/' ? styles.white : ''}`}
+          className={[styles.white, styles.login]}
+          >
             Login
           </Title>
         </div>
@@ -59,7 +62,7 @@ export default function Header() {
             showModal();
           }}
         >
-          <Title level={4} className={`${pathname === '/' ? styles.white : ''}`}>
+          <Title level={4} className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
             Sign Up
           </Title>
         </div>
