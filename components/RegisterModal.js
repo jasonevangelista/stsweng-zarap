@@ -24,20 +24,7 @@ export default function RegisterModal(props) {
   };
 
   function isAlphaNumeric(str) {
-    var code, i, len;
-
-    for (i = 0, len = str.length; i < len; i++) {
-      code = str.charCodeAt(i);
-      if (
-        !(code > 47 && code < 58) && // numeric (0-9)
-        !(code > 64 && code < 91) && // upper alpha (A-Z)
-        !(code > 96 && code < 123)
-      ) {
-        // lower alpha (a-z)
-        return false;
-      }
-    }
-    return true;
+    return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(str);
   }
 
   return (
@@ -97,18 +84,6 @@ export default function RegisterModal(props) {
               required: true,
               message: 'Please input your e-mail!'
             },
-            // () => ({
-            //   validator(rule, value) {
-            //     if (value) {
-            //       var emailStatus = checkEmailDuplicate(value);
-            //       // checkEmailDuplicate(value).then(result => {
-            //         // return result;
-            //       // })
-            //       return emailStatus;
-            //     }
-            //     return Promise.resolve();
-            //   }
-            // })
             {
               validator: async (rule, value) => {
                 if (value) {
@@ -123,7 +98,7 @@ export default function RegisterModal(props) {
         </Form.Item>
 
         <Tooltip
-          title="Password must be atleast 6 characters and alphanumeric!"
+          title="Password must be at least 6 characters and alphanumeric!"
           placement="top"
           name="password"
           trigger={["focus"]}>
@@ -139,7 +114,7 @@ export default function RegisterModal(props) {
                 validator(rule, value) {
                   if (!value || value.length >= 6) {
                     if (value && !isAlphaNumeric(value)) {
-                      return Promise.reject('Password is not alphanumeric!');
+                      return Promise.reject('Password must be alphanumeric!');
                     }
                     return Promise.resolve();
                   } else if (value.length > 0) {
