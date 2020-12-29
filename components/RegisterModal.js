@@ -1,11 +1,9 @@
 /*eslint no-undef: 0*/
-
 import styles from '../styles/registerModal.module.css';
 import { Input, Button, Form, Modal, Tooltip } from 'antd';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
-import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
+import bcrypt from 'bcryptjs';
 
 export default function RegisterModal(props) {
   const [form] = Form.useForm();
@@ -13,14 +11,15 @@ export default function RegisterModal(props) {
 
   // called when form content is valid
   const onFinish = (values) => {
-    console.log('Received values of form: ', values); // values.firstName | values.lastName | values.email | values.password
     setLoading(true);
-    setTimeout(() => {
-      // setVisible(false);
+    delete values["confirm"]
+    console.log('Received values of form:'); // values.firstName | values.lastName | values.email | values.password
+    console.log(values)
+    addAccount(values).then(()=>{
       props.onFinish();
       setLoading(false);
       form.resetFields();
-    }, 2000);
+    })
   };
 
   function isAlphaNumeric(str) {
@@ -199,4 +198,16 @@ async function checkEmailDuplicate(emailInput) {
     return Promise.reject('E-mail has already been registered!');
   }
   return Promise.resolve();
+}
+
+async function addAccount(newAccount){
+  // encrypt password
+  newAccount.password = bcrypt.hashSync(newAccount.password, 10)
+  // insert new account info in db
+  var accountString = JSON.stringify(newAccount);
+  const res = await fetch('/api/register/' + accountString);
+  const results = await res.json();
+
+  console.log('results');
+  console.log(results);
 }
