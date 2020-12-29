@@ -3,6 +3,7 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
+    position: relative;
 }
 
 .ant-card-head-title {
@@ -30,11 +31,11 @@ body {
     color:  #E23744;
 }
 
+/* SearchFilter Menu Overrides */
 .ant-menu{
     border-right-color: white;
 }
 
-/* SearchFilter Menu Overrides */
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
     background: #e769741e;
 }
@@ -57,23 +58,23 @@ body {
     border-color:#E23744;
 }
 
-.searchBar .ant-input-affix-wrapper:focus, .ant-input-affix-wrapper-focused{
+.searchBar .ant-input-affix-wrapper:focus, .searchBar .ant-input-affix-wrapper-focused{
     border-color:#E23744;
     /* border-color: white; */
     -webkit-box-shadow: 0 0 5px #e65662;
     box-shadow: 0 0 5px #e65662;
 }
 
-.searchBar .ant-input-search .ant-input:hover, .ant-input-search .ant-input:focus{
+.searchBar .ant-input-search .ant-input:hover, .searchBar .ant-input-search .ant-input:focus{
     border-color:#E23744;
 }
 
 /* Search Bar Button Style Overrides */
-.searchBar .ant-btn:hover, .ant-btn:focus, .ant-btn:active{
+.searchBar .ant-btn:hover,.searchBar .ant-btn:focus,.searchBar .ant-btn:active{
     border-color:#E23744;
 }
 
-.searchBar .ant-btn-primary, .ant-btn-primary:hover, .ant-btn-primary:focus, .ant-btn-primary:active{
+.searchBar .ant-btn-primary, .searchBar .ant-btn-primary:hover, .searchBar .ant-btn-primary:focus,.searchBar .ant-btn-primary:active{
     background: #E23744;
     border-color:#E23744;
 }
@@ -83,4 +84,8 @@ body {
     border-color: #E23744 !important;
     -webkit-box-shadow: 0 0 5px #e65662;
     box-shadow: 0 0 5px #e65662;
+}
+
+.ant-modal-content{
+    border-radius: 10px;
 }

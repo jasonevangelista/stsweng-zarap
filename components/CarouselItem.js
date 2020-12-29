@@ -6,27 +6,27 @@ import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
 
 function FormatRating(rating, reviews){
-    var ratingString = "";
-    ratingString = Math.floor(rating * 2 ) / 2;
-    ratingString = ratingString.toFixed(1);
+  var ratingString = "";
+  ratingString = Math.floor(rating * 2 ) / 2;
+  ratingString = ratingString.toFixed(1);
 
-    if(reviews != null){
-        if (reviews.length > 1){
-            return (
-                <p>{ratingString} ({reviews.length} reviews)</p>
-            )
-        }
-        else{
-            return (
-                <p>{ratingString} ({reviews.length} review)</p>
-            )
-        }
+  if(reviews != null){
+    if (reviews.length > 1){
+      return (
+        <p>{ratingString} ({reviews.length} reviews)</p>
+      )
     }
-    else {
-        return (
-            <p>{ratingString} (0 review)</p>
-        )
+    else{
+      return (
+        <p>{ratingString} ({reviews.length} review)</p>
+      )
     }
+  }
+  else {
+    return (
+      <p>{ratingString} (0 review)</p>
+    )
+  }
 }
 
 export default function carouselItem({ restoSet }) {
@@ -67,19 +67,19 @@ export default function carouselItem({ restoSet }) {
                     borderTopRightRadius: '10px'
                   }}
                   className={styles.card}
-                  >
+                >
                   <div className={`${styles.cardTitle} ${styles.paddBottom}`}>
-                      {card.name}
+                    {card.name}
                   </div>
 
                   <Row style={{paddingBottom: '4px'}}>
                     <Tag icon={card.icon}> {card.establishmentType} </Tag>
                     <Tag icon={<MdLocationOn size="12px" />}> {card.city} </Tag>
                   </Row>
-                    <div id={styles.stars}>
-                      <Rate disabled allowHalf value={card.averageRating}/>
-                      <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
-                    </div>
+                  <div id={styles.stars}>
+                    <Rate disabled allowHalf value={card.averageRating}/>
+                    <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
+                  </div>
                 </Card> 
               </Link>
             </Badge.Ribbon>
