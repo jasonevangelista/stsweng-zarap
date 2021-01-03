@@ -97,7 +97,7 @@ export default function RegisterModal(props) {
         </Form.Item>
 
         <Tooltip
-          title="Password must be at least 6 characters and alphanumeric!"
+          title="Password must be at least 6 characters and must only be alphanumeric!"
           placement="top"
           name="password"
           trigger={["focus"]}>
