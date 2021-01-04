@@ -21,7 +21,7 @@ export default function RestaurantProfile({ resto }) {
       </Head>
 
       <div className={styles.buttonBox}>
-        <Button type="link"><Link href={`/searchfilter/${resto.name}`}>Back to search</Link></Button>
+        <Button type="link"><Link href={`/searchfilter/${resto.name}`}>Back to Search</Link></Button>
       </div>
 
       <div className={styles.contentContainer}>
