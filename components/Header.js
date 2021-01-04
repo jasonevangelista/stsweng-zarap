@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 import RegisterModal from './RegisterModal';
+import LoginModal from './LoginModal';
 
 import React, { useState, useEffect, useRef } from 'react';
 
@@ -15,6 +16,7 @@ export default function Header() {
   var pathname = null;
 
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
   // modal methods
   const showModal = () => {
@@ -26,13 +28,27 @@ export default function Header() {
   };
 
   const validRegister = () => {
-    console.log("account registered!")
+    console.log('account registered!');
     closeModal();
   };
 
   const redirectToLoginModal = () => {
     closeModal();
-    // redirect login modal here
+    showLoginModal();
+  };
+
+  // For login modal
+  const showLoginModal = () => {
+    setLoginModalVisible(true);
+  };
+
+  const closeLoginModal = () => {
+    setLoginModalVisible(false);
+  };
+
+  const redirectToRegisterModal = () => {
+    closeLoginModal();
+    showModal();
   };
 
   if (router) {
@@ -47,11 +63,14 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.navLinks}>
-        <div>
-          <Title level={4} 
-          // className={`${pathname === '/' ? styles.white : ''}`}
-          className={[styles.white, styles.login]}
-          >
+        <div
+          onClick={() => {
+            showLoginModal();
+          }}>
+          <Title
+            level={4}
+            // className={`${pathname === '/' ? styles.white : ''}`}
+            className={[styles.white, styles.login]}>
             Login
           </Title>
         </div>
@@ -60,12 +79,16 @@ export default function Header() {
           className={`${pathname === '/' ? '' : styles.majorButton}`}
           onClick={() => {
             showModal();
-          }}
-        >
+          }}>
           <Title level={4} className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
             Sign Up
           </Title>
         </div>
+        <LoginModal
+          closeModal={closeLoginModal}
+          visible={loginModalVisible}
+          redirect={redirectToRegisterModal}
+        />
         <RegisterModal
           registerModalVisible={registerModalVisible}
           closeModal={closeModal}
