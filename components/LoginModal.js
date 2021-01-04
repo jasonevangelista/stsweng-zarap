@@ -6,6 +6,13 @@ export default function LoginModal({ visible, closeModal, redirect }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
+  const onFinish = async (values) => {
+    setLoading(true);
+    console.log(values);
+    const res = await authenticate(values);
+    setLoading(false);
+  };
+
   return (
     <Modal
       centered
@@ -16,7 +23,12 @@ export default function LoginModal({ visible, closeModal, redirect }) {
       }}
       width={400}
       footer={null}>
-      <Form form={form} className={formstyles.form}>
+      <Form
+        form={form}
+        className={formstyles.form}
+        onFinish={(values) => {
+          onFinish(values);
+        }}>
         <h1>Login</h1>
 
         <Form.Item
@@ -73,4 +85,13 @@ export default function LoginModal({ visible, closeModal, redirect }) {
       </Form>
     </Modal>
   );
+}
+
+async function authenticate(values) {
+  const accountString = JSON.stringify(values);
+
+  const res = await fetch('/api/login/' + accountString);
+
+  console.log('results');
+  console.log(res);
 }
