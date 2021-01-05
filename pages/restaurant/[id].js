@@ -20,10 +20,6 @@ export default function RestaurantProfile({ resto }) {
         <title>{resto.name}</title>
       </Head>
 
-      <div className={styles.buttonBox}>
-        <Button type="link"><Link href={`/searchfilter/${resto.name}`}>Back to Search</Link></Button>
-      </div>
-
       <div className={styles.contentContainer}>
         <ImageHeader imageURL={resto.coverPhotoURL} />
 
