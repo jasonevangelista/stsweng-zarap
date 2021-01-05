@@ -26,7 +26,7 @@ export default function Header() {
   };
 
   const validRegister = () => {
-    console.log("account registered!")
+    console.log('account registered!');
     closeModal();
   };
 
@@ -41,17 +41,18 @@ export default function Header() {
 
   return (
     <div className={`${styles.header} ${pathname === '/' ? styles.transparent : ''}`}>
-      <div className={styles.imageContainer}>
-        <Link href="/">
+      <Link href="/">
+        <div className={styles.imageContainer}>
           <Image src="/text.png" width={130} height={35} />
-        </Link>
-      </div>
+        </div>
+      </Link>
+
       <div className={styles.navLinks}>
         <div>
-          <Title level={4} 
-          // className={`${pathname === '/' ? styles.white : ''}`}
-          className={[styles.white, styles.login]}
-          >
+          <Title
+            level={4}
+            // className={`${pathname === '/' ? styles.white : ''}`}
+            className={[styles.white, styles.login]}>
             Login
           </Title>
         </div>
@@ -60,8 +61,7 @@ export default function Header() {
           className={`${pathname === '/' ? '' : styles.majorButton}`}
           onClick={() => {
             showModal();
-          }}
-        >
+          }}>
           <Title level={4} className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
             Sign Up
           </Title>
