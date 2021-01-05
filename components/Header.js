@@ -49,11 +49,11 @@ export default function Header() {
       </Link>
 
       {/* search bar for specific pages */}
-      {router.pathname.includes('/restaurant/') ? (
+      {router && router.pathname.includes('/restaurant/') ? (
         <Search
           placeholder="Search for restaurants"
           allowClear
-          className={[styles.searchBar, "searchBar"]}
+          className={[styles.searchBar, 'searchBar']}
           onSearch={(value) => (value ? router.push(`/searchfilter/${value}`) : '')}
         />
       ) : (
