@@ -1,6 +1,6 @@
 import styles from '../styles/header.module.css';
 import Image from 'next/image';
-import { Typography } from 'antd';
+import { Typography, Input } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 
@@ -9,6 +9,7 @@ import RegisterModal from './RegisterModal';
 import React, { useState, useEffect, useRef } from 'react';
 
 const { Title } = Typography;
+const { Search } = Input;
 
 export default function Header() {
   const router = useRouter();
@@ -47,6 +48,19 @@ export default function Header() {
         </div>
       </Link>
 
+      {/* search bar for specific pages */}
+      {router.pathname.includes('/restaurant/') ? (
+        <Search
+          placeholder="Search for restaurants"
+          allowClear
+          className={[styles.searchBar, "searchBar"]}
+          onSearch={(value) => (value ? router.push(`/searchfilter/${value}`) : '')}
+        />
+      ) : (
+        ''
+      )}
+
+      {/* login logout and register */}
       <div className={styles.navLinks}>
         <div>
           <Title
