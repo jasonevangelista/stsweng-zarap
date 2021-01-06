@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
 import { Input, Button, Form, Modal, Tooltip } from 'antd';
 import formstyles from '../styles/registerModal.module.css';
+import Router from 'next/router';
+import Cookies from 'js-cookie';
 
-export default function LoginModal({ visible, closeModal, redirect }) {
+/* middleware */
+import {
+  // absoluteUrl,
+  getAppCookies,
+  verifyToken,
+  setLogout
+} from '../lib/utils';
+
+export default function LoginModal({ visible, closeModal, redirect, profile }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +33,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
       }}
       width={400}
       footer={null}>
+      {profile ? <h1>LOGGED IN</h1> : <h1>NO ACCOUNT</h1>}
       <Form
         form={form}
         className={formstyles.form}
@@ -90,8 +101,32 @@ export default function LoginModal({ visible, closeModal, redirect }) {
 async function authenticate(values) {
   const accountString = JSON.stringify(values);
 
-  const res = await fetch('/api/login/' + accountString);
+  const result = await fetch('/api/login/' + accountString);
 
-  console.log('results');
-  console.log(res);
+  console.log(result);
+
+  if (result.success && result.token) {
+    Cookies.set('token', result.token);
+    // window.location.href = referer ? referer : "/";
+    // const pathUrl = referer ? referer.lastIndexOf("/") : "/";
+    Router.push('/');
+  } else {
+    console.log('fail');
+  }
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  // const { origin } = absoluteUrl(req);
+
+  // const baseApiUrl = `${origin}/api`;
+
+  const { token } = getAppCookies(req);
+  const profile = token ? verifyToken(token.split(' ')[1]) : '';
+  return {
+    props: {
+      // baseApiUrl,
+      profile
+    }
+  };
 }
