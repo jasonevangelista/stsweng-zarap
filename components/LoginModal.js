@@ -5,12 +5,7 @@ import Router from 'next/router';
 import Cookies from 'js-cookie';
 
 /* middleware */
-import {
-  // absoluteUrl,
-  getAppCookies,
-  verifyToken,
-  setLogout
-} from '../lib/utils';
+import { absoluteUrl, getAppCookies, verifyToken, setLogout } from '../lib/utils';
 
 export default function LoginModal({ visible, closeModal, redirect, profile }) {
   const [form] = Form.useForm();
@@ -18,7 +13,6 @@ export default function LoginModal({ visible, closeModal, redirect, profile }) {
 
   const onFinish = async (values) => {
     setLoading(true);
-    console.log(values);
     const res = await authenticate(values);
     setLoading(false);
   };
@@ -101,7 +95,9 @@ export default function LoginModal({ visible, closeModal, redirect, profile }) {
 async function authenticate(values) {
   const accountString = JSON.stringify(values);
 
-  const result = await fetch('/api/login/' + accountString);
+  const api = await fetch('/api/login/' + accountString);
+
+  let result = await api.json();
 
   console.log(result);
 
@@ -113,19 +109,22 @@ async function authenticate(values) {
   } else {
     console.log('fail');
   }
+  
+  return result;
 }
 
 export async function getServerSideProps(context) {
   const { req } = context;
-  // const { origin } = absoluteUrl(req);
+  const { origin } = absoluteUrl(req);
 
-  // const baseApiUrl = `${origin}/api`;
+  const baseApiUrl = `${origin}/api`;
 
   const { token } = getAppCookies(req);
   const profile = token ? verifyToken(token.split(' ')[1]) : '';
+
   return {
     props: {
-      // baseApiUrl,
+      baseApiUrl,
       profile
     }
   };

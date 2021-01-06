@@ -9,9 +9,13 @@ import LoginModal from './LoginModal';
 
 import React, { useState, useEffect, useRef } from 'react';
 
+/* middleware */
+import { absoluteUrl, getAppCookies, verifyToken, setLogout } from '../lib/utils';
+
 const { Title } = Typography;
 
-export default function Header() {
+export default function Header(props) {
+  const { profile } = props;
   const router = useRouter();
   var pathname = null;
 
@@ -84,11 +88,16 @@ export default function Header() {
             Sign Up
           </Title>
         </div>
-        <LoginModal
-          closeModal={closeLoginModal}
-          visible={loginModalVisible}
-          redirect={redirectToRegisterModal}
-        />
+        {!profile ? (
+          <LoginModal
+            closeModal={closeLoginModal}
+            visible={loginModalVisible}
+            redirect={redirectToRegisterModal}
+          />
+        ) : (
+          <h1>Log Out</h1>
+        )}
+
         <RegisterModal
           registerModalVisible={registerModalVisible}
           closeModal={closeModal}
@@ -98,4 +107,21 @@ export default function Header() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const { origin } = absoluteUrl(req);
+
+  const baseApiUrl = `${origin}/api`;
+
+  const { token } = getAppCookies(req);
+  const profile = token ? verifyToken(token.split(' ')[1]) : '';
+
+  return {
+    props: {
+      baseApiUrl,
+      profile
+    }
+  };
 }
