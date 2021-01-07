@@ -12,7 +12,7 @@ import {
   setLogout
 } from '../lib/utils';
 
-export default function LoginModal({ visible, closeModal, redirect, profile }) {
+export default function LoginModal({ visible, closeModal, redirect}) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
@@ -101,15 +101,15 @@ export default function LoginModal({ visible, closeModal, redirect, profile }) {
 async function authenticate(values) {
   const accountString = JSON.stringify(values);
 
-  const result = await fetch('/api/login/' + accountString);
+  const api = await fetch('/api/login/' + accountString);
 
-  console.log(result);
-
+  let result = await api.json();
+  console.log(result)
   if (result.success && result.token) {
     Cookies.set('token', result.token);
     // window.location.href = referer ? referer : "/";
     // const pathUrl = referer ? referer.lastIndexOf("/") : "/";
-    Router.push('/');
+    Router.push("/");
   } else {
     console.log('fail');
   }

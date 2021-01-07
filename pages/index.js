@@ -2,11 +2,19 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Carousel, Typography } from 'antd';
+import { Input, Row, Col, Carousel, Typography, Button } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 
 const { Title } = Typography;
+
+/* middleware */
+import {
+  // absoluteUrl,
+  getAppCookies,
+  verifyToken,
+  setLogout
+} from '../lib/utils';
 
 const Search = Input;
 import { useRouter } from 'next/router';
@@ -60,12 +68,21 @@ const restoPicker = (results) => {
   return restaurants;
 };
 
-export default function Home({ results }) {
+export default function Home({ results, profile}) {
   const router = useRouter();
   const [cards, setCards] = useState([]);
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
+
+  // const { profile } = results;
+
+  console.log("profile")
+  console.log(profile)
+
+  function handleOnClickLogout(e) {
+    setLogout(e);
+  }
 
   return (
     <div className={styles.container}>
@@ -78,6 +95,10 @@ export default function Home({ results }) {
           <h2 className={styles.landingTitle}>
             {' '}
             <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            {profile && <h1>LOGGED IN</h1>}
+            {profile && 
+            <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
+            {!profile && <h1>NOT LOGGED IN</h1>}
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"
@@ -109,14 +130,26 @@ export default function Home({ results }) {
 }
 
 // get all restaurants info when page is loaded
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();
 
+  const { req } = context;
+  // const { origin } = absoluteUrl(req);
+
+  // const baseApiUrl = `${origin}/api`;
+  console.log("header get serversidep rops")
+
+  const { token } = getAppCookies(req);
+  const profile = token ? verifyToken(token.split(' ')[1]) : '';
+  console.log("profile")
+  console.log(profile)
+
   return {
     props: {
       results: JSON.parse(JSON.stringify(restaurants)),
+      profile
     },
   };
 }
