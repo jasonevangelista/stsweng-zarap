@@ -18,7 +18,6 @@ export default async (req, res) => {
 
     if (foundAccount) {
       const isMatch = bcrypt.compareSync(accountDetails['password'], foundAccount.password);
-      // console.log('match ' + match);
 
       if (isMatch) {
         // create jwt payload
@@ -39,19 +38,12 @@ export default async (req, res) => {
               success: true,
               token: 'Bearer ' + token
             });
-
-            
-            // console.log("bruh " + err);
           }
         );
       } else {
         /* Send error with message */
         res.status(400).json({ status: 'error', error: 'Password incorrect' });
       }
-
-      // res.status(200).json({
-      //   message: 'Account found!'
-      // });
     } else {
       res.status(400).json({
         message: 'Account not found!'
