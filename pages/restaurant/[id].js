@@ -2,6 +2,7 @@ import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
 import { Typography, Divider } from 'antd';
 import Head from 'next/head';
+import Link from 'next/link';
 
 import BasicInfo from '../../components/restoprofile/BasicInfo';
 import ImageHeader from '../../components/restoprofile/ImageHeader';
@@ -18,6 +19,7 @@ export default function RestaurantProfile({ resto }) {
       <Head>
         <title>{resto.name}</title>
       </Head>
+
       <div className={styles.contentContainer}>
         <ImageHeader imageURL={resto.coverPhotoURL} />
 
@@ -56,8 +58,8 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: '/404',
-        permanent: false,
-      },
+        permanent: false
+      }
     };
   }
 
@@ -73,8 +75,8 @@ export async function getServerSideProps(context) {
     var results = JSON.parse(JSON.stringify(restaurant));
     return {
       props: {
-        resto: results[0],
-      },
+        resto: results[0]
+      }
     };
   }
 
@@ -83,8 +85,8 @@ export async function getServerSideProps(context) {
     return {
       redirect: {
         destination: '/404',
-        permanent: false,
-      },
+        permanent: false
+      }
     };
   }
 }

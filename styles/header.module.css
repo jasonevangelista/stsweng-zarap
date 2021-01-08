@@ -60,3 +60,8 @@ h4.signup, h4.login{
 .white{
   color: white !important;
 }
+
+.searchBar{
+  max-width: 500px;
+  border-color: red;
+}
