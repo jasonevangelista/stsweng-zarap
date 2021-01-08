@@ -48,7 +48,6 @@ export default function LoginModal({ visible, closeModal, redirect }) {
 
         <Form.Item
           name="e-mail"
-          hasFeedback
           rules={[
             {
               type: 'email',
@@ -64,7 +63,6 @@ export default function LoginModal({ visible, closeModal, redirect }) {
 
         <Form.Item
           name="password"
-          hasFeedback
           rules={[
             {
               required: true,
