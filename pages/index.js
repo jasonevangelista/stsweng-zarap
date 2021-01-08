@@ -66,11 +66,7 @@ export default function Home({ results }) {
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
-
-  function handleOnClickLogout(e) {
-    setLogout(e);
-  }
-
+  
   return (
     <div className={styles.container}>
       <Head>
