@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
-import { Typography, Rate, Divider } from 'antd';
+import { Typography, Divider } from 'antd';
 import Head from 'next/head';
 
 import BasicInfo from '../../components/restoprofile/BasicInfo';

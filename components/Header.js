@@ -7,7 +7,7 @@ import Link from 'next/link';
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 
 const { Title } = Typography;
