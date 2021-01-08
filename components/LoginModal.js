@@ -57,7 +57,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
               message: 'Please input your password!'
             }
           ]}>
-          <Input id="password" placeholder="password" style={{ borderRadius: '7px' }} />
+          <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
         <div className={formstyles.submitFormItem}>
