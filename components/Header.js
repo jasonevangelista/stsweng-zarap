@@ -7,7 +7,7 @@ import Link from 'next/link';
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 
 const { Title } = Typography;
@@ -17,6 +17,7 @@ export default function Header() {
   var pathname = null;
 
   const [session, loading] = useSession();
+  
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
@@ -65,7 +66,7 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.navLinks}>
-        {!session && (
+        {session && (
           <div
             onClick={() => {
               signOut();
@@ -78,7 +79,7 @@ export default function Header() {
             </Title>
           </div>
         )}
-        {session && (
+        {!session && (
           <>
             <div
               onClick={() => {
