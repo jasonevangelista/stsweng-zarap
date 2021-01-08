@@ -19,6 +19,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
 
     if (decision === 'success') {
       await signIn('credentials', { email: values['e-mail'], password: values.password });
+      setIsError(false);
     } else if (decision === 'error') {
       setIsError(true);
     }
