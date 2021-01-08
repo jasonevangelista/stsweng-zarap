@@ -22,7 +22,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
     } else if (decision === 'error') {
       setIsError(true);
     }
-    
+
     setLoading(false);
   };
 
@@ -32,6 +32,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
       visible={visible}
       onCancel={() => {
         form.resetFields();
+        setIsError(false);
         closeModal();
       }}
       width={400}
@@ -72,9 +73,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
           <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
-        {
-          isError && <p style={{color:"red"}}> Account not found or password is wrong. </p>
-        }
+        {isError && <p style={{ color: 'red' }}> Account not found or password is wrong. </p>}
 
         <div className={formstyles.submitFormItem}>
           <Button
