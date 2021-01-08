@@ -17,7 +17,7 @@ export default function Header() {
   var pathname = null;
 
   const [session, loading] = useSession();
-  
+
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
@@ -66,7 +66,7 @@ export default function Header() {
         </Link>
       </div>
       <div className={styles.navLinks}>
-        {session && (
+        {!loading && session && (
           <div
             onClick={() => {
               signOut();
@@ -79,7 +79,7 @@ export default function Header() {
             </Title>
           </div>
         )}
-        {!session && (
+        {!loading && !session && (
           <>
             <div
               onClick={() => {
