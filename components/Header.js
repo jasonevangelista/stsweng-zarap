@@ -7,18 +7,16 @@ import Link from 'next/link';
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
 
-import React, { useState, useEffect, useRef } from 'react';
-
-/* middleware */
-import { absoluteUrl, getAppCookies, verifyToken, setLogout } from '../lib/utils';
+import React, { useState } from 'react';
+import { signOut, useSession } from 'next-auth/client';
 
 const { Title } = Typography;
 
-export default function Header(props) {
-  const { profile } = props;
+export default function Header() {
   const router = useRouter();
   var pathname = null;
 
+  const [session, loading] = useSession();
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
   const [loginModalVisible, setLoginModalVisible] = useState(false);
 
@@ -32,7 +30,7 @@ export default function Header(props) {
   };
 
   const validRegister = () => {
-    console.log('account registered!');
+    // console.log('account registered!');
     closeModal();
   };
 
@@ -67,61 +65,60 @@ export default function Header(props) {
         </Link>
       </div>
       <div className={styles.navLinks}>
-        <div
-          onClick={() => {
-            showLoginModal();
-          }}>
-          <Title
-            level={4}
-            // className={`${pathname === '/' ? styles.white : ''}`}
-            className={[styles.white, styles.login]}>
-            Login
-          </Title>
-        </div>
-        <div
-          aria-hidden="true"
-          className={`${pathname === '/' ? '' : styles.majorButton}`}
-          onClick={() => {
-            showModal();
-          }}>
-          <Title level={4} className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
-            Sign Up
-          </Title>
-        </div>
-        {!profile ? (
-          <LoginModal
-            closeModal={closeLoginModal}
-            visible={loginModalVisible}
-            redirect={redirectToRegisterModal}
-          />
-        ) : (
-          <h1>Log Out</h1>
+        {!session && (
+          <div
+            onClick={() => {
+              signOut();
+            }}>
+            <Title
+              level={4}
+              // className={`${pathname === '/' ? styles.white : ''}`}
+              className={[styles.white, styles.login]}>
+              Log Out
+            </Title>
+          </div>
         )}
+        {session && (
+          <>
+            <div
+              onClick={() => {
+                showLoginModal();
+              }}>
+              <Title
+                level={4}
+                // className={`${pathname === '/' ? styles.white : ''}`}
+                className={[styles.white, styles.login]}>
+                Login
+              </Title>
+            </div>
+            <div
+              aria-hidden="true"
+              className={`${pathname === '/' ? '' : styles.majorButton}`}
+              onClick={() => {
+                showModal();
+              }}>
+              <Title
+                level={4}
+                className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
+                Sign Up
+              </Title>
+            </div>
 
-        <RegisterModal
-          registerModalVisible={registerModalVisible}
-          closeModal={closeModal}
-          redirectToLoginModal={redirectToLoginModal}
-          onFinish={validRegister}
-        />
+            <LoginModal
+              closeModal={closeLoginModal}
+              visible={loginModalVisible}
+              redirect={redirectToRegisterModal}
+            />
+
+            <RegisterModal
+              registerModalVisible={registerModalVisible}
+              closeModal={closeModal}
+              redirectToLoginModal={redirectToLoginModal}
+              onFinish={validRegister}
+            />
+          </>
+        )}
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const { origin } = absoluteUrl(req);
-
-  const baseApiUrl = `${origin}/api`;
-
-  const { token } = getAppCookies(req);
-  const profile = token ? verifyToken(token.split(' ')[1]) : '';
-
-  return {
-    props: {
-      baseApiUrl,
-      profile
-    }
-  };
 }

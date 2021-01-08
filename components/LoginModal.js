@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { Input, Button, Form, Modal, Tooltip } from 'antd';
+import { Input, Button, Form, Modal } from 'antd';
 import formstyles from '../styles/registerModal.module.css';
-import Router from 'next/router';
-import Cookies from 'js-cookie';
 
-export default function LoginModal({ visible, closeModal, redirect}) {
+import { signIn } from 'next-auth/client';
+
+export default function LoginModal({ visible, closeModal, redirect }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
 
   const onFinish = async (values) => {
     setLoading(true);
-    const res = await authenticate(values);
+    await signIn('credentials', { email: values['e-mail'], password: values.password });
     setLoading(false);
   };
 
@@ -86,23 +86,4 @@ export default function LoginModal({ visible, closeModal, redirect}) {
       </Form>
     </Modal>
   );
-}
-
-async function authenticate(values) {
-  const accountString = JSON.stringify(values);
-
-  const api = await fetch('/api/login/' + accountString);
-
-  let result = await api.json();
-  console.log(result)
-  if (result.success && result.token) {
-    Cookies.set('token', result.token);
-    // window.location.href = referer ? referer : "/";
-    // const pathUrl = referer ? referer.lastIndexOf("/") : "/";
-    Router.push("/");
-  } else {
-    console.log('fail');
-  }
-  
-  return result;
 }
