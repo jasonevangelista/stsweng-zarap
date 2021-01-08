@@ -3,10 +3,8 @@ import Image from 'next/image';
 import { Typography } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
 import RegisterModal from './RegisterModal';
 import LoginModal from './LoginModal';
-
 import React, { useState } from 'react';
 import { signOut, useSession } from 'next-auth/client';
 

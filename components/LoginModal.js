@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
 import { Input, Button, Form, Modal } from 'antd';
 import formstyles from '../styles/registerModal.module.css';
-
+// import { verifyAccount } from '../util/verifyUser'
 import { signIn } from 'next-auth/client';
 
 export default function LoginModal({ visible, closeModal, redirect }) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   const onFinish = async (values) => {
     setLoading(true);
-    await signIn('credentials', { email: values['e-mail'], password: values.password });
+
+    const accountString = JSON.stringify(values);
+    const res = await fetch('/api/verify/' + accountString);
+    const resJSON = await res.json();
+    const decision = resJSON.decision;
+
+    if (decision === 'success') {
+      await signIn('credentials', { email: values['e-mail'], password: values.password });
+    } else if (decision === 'error') {
+      setIsError(true);
+    }
+    
     setLoading(false);
   };
 
@@ -59,6 +71,10 @@ export default function LoginModal({ visible, closeModal, redirect }) {
           ]}>
           <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
         </Form.Item>
+
+        {
+          isError && <p style={{color:"red"}}> Account not found or password is wrong. </p>
+        }
 
         <div className={formstyles.submitFormItem}>
           <Button
