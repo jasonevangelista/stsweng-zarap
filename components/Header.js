@@ -81,6 +81,7 @@ export default function Header() {
       <div className={styles.navLinks}>
         {!loading && session && (
           <div
+            aria-hidden="true"
             onClick={() => {
               signOut();
             }}>
@@ -95,6 +96,7 @@ export default function Header() {
         {!loading && !session && (
           <>
             <div
+              aria-hidden="true"
               onClick={() => {
                 showLoginModal();
               }}>
