@@ -47,7 +47,8 @@ export default function RegisterModal(props) {
         onClose()
       }}
       width={400}
-      footer={null}>
+      footer={null}
+      maskClosable={false}>
 
       {registered &&
         <div className={styles.registeredMessage}>
