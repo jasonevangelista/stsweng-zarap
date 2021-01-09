@@ -37,7 +37,8 @@ export default function LoginModal({ visible, closeModal, redirect }) {
         closeModal();
       }}
       width={400}
-      footer={null}>
+      footer={null}
+      maskClosable={false}>
       <Form
         form={form}
         className={formstyles.form}
