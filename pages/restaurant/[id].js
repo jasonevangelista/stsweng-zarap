@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
-import { Typography, Rate, Divider, Button } from 'antd';
+import { Typography, Divider } from 'antd';
 import Head from 'next/head';
 import Link from 'next/link';
 
@@ -52,11 +52,9 @@ function isHex(str) {
 
 export async function getServerSideProps(context) {
   const restaurantID = context.params.id;
-  console.log('restaurant id: ' + restaurantID);
 
   // check if params is in valid form (24-character hex string)
   if (restaurantID.length != 24 || !isHex(restaurantID)) {
-    console.log('invalid params!!!');
     return {
       redirect: {
         destination: '/404',
@@ -75,8 +73,6 @@ export async function getServerSideProps(context) {
 
   if (restaurant.length > 0) {
     var results = JSON.parse(JSON.stringify(restaurant));
-    console.log('resto:');
-    console.log(results[0]);
     return {
       props: {
         resto: results[0]

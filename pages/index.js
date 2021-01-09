@@ -2,13 +2,12 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Carousel, Typography } from 'antd';
+import { Input, Row, Col, Typography, Button } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 
 const { Title } = Typography;
 
-const Search = Input;
 import { useRouter } from 'next/router';
 
 const RoundSearch = styled(Input.Search)`
@@ -63,10 +62,11 @@ const restoPicker = (results) => {
 export default function Home({ results }) {
   const router = useRouter();
   const [cards, setCards] = useState([]);
+
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
-
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -78,6 +78,10 @@ export default function Home({ results }) {
           <h2 className={styles.landingTitle}>
             {' '}
             <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            {/* {profile && <h1>LOGGED IN</h1>}
+            {profile && 
+            <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
+            {!profile && <h1>NOT LOGGED IN</h1>} */}
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"
@@ -109,7 +113,7 @@ export default function Home({ results }) {
 }
 
 // get all restaurants info when page is loaded
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();

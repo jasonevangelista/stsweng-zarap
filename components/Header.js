@@ -3,10 +3,10 @@ import Image from 'next/image';
 import { Typography, Input } from 'antd';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-
 import RegisterModal from './RegisterModal';
-
-import React, { useState, useEffect, useRef } from 'react';
+import LoginModal from './LoginModal';
+import React, { useState } from 'react';
+import { signOut, useSession } from 'next-auth/client';
 
 const { Title } = Typography;
 const { Search } = Input;
@@ -15,7 +15,10 @@ export default function Header() {
   const router = useRouter();
   var pathname = null;
 
+  const [session, loading] = useSession();
+
   const [registerModalVisible, setRegisterModalVisible] = useState(false);
+  const [loginModalVisible, setLoginModalVisible] = useState(false);
 
   // modal methods
   const showModal = () => {
@@ -27,13 +30,27 @@ export default function Header() {
   };
 
   const validRegister = () => {
-    console.log('account registered!');
+    // console.log('account registered!');
     closeModal();
   };
 
   const redirectToLoginModal = () => {
     closeModal();
-    // redirect login modal here
+    showLoginModal();
+  };
+
+  // For login modal
+  const showLoginModal = () => {
+    setLoginModalVisible(true);
+  };
+
+  const closeLoginModal = () => {
+    setLoginModalVisible(false);
+  };
+
+  const redirectToRegisterModal = () => {
+    closeLoginModal();
+    showModal();
   };
 
   if (router) {
@@ -62,30 +79,61 @@ export default function Header() {
 
       {/* login logout and register */}
       <div className={styles.navLinks}>
-        <div>
-          <Title
-            level={4}
-            // className={`${pathname === '/' ? styles.white : ''}`}
-            className={[styles.white, styles.login]}>
-            Login
-          </Title>
-        </div>
-        <div
-          aria-hidden="true"
-          className={`${pathname === '/' ? '' : styles.majorButton}`}
-          onClick={() => {
-            showModal();
-          }}>
-          <Title level={4} className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
-            Sign Up
-          </Title>
-        </div>
-        <RegisterModal
-          registerModalVisible={registerModalVisible}
-          closeModal={closeModal}
-          redirectToLoginModal={redirectToLoginModal}
-          onFinish={validRegister}
-        />
+        {!loading && session && (
+          <div
+            aria-hidden="true"
+            onClick={() => {
+              signOut();
+            }}>
+            <Title
+              level={4}
+              // className={`${pathname === '/' ? styles.white : ''}`}
+              className={[styles.white, styles.login]}>
+              Log Out
+            </Title>
+          </div>
+        )}
+        {!loading && !session && (
+          <>
+            <div
+              aria-hidden="true"
+              onClick={() => {
+                showLoginModal();
+              }}>
+              <Title
+                level={4}
+                // className={`${pathname === '/' ? styles.white : ''}`}
+                className={[styles.white, styles.login]}>
+                Login
+              </Title>
+            </div>
+            <div
+              aria-hidden="true"
+              className={`${pathname === '/' ? '' : styles.majorButton}`}
+              onClick={() => {
+                showModal();
+              }}>
+              <Title
+                level={4}
+                className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
+                Sign Up
+              </Title>
+            </div>
+
+            <LoginModal
+              closeModal={closeLoginModal}
+              visible={loginModalVisible}
+              redirect={redirectToRegisterModal}
+            />
+
+            <RegisterModal
+              registerModalVisible={registerModalVisible}
+              closeModal={closeModal}
+              redirectToLoginModal={redirectToLoginModal}
+              onFinish={validRegister}
+            />
+          </>
+        )}
       </div>
     </div>
   );
