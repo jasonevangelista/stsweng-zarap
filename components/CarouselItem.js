@@ -76,10 +76,8 @@ export default function carouselItem({ restoSet }) {
                     <Tag icon={card.icon}> {card.establishmentType} </Tag>
                     <Tag icon={<MdLocationOn size="12px" />}> {card.city} </Tag>
                   </Row>
-                  <div id={styles.stars}>
-                    <div className={styles.ratingDiv}>
+                  <div id={styles.stars} className={styles.ratingDiv}>
                       <Rate disabled allowHalf value={card.averageRating}/>
-                    </div>
                     <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
                   </div>
                 </Card> 
