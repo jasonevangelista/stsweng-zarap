@@ -83,7 +83,7 @@ export default function Header() {
           <div
             aria-hidden="true"
             onClick={() => {
-              signOut();
+              signOut({ callbackUrl: '/' });
             }}>
             <Title
               level={4}

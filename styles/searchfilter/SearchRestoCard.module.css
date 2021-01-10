@@ -82,6 +82,10 @@
   margin-bottom: 0.5em;
 }
 
+.ratingDiv{
+  pointer-events: none;
+}
+
 .ratingDiv :hover{
   cursor: pointer;
 }
