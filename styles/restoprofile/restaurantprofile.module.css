@@ -1,5 +1,5 @@
 .wrapper {
-  background-color: #c4c4c4;
+  background-color: #f4f4f2;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -16,4 +16,13 @@
 
 .contentBody {
   padding: 30px;
+}
+
+.buttonBox {
+  width: 100%;
+  display: flex;
+  max-width: 1200px;
+  height: 60px;
+  align-items: center;
+  justify-content: flex-start;
 }

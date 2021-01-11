@@ -2,17 +2,24 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Carousel } from 'antd';
+import { Input, Row, Col, Typography, Button } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 
-const Search = Input;
+const { Title } = Typography;
+
 import { useRouter } from 'next/router';
 
 const RoundSearch = styled(Input.Search)`
   .ant-input {
     border-radius: 10px;
   }
+`;
+
+const WhiteTitle = styled(Title)`
+  &.ant-typography {
+      color: white;
+    }
 `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
@@ -55,10 +62,11 @@ const restoPicker = (results) => {
 export default function Home({ results }) {
   const router = useRouter();
   const [cards, setCards] = useState([]);
+
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
-
+  
   return (
     <div className={styles.container}>
       <Head>
@@ -69,10 +77,16 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <h2 className={styles.landingTitle}>
             {' '}
-            Find what you like
-            <Row className={styles.searchBar}>
-              <Col span={8}>
-                <RoundSearch
+            <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            {/* {profile && <h1>LOGGED IN</h1>}
+            {profile && 
+            <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
+            {!profile && <h1>NOT LOGGED IN</h1>} */}
+            <Row className={styles.searchBar} type="flex">
+              <Col span={12} height="100%">
+                <RoundSearch size="large"
+                  className={["searchBar", "landingSearchBar"]}
+                  placeholder="Search for restaurants"
                   enterButton
                   onSearch={(value) => {
                     if (value && value.trim()) {
@@ -84,29 +98,14 @@ export default function Home({ results }) {
               </Col>
             </Row>
           </h2>
-          <Row>
-            <Col span={4} offset={11} className={styles.scrollContainer}>
-              <div className={styles.chevron}></div>
-              <div className={styles.chevron}></div>
-              <div className={styles.chevron}></div>
-              {/* <br></br>
-                <span className={styles.text}>Find Out More</span> */}
-            </Col>
-          </Row>
         </div>
       </div>
 
       <div className={styles.bottomBG}>
-        <h2 className={styles.landingBottomTitle}> Recommendations </h2>
         <div className={styles.carouselTop}>
-          <Carousel autoplay dots={false}>
-            <div>
-              <CarouselItem restoSet={cards.slice(0, 3)} />
-            </div>
-            <div>
-              <CarouselItem restoSet={cards.slice(3, 6)} />
-            </div>
-          </Carousel>
+          <div>
+            <CarouselItem restoSet={cards.slice(0, 3)} />
+          </div>
         </div>
       </div>
     </div>
@@ -114,7 +113,7 @@ export default function Home({ results }) {
 }
 
 // get all restaurants info when page is loaded
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();

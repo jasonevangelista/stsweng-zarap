@@ -3,6 +3,7 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
+    position: relative;
 }
 
 .ant-card-head-title {
@@ -14,18 +15,77 @@ body {
     text-overflow: ellipsis;
 }
 
+
+/* Search Filter Page Style Overrides */
 .ant-menu .ant-menu-item-active.menuOption {
     color: #272727;
 }
 
 .ant-menu .ant-menu-item-selected.menuOption {
-    color: #1890ff;
+    /* color: #1890ff; */
+    color:#E23744;
 }
 
 .ant-btn.modalBtnSelected {
-    color: #1890ff;
+    /* color: #1890ff; */
+    color:  #E23744;
 }
 
+/* SearchFilter Menu Overrides */
 .ant-menu{
     border-right-color: white;
+}
+
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background: #e769741e;
+}
+
+.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after {
+    border-right-color: white;
+}
+
+.ant-menu-item:hover{
+    color:red;
+}
+
+.ant-btn.btnSearchFilter:hover, .ant-btn.btnSearchFilter:focus{
+    color: #E23744;
+    border-color: #E23744;
+}
+
+/* Search Bar Text Box Style Overrides */
+.searchBar .ant-input-affix-wrapper:hover{
+    border-color:#E23744;
+}
+
+.searchBar .ant-input-affix-wrapper:focus, .searchBar .ant-input-affix-wrapper-focused{
+    border-color:#E23744;
+    /* border-color: white; */
+    -webkit-box-shadow: 0 0 5px #e65662;
+    box-shadow: 0 0 5px #e65662;
+}
+
+.searchBar .ant-input-search .ant-input:hover, .searchBar .ant-input-search .ant-input:focus{
+    border-color:#E23744;
+}
+
+/* Search Bar Button Style Overrides */
+.searchBar .ant-btn:hover,.searchBar .ant-btn:focus,.searchBar .ant-btn:active{
+    border-color:#E23744;
+}
+
+.searchBar .ant-btn-primary, .searchBar .ant-btn-primary:hover, .searchBar .ant-btn-primary:focus,.searchBar .ant-btn-primary:active{
+    background: #E23744;
+    border-color:#E23744;
+}
+
+/* Landing Page-Specific Style Overrides */
+.landingSearchBar .ant-input:hover, .landingSearchBar .ant-input:active, .landingSearchBar .ant-input:focus{
+    border-color: #E23744 !important;
+    -webkit-box-shadow: 0 0 5px #e65662;
+    box-shadow: 0 0 5px #e65662;
+}
+
+.ant-modal-content{
+    border-radius: 10px;
 }

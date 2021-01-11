@@ -1,21 +1,20 @@
+/*eslint no-undef: 0*/
 import { mount } from 'enzyme';
 
 import { Empty } from 'antd';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CarouselItem from '../components/CarouselItem';
-import SearchRestoCard, {
-  FormatDetails,
-} from '../components/searchfilter/SearchRestoCard';
+import RegisterModal from '../components/RegisterModal';
+import LoginModal from '../components/LoginModal';
+
+import SearchRestoCard, { FormatDetails } from '../components/searchfilter/SearchRestoCard';
 import BasicInfo from '../components/restoprofile/BasicInfo';
 import Gallery from '../components/restoprofile/Gallery';
 import GalleryItem from '../components/restoprofile/GalleryItem';
 import ImageHeader from '../components/restoprofile/ImageHeader';
 import ReviewCard from '../components/restoprofile/ReviewCard';
-import Reviews, {
-  countReviews,
-  checkReviews,
-} from '../components/restoprofile/Reviews';
+import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews';
 
 // mock window.matchMedia() method which is not implemented in JSDOM
 Object.defineProperty(window, 'matchMedia', {
@@ -28,8 +27,8 @@ Object.defineProperty(window, 'matchMedia', {
     removeListener: jest.fn(), // Deprecated
     addEventListener: jest.fn(),
     removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
-  })),
+    dispatchEvent: jest.fn()
+  }))
 });
 
 /** @test {Header Component} */
@@ -65,12 +64,10 @@ describe('SearchRestoCard Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
-    const wrapper = mount(
-      <SearchRestoCard resto={testProps}></SearchRestoCard>
-    );
+    const wrapper = mount(<SearchRestoCard resto={testProps}></SearchRestoCard>);
     // Expect a SearchFilterCard
     expect(wrapper.find(SearchRestoCard)).toHaveLength(1);
     wrapper.unmount();
@@ -91,7 +88,7 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
+        reviews: []
       },
       {
         name: 'Golden Fortune',
@@ -103,7 +100,7 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
+        reviews: []
       },
       {
         name: 'Golden Fortune',
@@ -115,8 +112,8 @@ describe('CarouselItem Component', () => {
         openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
         contactDetails: ['02 85222288', '02 85222288'],
         averageRating: 3.9,
-        reviews: [],
-      },
+        reviews: []
+      }
     ];
 
     const wrapper = mount(<CarouselItem restoSet={testProps} />);
@@ -156,7 +153,7 @@ describe('BasicInfo Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
     const wrapper = mount(<BasicInfo resto={testProps} />);
@@ -240,9 +237,7 @@ describe('countReviews Function', () => {
 describe('checkReviews Function', () => {
   it('If null reviews, then output an Empty component', () => {
     const reviews = [null];
-    const output = (
-      <Empty description="There are no reviews for this restaurant." />
-    );
+    const output = <Empty description="There are no reviews for this restaurant." />;
     // Expect it to output an Empty component
     expect(checkReviews(reviews)).toEqual(output);
   });
@@ -263,7 +258,7 @@ describe('BasicInfo Component', () => {
       openHours: ['11:00 AM-2:30 PM (Mon-Sat)', '5:30 PM-12:AM (Sun)'],
       contactDetails: ['02 85222288', '02 85222288'],
       averageRating: 3.9,
-      reviews: [],
+      reviews: []
     };
 
     const wrapper = mount(<BasicInfo resto={testProps} />);
@@ -282,3 +277,310 @@ describe('Gallery Component', () => {
     wrapper.unmount();
   });
 });
+
+/** @test {RegisterModal Component} */
+describe('RegisterModal Component', () => {
+  let wrapper;
+  // const onFinish = jest.fn().mockImplementation(() => console.log('Form submitted!'));
+  const onFinish = jest.fn();
+  beforeEach(() => {
+    wrapper = mount(
+      <RegisterModal
+        registerModalVisible={true}
+        handleCancel={jest.fn()}
+        redirectToLoginModal={jest.fn()}
+        onFinish={onFinish}
+      />
+    );
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+  });
+
+  it('should render without crashing', () => {
+    // Expect a RegisterModal
+    expect(wrapper.find(RegisterModal)).toHaveLength(1);
+  });
+
+  it('should have proper input fields', () => {
+    var receivedNamesList = wrapper
+      .find(RegisterModal)
+      .find('form')
+      .children()
+      .map((node) => node.props().name);
+    var updatedReceivedNamesList = []
+    receivedNamesList.forEach((value)=>{
+      if(value){
+        updatedReceivedNamesList.push(value);
+      }
+    })
+    const expectedNamesList = ['firstName', 'lastName', 'email', 'password', 'confirm'];
+    expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+  });
+});
+
+/** @test {Register Modal Inputs} */
+describe('Register Modal Inputs',  () => {
+  let wrapper;
+  var errorMsg = 'ant-form-item-has-error'
+  var successMsg = 'ant-form-item-has-success'
+
+  const mockOnFinish = jest.fn()
+  const defaultProps = {
+    registerModalVisible: true,
+    handleCancel: jest.fn(),
+    redirectToLoginModal: jest.fn(),
+    onFinish: mockOnFinish
+  }
+    
+  beforeEach(() => {
+    wrapper = mount(<RegisterModal {...defaultProps}/>);
+  });
+
+  afterEach(() => {
+    wrapper.unmount();
+    jest.clearAllMocks();
+  });
+
+  function tick() {
+    return new Promise(resolve => {
+      setTimeout(resolve, 0);
+    })
+  }
+
+  // ----------- FIRST NAME INPUT ----------- 
+
+  it('if firstName is valid, no error message', async () => {
+    // test data
+    const firstName = 'John'
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
+  });
+
+  it('if firstName is empty, has error message', async () => {
+    // test data
+    const firstName = ''
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+  
+  it('if firstName is only whitespace, has error message', async () => {
+    // test data
+    const firstName = '  '
+    // place input in wrapper
+    wrapper.find('input#firstName').simulate('change', { target: { value: firstName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  // ----------- LAST NAME INPUT ----------- 
+
+  it('if lastName is valid, no error message', async () => {
+    // test data
+    const lastName = 'Smith'
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
+  });
+
+  it('if lastName is blank, has error message', async () => {
+    // test data
+    const lastName = ''
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  it('if lastName is only whitespace, has error message', async () => {
+    // test data
+    const lastName = '  '
+    // place input in wrapper
+    wrapper.find('input#lastName').simulate('change', { target: { value: lastName } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  // ----------- E-MAIL INPUT ----------- 
+  // it('if e-mail is valid, no error message', async () => {
+  //   // test data
+  //   const email = "john@smith.com"
+  //   // place input in wrapper
+  //   wrapper.find('input#email').simulate('change', { target: { value: email } });
+  //   // wait for all validation checks to finish
+  //   wrapper.update()
+  //   await tick();
+  //   // check for presence of success message
+  //   var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+  //   expect(currentNodeHTML).toContain(successMsg)
+  // });
+
+  // it('if e-mail has invalid format, no error message', async () => {
+  //   // test data
+  //   const email = "notanemail"
+  //   // place input in wrapper
+  //   wrapper.find('input#email').simulate('change', { target: { value: email } });
+  //   // wait for all validation checks to finish
+  //   wrapper.update()
+  //   await tick();
+  //   // check for presence of error message
+  //   var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+  //   expect(currentNodeHTML).toContain(errorMsg)
+  // });
+
+  // ----------- PASSWORD INPUT ----------- 
+
+  it('if password is valid, no error message', async () => {
+    // test data
+    const password = "password123"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(successMsg)
+  });
+
+
+  it('if password is not alphanumeric, has error message', async () => {
+    // test data
+    const password = "password!!!"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  it('if password is not alphanumeric, has error message', async () => {
+    // test data
+    const password = "password!!!"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  it('if password is less than 6 characters, has error message', async () => {
+    // test data
+    const password = "abc"
+    // place input in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('div.ant-form-item-has-feedback').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+
+  // ----------- CONFIRM PASSWORD INPUT ----------- 
+
+  it('if confirm password matches with password, no error message', async () => {
+    // test data
+    const password = "password123"
+    const confirm = "password123"
+    // place inputs in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: confirm } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of success message
+    var currentNodeHTML = wrapper.find('form').html()
+    expect(currentNodeHTML).toContain(successMsg)
+  });
+
+  it('if confirm password does not match with password, no error message', async () => {
+    // test data
+    const password = "password456"
+    const confirm = "password123"
+    // place inputs in wrapper
+    wrapper.find('input#password').simulate('change', { target: { value: password } });
+    wrapper.find('input#confirm').simulate('change', { target: { value: confirm } });
+    // wait for all validation checks to finish
+    wrapper.update()
+    await tick();
+    // check for presence of error message
+    var currentNodeHTML = wrapper.find('form').html()
+    expect(currentNodeHTML).toContain(errorMsg)
+  });
+});
+
+// /** @test {LoginModal Component} */
+// describe('LoginModal Component', () => {
+//   let wrapper;
+//   beforeEach(() => {
+//     wrapper = mount(
+//       <LoginModal
+//       closeModal={jest.fn()}
+//       visible={true}
+//       redirect={jest.fn()}
+//       />
+//     );
+//   });
+
+//   afterEach(() => {
+//     wrapper.unmount();
+//   });
+
+//   it('should render without crashing', () => {
+//     // Expect a LoginModal
+//     expect(wrapper.find(LoginModal)).toHaveLength(1);
+//   });
+
+//   it('should have proper input fields', () => {
+//     var receivedNamesList = wrapper
+//       .find(LoginModal)
+//       .find('form')
+//       .children()
+//       .map((node) => node.props().name);
+//     var updatedReceivedNamesList = []
+//     receivedNamesList.forEach((value)=>{
+//       if(value){
+//         updatedReceivedNamesList.push(value);
+//       }
+//     })
+//     const expectedNamesList = ['e-mail', 'password'];
+//     expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+//   });
+// });
