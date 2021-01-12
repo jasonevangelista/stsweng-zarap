@@ -85,6 +85,7 @@ export default function Home({ results }) {
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
                 <RoundSearch size="large"
+                  id="searchbar"
                   className={["searchBar", "landingSearchBar"]}
                   placeholder="Search for restaurants"
                   enterButton
