@@ -1,0 +1,19 @@
+.container{
+  background-color: #f4f4f2;
+}
+
+.userInfo{
+  text-align: center;
+  padding-top: 50px;
+}
+
+.userInfo h1{
+  font-size:5vw;
+  margin: 0;
+}
+
+.userInfo h4{
+  font-size:3vw;
+  color: #727272;
+  margin: 0;
+}

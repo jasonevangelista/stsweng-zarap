@@ -1,36 +1,64 @@
-// import { connectToDatabase } from '../../util/mongodb';
-// import { ObjectId } from 'mongodb';
-// import { Typography, Divider } from 'antd';
-// import Head from 'next/head';
-// import Link from 'next/link';
+import { connectToDatabase } from '../../util/mongodb';
+import { ObjectId } from 'mongodb';
+import { Button } from 'antd';
+import React, { useState } from 'react';
+import EditProfileModal from '../../components/EditProfileModal';
 
-// import styles from '../../styles/restoprofile/userprofile.module.css';
+
+import styles from '../../styles/userprofile.module.css';
 
 import { useSession } from 'next-auth/client';
 
-export default function UserProfile({userID}) {
+export default function UserProfile({user}) {
 
   const [session, loading] = useSession();
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
+
   console.log("props")
-  console.log(userID)
+  console.log(user._id)
+
+  // modal methods
+  const showModal = () => {
+    setProfileModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setProfileModalVisible(false);
+  };
 
   return (
-    <div>
+    <div className={styles.container}>
     
     {!loading && !session && ( // trying to access a profile without being logged in
       <div>Access Denied!</div>
     )}
-    {!loading && session && session.user.id != userID && ( // trying to access another user's profile
+    {!loading && session && session.user.id != user._id && ( // trying to access another user's profile
       <>
       <div>You cannot access other user's profiles!</div>
       </>
     )}
-    {!loading && session && session.user.id == userID && ( // accesing your own profile
+    {!loading && session && session.user.id == user._id && ( // accesing your own profile
       <>
-      <div>ID: {session.user.id}</div>
-      <div>Email: {session.user.email}</div>
-      <div>First Name: {session.user.firstName}</div>
-      <div>Last Name: {session.user.lastName}</div>
+      <div className={styles.userInfo}>
+        <h1>{session.user.firstName} {session.user.lastName}</h1>
+        <h4>{session.user.email}</h4>
+        <Button 
+          onClick={()=>{
+            console.log("edit profile!")
+            showModal()
+          }}
+        >Edit Profile</Button>
+        <EditProfileModal
+              profileModalVisible={profileModalVisible}
+              closeModal={closeModal}
+              user={user}
+            />
+      </div>
+      {/* <div className={styles.userReviews}>
+        <Title level={3}>Review History</Title>
+
+      </div> */}
+      
       </>
     )}
     </div>
@@ -44,22 +72,54 @@ function isHex(str) {
 export async function getServerSideProps(context) {
   const userID = context.params.id;
 
-  return {
-    props: {
-      userID: userID
+  const { db } = await connectToDatabase();
+
+  // check if params is in valid form (24-character hex string)
+  if (userID.length != 24 || !isHex(userID)) {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false
+      }
+    };
+  }
+
+  const user = await db
+    .collection('user')
+    .find({ _id: ObjectId(userID) })
+    .limit(1)
+    .toArray();
+
+    console.log(user)
+
+  if (user.length > 0) {
+    var results = JSON.parse(JSON.stringify(user));
+    return {
+      props: {
+        // userID: userID,
+        user: results[0]
+      }
     }
   }
-  // // check if params is in valid form (24-character hex string)
-  // if (restaurantID.length != 24 || !isHex(restaurantID)) {
-  //   return {
-  //     redirect: {
-  //       destination: '/404',
-  //       permanent: false
-  //     }
-  //   };
-  // }
 
-  // const { db } = await connectToDatabase();
+  // if data is empty
+  else {
+    return {
+      redirect: {
+        destination: '/404',
+        permanent: false
+      }
+    };
+  }
+
+  // return {
+  //   props: {
+  //     userID: userID,
+  //     userDocument: userDocument
+  //   }
+  // }
+  
+
 
   // const restaurant = await db
   //   .collection('restaurant')
