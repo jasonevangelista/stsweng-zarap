@@ -77,7 +77,7 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <h2 className={styles.landingTitle}>
             {' '}
-            <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            <WhiteTitle style={{fontSize:'64px'}}>Find what you like</WhiteTitle>
             {/* {profile && <h1>LOGGED IN</h1>}
             {profile && 
             <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
