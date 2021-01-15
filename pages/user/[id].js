@@ -3,10 +3,7 @@ import { ObjectId } from 'mongodb';
 import { Button } from 'antd';
 import React, { useState } from 'react';
 import EditProfileModal from '../../components/EditProfileModal';
-
-
 import styles from '../../styles/userprofile.module.css';
-
 import { useSession } from 'next-auth/client';
 
 export default function UserProfile({user}) {
@@ -47,7 +44,7 @@ export default function UserProfile({user}) {
             console.log("edit profile!")
             showModal()
           }}
-        >Edit Profile</Button>
+          type="text">Edit Profile</Button>
         <EditProfileModal
               profileModalVisible={profileModalVisible}
               closeModal={closeModal}

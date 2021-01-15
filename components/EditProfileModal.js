@@ -3,38 +3,49 @@ import styles from '../styles/registerModal.module.css';
 import { Input, Button, Form, Modal, Tooltip, Checkbox } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useState } from 'react';
+import bcrypt from 'bcryptjs';
+import { useRouter } from 'next/router';
+
 
 export default function RegisterModal(props) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
-  const [checked, setChecked] = useState(false);
-  // const [registered, setRegistered] = useState(false);
+  const [updated, setUpdated] = useState(false);
+  const router = useRouter();
 
   // called when form content is valid
   const onFinish = (values) => {
-    // setLoading(true);
-    // delete values["confirm"]
-    // console.log('Received values of form:'); // values.firstName | values.lastName | values.email | values.password
-    // console.log(values)
-    // addAccount(values).then(()=>{
-    //   setLoading(false);
-    //   setRegistered(true);
-    // })
-    props.closeModal();
+    setLoading(true);
+    delete values["confirmNew"]
+    delete values["oldPassword"]
+    values["_id"] = props.user._id;
+    console.log("updated profile values:")
+    console.log(values)
+    updateAccount(values).then(()=>{
+        // onClose();
+        setLoading(false);
+        setUpdated(true);
+    });
   };
 
   const onClose = () =>{
     form.resetFields();
-    // setLoading(false);
-    // if(registered){
-    //   props.onFinish();
-    //   setTimeout(() => {
-    //     setRegistered(false);
-    //   },500)
-    // }
-    // else{
+    setLoading(false);
+    if(updated){
+      // props.onFinish();
       props.closeModal();
-    // }
+      setTimeout(() => {
+        setUpdated(false);
+      },500)
+    }
+    else{
+      props.closeModal();
+    }
+  }
+
+  const reloadAfterUpdate = () => {
+    onClose();
+    router.reload();
   }
 
   const onClickCheckbox = (e) => {
@@ -57,18 +68,19 @@ export default function RegisterModal(props) {
       footer={null}
       maskClosable={false}>
 
-      {/* {registered &&
+      {updated && 
         <div className={styles.registeredMessage}>
-          <CheckCircleTwoTone style={{ fontSize: '50px'}} twoToneColor="#52c41a"/>
-          <h1>Success!</h1>
-          <p>Your account has been registered!</p>
-          <Button type="primary" className={styles.btnSuccess} onClick={()=>{
-            onClose();
-          }}>OK</Button>
-        </div>
-      } */}
+        <CheckCircleTwoTone style={{ fontSize: '50px'}} twoToneColor="#52c41a"/>
+        <h1>Success!</h1>
+        <p>Your account details have been updated!</p>
+        <Button type="primary" className={styles.btnSuccess} onClick={()=>{
+          // onClose();
+          reloadAfterUpdate();
+        }}>OK</Button>
+      </div>
+      }
 
-      {/* {!registered && */}
+      {!updated &&
         <Form
           form={form}
           onFinish={onFinish}
@@ -118,20 +130,19 @@ export default function RegisterModal(props) {
             <Form.Item
               name="oldPassword"
               hasFeedback
+              validateTrigger="onSubmit"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your old password!'
+                  message: 'Please input your current password!'
                 },
                 () => ({
                   validator(rule, value) {
-                    if (!value || value.length >= 6) {
-                      if (value && !isAlphaNumeric(value)) {
-                        return Promise.reject('Password must be alphanumeric!');
+                    if(value){
+                      if(bcrypt.compareSync(value, props.user.password)){
+                        return Promise.resolve();
                       }
-                      return Promise.resolve();
-                    } else if (value.length > 0) {
-                      return Promise.reject('Password is too short!');
+                      return Promise.reject('Incorrect password!');
                     }
                     return Promise.resolve();
                   }
@@ -139,9 +150,8 @@ export default function RegisterModal(props) {
               ]}>
               <Input.Password id="oldPassword" placeholder="password" style={{ borderRadius: '7px' }} />
             </Form.Item>
-            <Checkbox checked={checked} onChange={onClickCheckbox}>Change Password</Checkbox>
-            {checked && (
-            <>
+            {/* <Checkbox checked={checked} onChange={onClickCheckbox}>Change Password</Checkbox> */}
+            
             <Tooltip
               title="Password must be at least 6 characters and must only be alphanumeric!"
               placement="top"
@@ -151,10 +161,10 @@ export default function RegisterModal(props) {
                 name="newPassword"
                 hasFeedback
                 rules={[
-                  {
-                    required: true,
-                    message: 'Please input your current password!'
-                  },
+                  // {
+                  //   required: true,
+                  //   message: 'Please input your current password!'
+                  // },
                   () => ({
                     validator(rule, value) {
                       if (!value || value.length >= 6) {
@@ -164,6 +174,16 @@ export default function RegisterModal(props) {
                         return Promise.resolve();
                       } else if (value.length > 0) {
                         return Promise.reject('Password is too short!');
+                      }
+                      return Promise.resolve();
+                    }
+                  }),
+                  ({ getFieldValue } ) => ({
+                    validateTrigger:"onSubmit",
+                    validator(rule, value) {
+                      console.log("comparing new and old")
+                      if (value && getFieldValue('oldPassword') === value) {
+                        return Promise.reject('Input is identical with old password!');
                       }
                       return Promise.resolve();
                     }
@@ -178,17 +198,27 @@ export default function RegisterModal(props) {
               hasFeedback
               dependencies={['newPassword']}
               rules={[
-                {
-                  required: true,
-                  message: 'Please confirm your new password!'
-                },
+                // {
+                //   required: true,
+                //   message: 'Please confirm your new password!'
+                // },
+               
                 ({ getFieldValue }) => ({
                   validator(rule, value) {
-                    if (!value || getFieldValue('newPassword') === value) {
+                    var newPass = getFieldValue('newPassword');
+                    console.log('newpass: ' + newPass)
+                    if(newPass && value){
+                      if (getFieldValue('newPassword') === value) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject('The two passwords that you entered do not match!');
+                    }
+                    else if(!newPass && value || newPass && !value){
+                      return Promise.reject('The two passwords that you entered do not match!');
+                    }
+                    else{
                       return Promise.resolve();
                     }
-
-                    return Promise.reject('The two passwords that you entered do not match!');
                   }
                 })
               ]}>
@@ -198,8 +228,6 @@ export default function RegisterModal(props) {
                 style={{ borderRadius: '7px' }}
               />
             </Form.Item>
-          </>
-          )}
 
           {/* <Form.Item > */}
           <div className={styles.submitFormItem}>
@@ -212,24 +240,23 @@ export default function RegisterModal(props) {
               UPDATE
             </Button>
           </div>
-          {/* </Form.Item> */}
-          {/* <div className={styles.registerFooter}>
-            Already a member?{' '}
-            <Button
-              type="text"
-              className={styles.btnRedirect}
-              onClick={() => {
-                form.resetFields();
-                props.redirectToLoginModal();
-              }}>
-              Sign in
-            </Button>
-          </div> */}
         </Form>
-    {/* } */}
+      }
     </Modal>
   );
 }
+
+async function updateAccount(updatedDetails){
+  // insert new account info in db
+  var detailsString = JSON.stringify(updatedDetails);
+
+  const res = await fetch('/api/update/' + detailsString);
+  const results = await res.json();
+
+  console.log('results');
+  console.log(results);
+}
+
 
 // async function addAccount(newAccount){
 //   // insert new account info in db
