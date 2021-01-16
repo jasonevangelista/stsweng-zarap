@@ -1,11 +1,12 @@
 /*eslint no-undef: 0*/
 import styles from '../styles/registerModal.module.css';
-import { Input, Button, Form, Modal, Tooltip, Checkbox } from 'antd';
+import { Input, Button, Form, Modal, Tooltip } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
 import { useRouter } from 'next/router';
 
+import { signIn, signOut } from 'next-auth/client';
 
 export default function RegisterModal(props) {
   const [form] = Form.useForm();
@@ -14,18 +15,26 @@ export default function RegisterModal(props) {
   const router = useRouter();
 
   // called when form content is valid
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     setLoading(true);
     delete values["confirmNew"]
-    delete values["oldPassword"]
     values["_id"] = props.user._id;
     console.log("updated profile values:")
     console.log(values)
-    updateAccount(values).then(()=>{
-        // onClose();
-        setLoading(false);
-        setUpdated(true);
-    });
+    await updateAccount(values);
+    // onClose();
+    setLoading(false);
+    setUpdated(true);
+
+    // force re-sign in to update session
+    signOut();
+    if (values["newPassword"]){
+      signIn('credentials', { email: props.user.email, password: values.newPassword });
+    }
+    else{
+      signIn('credentials', { email: props.user.email, password: values.oldPassword });
+    }
+
   };
 
   const onClose = () =>{
@@ -73,10 +82,10 @@ export default function RegisterModal(props) {
         <CheckCircleTwoTone style={{ fontSize: '50px'}} twoToneColor="#52c41a"/>
         <h1>Success!</h1>
         <p>Your account details have been updated!</p>
-        <Button type="primary" className={styles.btnSuccess} onClick={()=>{
+        {/* <Button type="primary" className={styles.btnSuccess} onClick={()=>{
           // onClose();
           reloadAfterUpdate();
-        }}>OK</Button>
+        }}>OK</Button> */}
       </div>
       }
 
