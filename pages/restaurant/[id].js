@@ -13,7 +13,7 @@ import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
 const { Title } = Typography;
 
-export default function RestaurantProfile({ resto }) {
+export default function RestaurantProfile({ resto, reviews, author }) {
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -35,7 +35,7 @@ export default function RestaurantProfile({ resto }) {
           <Divider />
           <Gallery imageArray={resto.menuURLs} />
           <Divider />
-          <Reviews reviews={resto.reviews} />
+          <Reviews reviews={reviews} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
             <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
             <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>
@@ -72,10 +72,19 @@ export async function getServerSideProps(context) {
     .toArray();
 
   if (restaurant.length > 0) {
-    var results = JSON.parse(JSON.stringify(restaurant));
+    const restoResult = JSON.parse(JSON.stringify(restaurant));
+
+    const reviews = await db
+      .collection('review')
+      .find({ restaurantID: ObjectId(restoResult[0]._id) })
+      .toArray();
+
+    const reviewsResult = JSON.parse(JSON.stringify(reviews));
+    
     return {
       props: {
-        resto: results[0]
+        resto: restoResult[0],
+        reviews: reviewsResult
       }
     };
   }

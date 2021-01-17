@@ -7,25 +7,23 @@ import {
   PhoneOutlined
 } from '@ant-design/icons';
 
-import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function SearchRestoCard({ resto }) {
-  const router = useRouter();
-
-  var cuisines = FormatDetails(resto.cuisineType, ', ');
-  var contactDetails = FormatDetails(resto.contactDetails, '  |  ');
-  var openHours = FormatDetails(resto.openHours, '  |  ');
-  var rating = FormatRating(resto.averageRating, resto.reviews);
-  var restoProfileLink = '/restaurant/' + resto._id;
+  const cuisines = FormatDetails(resto.cuisineType, ', ');
+  const contactDetails = FormatDetails(resto.contactDetails, '  |  ');
+  const openHours = FormatDetails(resto.openHours, '  |  ');
+  const rating = FormatRating(resto.averageRating, getReviews(resto));
+  const restoProfileLink = '/restaurant/' + resto._id;
 
   return (
     <Link href={restoProfileLink}>
       <Card hoverable className={styles.restoCard}>
         <Row>
           <Col span={8} className={styles.imageSection}>
-            <div className={styles.imageDiv}
-              style={{backgroundImage: `url(${resto.coverPhotoURL})`}}>
+            <div
+              className={styles.imageDiv}
+              style={{ backgroundImage: `url(${resto.coverPhotoURL})` }}>
               {/* <Image
                 // className={styles.imagePlaceholder}
                 className={styles.cardImage}
@@ -54,20 +52,21 @@ export default function SearchRestoCard({ resto }) {
         <Row>
           <Col span={8} className={styles.detailHeader}>
             <p>
-              <ShopOutlined/>
+              <ShopOutlined />
               &nbsp;Cuisines
             </p>
             <p>
-              <MoneyCollectOutlined/>
+              <MoneyCollectOutlined />
               &nbsp;Avg. Cost For Two
             </p>
             <p>
-              <ClockCircleOutlined/>
+              <ClockCircleOutlined />
               &nbsp;Open Hours
             </p>
             <p>
-              <PhoneOutlined/>
-              &nbsp;Contact Details</p>
+              <PhoneOutlined />
+              &nbsp;Contact Details
+            </p>
           </Col>
           <Col span={16}>
             {cuisines}
@@ -115,4 +114,10 @@ function FormatRating(rating, reviews) {
       </p>
     );
   }
+}
+
+async function getReviews(resto) {
+  const res = await fetch('/api/reviews/' + resto._id);
+  const resJSON = await res.json();
+  return resJSON;
 }

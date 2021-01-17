@@ -8,7 +8,10 @@ export default function Reviews({ reviews }) {
   return (
     <div>
       <Title level={3}>Reviews</Title>
-      <Empty description="There are no reviews for this resturant." />
+      {reviews.length === 0 && <Empty description="There are no reviews for this resturant." />}
+
+      {/* {reviews != null && } */}
+
       {/* {checkReviews(reviews)} */}
       {/* <Space direction="vertical" style={{ margin: "10px" }}>
         <Card />
