@@ -18,7 +18,8 @@ const options = {
             const profile = {
               id: foundAccount._id,
               email: foundAccount.email,
-              name: foundAccount.firstName
+              firstName: foundAccount.firstName,
+              lastName: foundAccount.lastName
             };
 
             if (isMatch) {
