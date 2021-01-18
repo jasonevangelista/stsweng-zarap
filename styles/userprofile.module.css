@@ -2,7 +2,7 @@
   background-color: #f4f4f2;
 }
 
-.userInfo{
+/* .userInfo{
   text-align: center;
   padding-top: 50px;
 }
@@ -16,4 +16,30 @@
   font-size:3vw;
   color: #727272;
   margin: 0;
+} */
+
+.userFullName{
+  margin: 0;
+  font-size: 2.9vw;
+  font-weight: 600;
+}
+
+.userEmail{
+  margin: 0;
+  margin-left: 3px;
+  font-size: 2vw;
+  color: grey;
+}
+
+.nameSpan{
+  display: table-cell;
+  width:100%;
+}
+
+.editButtonSpan{
+  text-align: right;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0px;
 }

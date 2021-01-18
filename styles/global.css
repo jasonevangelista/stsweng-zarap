@@ -89,3 +89,10 @@ body {
 .ant-modal-content{
     border-radius: 10px;
 }
+
+/* Edit Profile Style Overrides */
+.ant-btn-primary.btnEditProfile{
+    background: #E23744;
+    border-color:#E23744;
+    border-radius: 10px;
+}
