@@ -104,7 +104,9 @@ export default function SearchFilter({ results }) {
         enterButton={false}
         onSearch={(value) => {
           if (value && value.trim()) {
-            searchResults(value, null, { location: null, cuisine: null });
+            var encondedValue = encodeURIComponent(value)
+            console.log("encoded value: " + encondedValue)
+            searchResults(encondedValue, null, { location: null, cuisine: null });
           }
         }}
       />
@@ -150,10 +152,6 @@ export async function getServerSideProps(context) {
   console.log('search item: ' + searchItem);
   const { db } = await connectToDatabase();
 
-  const restaurants = await db
-    .collection('restaurant')
-    .find({ name: { $regex: searchItem, $options: 'i' } })
-    .toArray();
 
   return {
     props: {
@@ -176,7 +174,6 @@ async function getSearchResults(searchString, sort, filter) {
   var searchRoute = '/api/search/' + searchString + queryParams;
   const res = await fetch(searchRoute);
   const data = await res.json();
-
   if (data) {
     return {
       data
