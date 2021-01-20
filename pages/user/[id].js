@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import EditProfileModal from '../../components/EditProfileModal';
 import styles from '../../styles/userprofile.module.css';
 import restoProfileStyles from '../../styles/restoprofile/restaurantprofile.module.css';
-import Reviews from '../../components/userprofile/UserReviews';
+import UserReviews from '../../components/userprofile/UserReviews';
 
 
 import Head from 'next/head';
@@ -14,7 +14,7 @@ const { Title } = Typography;
 
 import { useSession } from 'next-auth/client';
 
-export default function UserProfile({user}) {
+export default function UserProfile({user, reviews}) {
 
   const [session, loading] = useSession();
   const [profileModalVisible, setProfileModalVisible] = useState(false);
@@ -75,7 +75,7 @@ export default function UserProfile({user}) {
             <Divider />
             {/* <Title level={3}>Review History</Title> */}
           
-            <Reviews reviews={[1]} />
+            <UserReviews reviews={reviews} />
             {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
               <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
               <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>
@@ -119,10 +119,11 @@ export async function getServerSideProps(context) {
 
   if (user.length > 0) {
     var results = JSON.parse(JSON.stringify(user));
+    var userReviews = await getUserReviews(db, results[0]);
     return {
       props: {
-        // userID: userID,
-        user: results[0]
+        user: results[0],
+        reviews: userReviews
       }
     }
   }
@@ -137,5 +138,36 @@ export async function getServerSideProps(context) {
     };
   }
 
+}
+
+async function getUserReviews(db, user){
+  var userReviews = await db
+    .collection('review')
+    .find({ author: user.email })
+    // .sort({date: -1})
+    .toArray();
   
+  if (userReviews.length > 0){
+    var reviewsArr = JSON.parse(JSON.stringify(userReviews));
+
+    for(var i = 0; i < reviewsArr.length; i++){
+      var restaurantName = await getRestaurantNames(db, reviewsArr[i].restaurantID);
+      reviewsArr[i]["restaurantName"] = restaurantName
+    }
+    return reviewsArr;
+  }
+  return [];
+}
+
+async function getRestaurantNames(db, restaurantID){
+  var restaurant = await db
+  .collection('restaurant')
+  .find({_id: ObjectId(restaurantID)})
+  .limit(1)
+  .toArray();
+
+  if(restaurant.length > 0){
+    return JSON.parse(JSON.stringify(restaurant))[0].name;
+  }
+  return null;
 }
