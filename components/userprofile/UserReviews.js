@@ -4,18 +4,20 @@ import Card from "./UserReviewCard";
 
 const { Title } = Typography;
 
-export default function Reviews({ reviews }) {
+export default function UserReviews({ reviews }) {
+  const reviewCards = generateUserReviewCards(reviews);
 
   return (
     <div>
       <h1>Review History</h1>
       {hasReviews(reviews) && (
         <div>
+          {reviewCards}
+          {/* <Card />
           <Card />
           <Card />
           <Card />
-          <Card />
-          <Card />
+          <Card /> */}
           <Space direction="vertical" style={{ margin: "10px" }}>
           </Space>
         </div>
@@ -27,6 +29,14 @@ export default function Reviews({ reviews }) {
 
     </div>
   )
+}
+
+const generateUserReviewCards = (reviews) => {
+  var cards = [];
+  for (const [index, value] of reviews.entries()) {
+    cards.push(<Card key={index} review={value}></Card>);
+  }
+  return cards;
 }
 
 export const countReviews = (reviews) => {

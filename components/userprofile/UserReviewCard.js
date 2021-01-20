@@ -1,57 +1,47 @@
 import React from 'react';
 import { Card, Typography, Rate, Space } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
+import styles from '../../styles/userreview.module.css';
+
+import Link from 'next/link';
 
 const { Text, Paragraph } = Typography;
 
-export default function UserReviewCard() {
+export default function UserReviewCard({review}) {
   return (
-    <div>
-      <Card>
-        <Space>
-          <div>
+    <div className={styles.restoRedirectDiv}>
+      <Link href={"/restaurant/" + review.restaurantID}>
+        <Card>
+          <Space>
             <div>
-              <Text strong>Ichiraku Ramen &nbsp;&nbsp;</Text>
-              <Rate value={1} />
+              <div>
+                <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text>
+                <Rate disabled value={review.rating} />
+              </div>
+              <br />
+              <div>
+                <Space>
+                  <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+                    {review.text}
+                  </Paragraph>
+                </Space>
+              </div>
             </div>
-            <br />
-            <div>
-              <Space>
-                <Paragraph
-                  ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                  Situation admitting promotion at or to perceived be. Mr
-                  acuteness we as estimable enjoyment up. An held late as felt
-                  know. Learn do allow solid to grave. Middleton suspicion age
-                  her attention. Chiefly several bed its wishing. Is so moments
-                  on chamber pressed to. Doubtful yet way properly answered
-                  humanity its desirous. Minuter believe service arrived civilly
-                  add all. Acuteness allowance an at eagerness favourite in
-                  extensive exquisite ye. <br />
-                  Situation admitting promotion at or to perceived be. Mr
-                  acuteness we as estimable enjoyment up. An held late as felt
-                  know. Learn do allow solid to grave. Middleton suspicion age
-                  her attention. Chiefly several bed its wishing. Is so moments
-                  on chamber pressed to. Doubtful yet way properly answered
-                  humanity its desirous. Minuter believe service arrived civilly
-                  add all. Acuteness allowance an at eagerness favourite in
-                  extensive exquisite ye.
-                </Paragraph>
-              </Space>
-            </div>
-          </div>
 
-          <div
-            style={{
-              display: 'flex',
-              textAlign: 'center',
-              flexDirection: 'column',
-              width: '75px',
-            }}>
-            <HeartOutlined style={{ fontSize: '1.5rem' }} />
-            <Text>420 Likes</Text>
-          </div>
-        </Space>
-      </Card>
+            {/* <div
+              style={{
+                display: 'flex',
+                textAlign: 'center',
+                flexDirection: 'column',
+                width: '75px',
+              }}>
+              <HeartOutlined style={{ fontSize: '1.5rem' }} />
+              <Text>420 Likes</Text>
+            </div> */}
+          </Space>
+        
+        </Card>
+      </Link>
     </div>
   );
 }
