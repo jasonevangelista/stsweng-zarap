@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography, Empty, Space } from 'antd';
-// import Card from "./ReviewCard";
+import Card from './ReviewCard';
 
 const { Title } = Typography;
 
@@ -8,7 +8,13 @@ export default function Reviews({ reviews }) {
   return (
     <div>
       <Title level={3}>Reviews</Title>
-      {reviews.length === 0 && <Empty description="There are no reviews for this resturant." />}
+      {reviews.length === 0 ? (
+        <Empty description="There are no reviews for this resturant." />
+      ) : (
+        reviews.map((review, index) => {
+          return <Card review={review} key={index} />;
+        })
+      )}
 
       {/* {reviews != null && } */}
 

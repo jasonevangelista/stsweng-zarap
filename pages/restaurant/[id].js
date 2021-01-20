@@ -80,11 +80,27 @@ export async function getServerSideProps(context) {
       .toArray();
 
     const reviewsResult = JSON.parse(JSON.stringify(reviews));
-    
+
+    const users = await db.collection('user').find({}).toArray();
+
+    const userList = JSON.parse(JSON.stringify(users));
+
+    // add firstname and lastname of collection 'user' to list of reviews
+    const newReviews = reviewsResult.map((review) => {
+      const author = userList.find((user) => {
+        return user.email === review.author;
+      });
+      if (author) {
+        review.lastName = author.lastName;
+        review.firstName = author.firstName;
+      }
+      return review;
+    });
+
     return {
       props: {
         resto: restoResult[0],
-        reviews: reviewsResult
+        reviews: newReviews
       }
     };
   }
