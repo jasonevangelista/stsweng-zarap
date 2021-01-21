@@ -66,7 +66,7 @@ export default function Header() {
       </Link>
 
       {/* search bar for specific pages */}
-      {router && router.pathname.includes('/restaurant/') ? (
+      {router && (router.pathname.includes('/restaurant/') || router.pathname.includes('/user/')) ? (
         <Search
           placeholder="Search for restaurants"
           allowClear
