@@ -68,6 +68,7 @@ export default function Header() {
       {/* search bar for specific pages */}
       {router && (router.pathname.includes('/restaurant/') || router.pathname.includes('/user/')) ? (
         <Search
+          id="searchbar"
           placeholder="Search for restaurants"
           allowClear
           className={[styles.searchBar, 'searchBar']}
@@ -112,6 +113,7 @@ export default function Header() {
         {!loading && !session && (
           <>
             <div
+              id="login"
               aria-hidden="true"
               onClick={() => {
                 showLoginModal();
@@ -124,6 +126,7 @@ export default function Header() {
               </Title>
             </div>
             <div
+              id="signup"
               aria-hidden="true"
               className={`${pathname === '/' ? '' : styles.majorButton}`}
               onClick={() => {

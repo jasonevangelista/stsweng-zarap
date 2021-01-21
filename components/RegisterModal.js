@@ -82,7 +82,7 @@ export default function RegisterModal(props) {
                 whitespace: true
               }
             ]}>
-            <Input placeholder="first name" style={{ borderRadius: '7px' }} />
+            <Input id="firstName" placeholder="first name" style={{ borderRadius: '7px' }} />
           </Form.Item>
 
           <Form.Item
