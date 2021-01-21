@@ -33,12 +33,21 @@ export default function UserProfile({user, reviews}) {
     <div className={styles.container}>
     
     {!loading && !session && ( // trying to access a profile without being logged in
-      <div>Access Denied!</div>
+      <div className={styles.errorContainer}>
+        <h1 className={styles.errorHeader}>Access Denied!</h1>
+        <p className={styles.errorMessage}>
+          You are not currently logged in.
+        </p>
+      </div>
+      
     )}
     {!loading && session && session.user.id != user._id && ( // trying to access another user's profile
-      <>
-      <div>You cannot access other user's profiles!</div>
-      </>
+      <div className={styles.errorContainer}>
+        <h1 className={styles.errorHeader}>Access Denied!</h1>
+        <p className={styles.errorMessage}>
+          You cannot access another user&apos;s profile!
+        </p>
+      </div>
     )}
     {!loading && session && session.user.id == user._id && ( // accesing your own profile
       <>
