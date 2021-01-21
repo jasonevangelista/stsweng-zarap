@@ -19,8 +19,6 @@ export default function UserProfile({user, reviews}) {
   const [session, loading] = useSession();
   const [profileModalVisible, setProfileModalVisible] = useState(false);
 
-  console.log("props")
-  console.log(user._id)
 
   // modal methods
   const showModal = () => {

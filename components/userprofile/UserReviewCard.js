@@ -15,8 +15,10 @@ export default function UserReviewCard({review}) {
           <Space>
             <div>
               <div>
-                <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text>
-                <Rate disabled value={review.rating} />
+                <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text><br/>
+                <div className={styles.ratingDiv}>
+                  <Rate disabled value={review.rating} />
+                </div>
               </div>
               <br />
               <div>

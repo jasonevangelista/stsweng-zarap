@@ -1,6 +1,6 @@
 .container{
   background-color: #f4f4f2;
-  height: 82vh;
+  min-height: 83vh;
 }
 
 /* .userInfo{

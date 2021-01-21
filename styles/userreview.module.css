@@ -1,3 +1,19 @@
 .restoRedirectDiv :hover{
   cursor: pointer;
 }
+
+.ratingDiv{
+  pointer-events: none;
+}
+
+.ratingDiv :hover{
+  cursor: pointer;
+}
+
+.userReviewPagination {
+  margin-top: 30px;
+}
+
+.paginationDiv {
+  /* text-align: center; */
+}

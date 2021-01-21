@@ -1,25 +1,33 @@
-import React from 'react';
-import { Typography, Empty, Space } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Empty, Space, Pagination } from 'antd';
 import Card from "./UserReviewCard";
+import styles from '../../styles/userreview.module.css';
 
 const { Title } = Typography;
 
 export default function UserReviews({ reviews }) {
-  const reviewCards = generateUserReviewCards(reviews);
-
+  const [cardSetIndex, setCardSetIndex] = useState(0);
+  const pageSize = 4;
+  const reviewCards = generateUserReviewCards(reviews, pageSize);
   return (
     <div>
       <h1>Review History</h1>
       {hasReviews(reviews) && (
         <div>
-          {reviewCards}
-          {/* <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card /> */}
+          {reviewCards[cardSetIndex]}
           <Space direction="vertical" style={{ margin: "10px" }}>
           </Space>
+          <div className={styles.paginationDiv}>
+            <Pagination 
+              className={styles.userReviewPagination} 
+              onChange={(page) => {
+                setCardSetIndex(page-1)
+              }} 
+              defaultCurrent={1} 
+              pageSize={pageSize} 
+              total={reviews.length}
+              showTotal={(total, range) => `${range[0]}-${range[1]} of ${total} reviews`} />
+         </div>
         </div>
       )}
 
@@ -31,12 +39,14 @@ export default function UserReviews({ reviews }) {
   )
 }
 
-const generateUserReviewCards = (reviews) => {
+const generateUserReviewCards = (reviews, pageSize) => {
   var cards = [];
+  var groupedCards = [];
   for (const [index, value] of reviews.entries()) {
     cards.push(<Card key={index} review={value}></Card>);
   }
-  return cards;
+  while(cards.length) groupedCards.push(cards.splice(0, pageSize));
+  return groupedCards;
 }
 
 export const countReviews = (reviews) => {
@@ -56,12 +66,10 @@ export const checkReviews = (arr) => {
 };
 
 export const hasReviews = (arr) => {
-  if (arr.length === 1) {
-    if (arr[0] === null) {
-      // return <Empty description="You do not have reviews for any restaurant." />;
-      return false;
+  if(arr){
+    if(arr.length > 0){
+      return true;
     }
-    return true;
   }
   return false;
 };
