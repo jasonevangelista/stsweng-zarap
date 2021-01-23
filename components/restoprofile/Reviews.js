@@ -1,10 +1,13 @@
 import React from 'react';
 import { Typography, Empty, Space } from 'antd';
 import Card from './ReviewCard';
+import { useSession } from 'next-auth/client';
 
 const { Title } = Typography;
 
 export default function Reviews({ reviews }) {
+  const [session, loading] = useSession();
+
   return (
     <div>
       <Title level={3}>Reviews</Title>
@@ -12,7 +15,7 @@ export default function Reviews({ reviews }) {
         <Empty description="There are no reviews for this resturant." />
       ) : (
         reviews.map((review, index) => {
-          return <Card review={review} key={index} />;
+          return <Card review={review} key={index} session={session} loading={loading} />;
         })
       )}
 
