@@ -9,6 +9,12 @@ export default function ReviewCard({ review, session, loading }) {
   const router = useRouter();
   const [upvoted, setUpvoted] = useState(false);
 
+  useEffect(() => {
+    if(session){
+      setUpvoted(review.upvoters.includes(session.user.email));
+    }
+  }, [session]);
+
   async function reviewLiked(){
     console.log("button clicked!")
     if(!loading && session){ // user is logged in
