@@ -28,7 +28,7 @@ export default function ReviewCard({ review }) {
               minWidth: '75px'
             }}>
             <HeartOutlined style={{ fontSize: '1.5rem' }} />
-            <Text>{review.upvoters.length + ' likes'}</Text>
+            <Text>{review.upvoters && review.upvoters.length + ' likes'}</Text>
           </div>
         </div>
       </Card>
