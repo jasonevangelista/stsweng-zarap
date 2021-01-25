@@ -89,3 +89,28 @@ body {
 .ant-modal-content{
     border-radius: 10px;
 }
+
+/* Edit Profile Style Overrides */
+.ant-btn-primary.btnEditProfile{
+    background: #E23744;
+    border-color:#E23744;
+    border-radius: 10px;
+}
+
+/* User Profile Pagination Style Overrides */
+.ant-pagination-item-active a, .ant-pagination-item-active:focus a, .ant-pagination-item-active:hover a, .ant-pagination-item:focus a, .ant-pagination-item:hover a{
+    color:#E23744;
+}
+
+.ant-pagination-item:focus, .ant-pagination-item:hover, .ant-pagination-item-active:focus, .ant-pagination-item-active:hover, .ant-pagination-item-active{
+    border-color: #E23744;
+}
+
+.ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link{
+    color: #E23744;
+    border-color: #E23744;
+}
+
+.ant-pagination-prev:hover button, .ant-pagination-next:hover button{
+    border-color: #E23744;
+}

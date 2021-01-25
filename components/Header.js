@@ -66,7 +66,7 @@ export default function Header() {
       </Link>
 
       {/* search bar for specific pages */}
-      {router && router.pathname.includes('/restaurant/') ? (
+      {router && (router.pathname.includes('/restaurant/') || router.pathname.includes('/user/')) ? (
         <Search
           id="searchbar"
           placeholder="Search for restaurants"
@@ -81,19 +81,34 @@ export default function Header() {
       {/* login logout and register */}
       <div className={styles.navLinks}>
         {!loading && session && (
-          <div
-            id="logout"
-            aria-hidden="true"
-            onClick={() => {
-              signOut({ callbackUrl: '/' });
-            }}>
-            <Title
-              level={4}
-              // className={`${pathname === '/' ? styles.white : ''}`}
-              className={[styles.white, styles.login]}>
-              Log Out
-            </Title>
-          </div>
+          <>
+            <div
+              aria-hidden="true"
+              // className={`${pathname === '/' ? '' : styles.majorButton}`}
+              onClick={() => {
+                console.log("go to profile!")
+                router.push("/user/" + session.user.id);
+              }}>
+              <Title
+                level={4}
+                // className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
+                className={[styles.signup, styles.white]}>
+                My Profile
+              </Title>
+            </div>
+            <div
+              aria-hidden="true"
+              onClick={() => {
+                signOut({ callbackUrl: '/' });
+              }}>
+              <Title
+                level={4}
+                // className={`${pathname === '/' ? styles.white : ''}`}
+                className={[styles.white, styles.login]}>
+                Log Out
+              </Title>
+            </div>
+          </>
         )}
         {!loading && !session && (
           <>

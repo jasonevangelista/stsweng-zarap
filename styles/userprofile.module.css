@@ -1,0 +1,44 @@
+.container{
+  background-color: #f4f4f2;
+  min-height: 83vh;
+}
+
+.userFullName{
+  margin: 0;
+  font-size: 2.9vw;
+  font-weight: 600;
+}
+
+.userEmail{
+  margin: 0;
+  margin-left: 3px;
+  font-size: 2vw;
+  color: grey;
+}
+
+.nameSpan{
+  display: table-cell;
+  width:100%;
+}
+
+.editButtonSpan{
+  text-align: right;
+  width: 100%;
+  display: table-cell;
+  vertical-align: middle;
+  padding: 0px;
+}
+
+.errorContainer{
+  text-align: center;
+}
+
+.errorHeader {
+  padding-top: 2.5%;
+  margin-bottom: 0%;
+  font-size: 10vh;
+}
+.errorMessage {
+  font-size: 3.5vh;
+  margin: 0;
+}
