@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../../util/mongodb';
+import { ObjectId } from 'mongodb';
 
 export default async (req, res) => {
   const {
@@ -6,18 +7,6 @@ export default async (req, res) => {
   } = req;
 
   var filterQuery = JSON.parse(filter);
-  // console.log('=== QUERIES ===');
-  // console.log('ID: ' + id);
-  // if (sort != '') {
-  //     console.log('SORT: ' + sort);
-  // } else {
-  //     console.log('NO SORT OPTION');
-  // }
-  // if (filter != '') {
-  //     console.log('FILTER: ' + filter);
-  // } else {
-  //     console.log('NO FILTER OPTION');
-  // }
   
   const { db } = await connectToDatabase();
   var restaurants;
@@ -64,5 +53,27 @@ export default async (req, res) => {
       .sort(sortOption)
       .toArray();
   }
+
+  for(var i = 0; i < restaurants.length; i++){
+    var currentResto = restaurants[i]
+    var reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    restaurants[i].averageRating = computeAverageScore(reviews)
+    restaurants[i].reviewCount = reviews.length
+    }
+
   res.json(restaurants);
 };
+
+
+function computeAverageScore(reviews){
+  var total = 0;
+  var average = 0;
+  if(reviews.length > 0){
+    for(var i = 0; i < reviews.length; i++){
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
+}

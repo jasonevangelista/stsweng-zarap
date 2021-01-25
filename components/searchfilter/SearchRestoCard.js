@@ -6,14 +6,15 @@ import {
   MoneyCollectOutlined,
   PhoneOutlined
 } from '@ant-design/icons';
-
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 
 export default function SearchRestoCard({ resto }) {
+  const router = useRouter();
   const cuisines = FormatDetails(resto.cuisineType, ', ');
   const contactDetails = FormatDetails(resto.contactDetails, '  |  ');
   const openHours = FormatDetails(resto.openHours, '  |  ');
-  const rating = FormatRating(resto.averageRating, getReviews(resto));
+  const rating = FormatRating(resto.averageRating, resto.reviewCount);
   const restoProfileLink = '/restaurant/' + resto._id;
 
   return (
@@ -96,28 +97,37 @@ export function FormatDetails(details, symbol) {
   return <p>{detailsString}</p>;
 }
 
-function FormatRating(rating, reviews) {
+function FormatRating(rating, reviewCount) {
   var ratingString = '';
   ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 
-  if (reviews.length > 1) {
+  if (reviewCount > 0) {
+    if(reviewCount == 1){
+      return (
+        <p>
+          {ratingString} ({reviewCount} review)
+        </p>
+      );
+    }
     return (
       <p>
-        {ratingString} ({reviews.length} reviews)
+        {ratingString} ({reviewCount} reviews)
       </p>
     );
   } else {
     return (
       <p>
-        {ratingString} ({reviews.length} review)
+        {ratingString} (No reviews)
       </p>
     );
   }
 }
 
-async function getReviews(resto) {
-  const res = await fetch('/api/reviews/' + resto._id);
-  const resJSON = await res.json();
-  return resJSON;
-}
+// async function getReviews(resto) {
+//   const res = await fetch('/api/reviews/' + resto._id);
+//   const resJSON = await res.json();
+//   console.log(res)
+
+//   return resJSON;
+// }

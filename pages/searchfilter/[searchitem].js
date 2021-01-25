@@ -21,6 +21,7 @@ var errorMessage = (
 
 export default function SearchFilter({ results }) {
   const firstTimeRender = useRef(true);
+
   const router = useRouter();
   const { searchitem } = router.query;
 
@@ -47,8 +48,7 @@ export default function SearchFilter({ results }) {
 
   useEffect(() => {
     if (!firstTimeRender.current) {
-      searchResults(searchitem, sortOption, filterOption);
-      // window.scrollTo(0, 0);
+        searchResults(searchitem, sortOption, filterOption);
     }
   }, [filterOption]);
 
@@ -155,6 +155,10 @@ export async function getServerSideProps(context) {
     .find({ name: { $regex: searchItem, $options: 'i' } })
     .toArray();
 
+  // console.log("getServerSideProps")
+  // console.log(restaurants)
+  // getReviewScore(restaurants)
+
   return {
     props: {
       results: JSON.parse(JSON.stringify(restaurants)),
@@ -183,5 +187,6 @@ async function getSearchResults(searchString, sort, filter) {
     };
   }
 }
+
 
 // url param format: http://localhost:3000/api/search/SEARCHSTRING?sort=SORT&filter=
