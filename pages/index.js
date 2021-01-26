@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { Input, Row, Col, Typography, Button } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
+import { ObjectId } from 'mongodb';
+
 
 const { Title } = Typography;
 
@@ -118,10 +120,31 @@ export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();
+  
+  for(var i = 0; i < restaurants.length; i++){
+    var currentResto = restaurants[i]
+    var reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    restaurants[i].averageRating = computeAverageScore(reviews)
+    restaurants[i].reviewCount = reviews.length
+  }
+
 
   return {
     props: {
       results: JSON.parse(JSON.stringify(restaurants)),
     },
   };
+}
+
+function computeAverageScore(reviews){
+  var total = 0;
+  var average = 0;
+  if(reviews.length > 0){
+    for(var i = 0; i < reviews.length; i++){
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
 }

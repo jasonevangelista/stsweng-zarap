@@ -7,7 +7,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 export default function Reviews({ reviews }) {
-  const [session] = useSession();
+  const [session, loading] = useSession();
   const [rating, setRating] = useState(0);
   const [buttonLoading, setButtonLoading] = useState(false);
   const [hasReview, setHasReview] = useState(false);
@@ -71,8 +71,8 @@ export default function Reviews({ reviews }) {
       ) : (
         reviews.map((review, index) => {
           if (session && session.user.email !== review.author)
-            return <Card review={review} key={index} />;
-          else if (!session) return <Card review={review} key={index} />;
+            return <Card review={review} key={index} session={session} loading={loading}/>;
+          else if (!session) return <Card review={review} key={index} session={session} loading={loading}/>;
         })
       )}
 

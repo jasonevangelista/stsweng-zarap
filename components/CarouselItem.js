@@ -5,27 +5,54 @@ import { MdLocationOn } from 'react-icons/md';
 import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import Link from 'next/link';
 
-function FormatRating(rating, reviews){
-  var ratingString = "";
-  ratingString = Math.floor(rating * 2 ) / 2;
+// function FormatRating(rating, reviews){
+//   var ratingString = "";
+//   ratingString = Math.floor(rating * 2 ) / 2;
+//   ratingString = ratingString.toFixed(1);
+
+//   if(reviews != null){
+//     if (reviews.length > 1){
+//       return (
+//         <p>{ratingString} ({reviews.length} reviews)</p>
+//       )
+//     }
+//     else{
+//       return (
+//         <p>{ratingString} ({reviews.length} review)</p>
+//       )
+//     }
+//   }
+//   else {
+//     return (
+//       <p>{ratingString} (0 review)</p>
+//     )
+//   }
+// }
+
+function FormatRating(rating, reviewCount) {
+  var ratingString = '';
+  ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 
-  if(reviews != null){
-    if (reviews.length > 1){
+  if (reviewCount > 0) {
+    if(reviewCount == 1){
       return (
-        <p>{ratingString} ({reviews.length} reviews)</p>
-      )
+        <p>
+          {ratingString} ({reviewCount} review)
+        </p>
+      );
     }
-    else{
-      return (
-        <p>{ratingString} ({reviews.length} review)</p>
-      )
-    }
-  }
-  else {
     return (
-      <p>{ratingString} (0 review)</p>
-    )
+      <p>
+        {ratingString} ({reviewCount} reviews)
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        {ratingString} (No reviews)
+      </p>
+    );
   }
 }
 
@@ -78,7 +105,7 @@ export default function carouselItem({ restoSet }) {
                   </Row>
                   <div id={styles.stars} className={styles.ratingDiv}>
                       <Rate disabled allowHalf value={card.averageRating}/>
-                    <span className="ant-rate-text">{FormatRating(card.averageRating, restoSet.reviews)}</span>
+                    <span className="ant-rate-text">{FormatRating(card.averageRating, card.reviewCount)}</span>
                   </div>
                 </Card> 
               </Link>
