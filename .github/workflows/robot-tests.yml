@@ -7,11 +7,11 @@ on:
 jobs:
   robot-test:
     runs-on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - name: Execute tests
-          uses: joonvena/robotframework-docker-action@v0.1
-          env:
-            BROWSER: chrome
-            ROBOT_TESTS_DIR: ${{ /automated_tests }}
-            ROBOT_REPORTS_DIR: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Execute tests
+        uses: joonvena/robotframework-docker-action@v0.1
+        env:
+          BROWSER: chrome
+          ROBOT_TESTS_DIR: ${{ /automated_tests }}
+          ROBOT_REPORTS_DIR: ${{ github.workspace }}
