@@ -2,7 +2,6 @@ import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
 import { Typography, Divider } from 'antd';
 import Head from 'next/head';
-import Link from 'next/link';
 
 import BasicInfo from '../../components/restoprofile/BasicInfo';
 import ImageHeader from '../../components/restoprofile/ImageHeader';
@@ -13,7 +12,7 @@ import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
 const { Title } = Typography;
 
-export default function RestaurantProfile({ resto, reviews, author }) {
+export default function RestaurantProfile({ resto, reviews }) {
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -35,7 +34,7 @@ export default function RestaurantProfile({ resto, reviews, author }) {
           <Divider />
           <Gallery imageArray={resto.menuURLs} />
           <Divider />
-          <Reviews reviews={reviews} />
+          <Reviews reviews={reviews} restaurantID={resto._id} />
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
             <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
             <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>

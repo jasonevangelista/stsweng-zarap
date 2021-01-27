@@ -27,7 +27,8 @@ export default async (req, res) => {
   try{
     if(req.method == "POST"){
       console.log("creating post request...")
-      if(details.author && details.text && details.rating && details.restaurantID){
+      console.log(details);
+      if(details.author && details.text && details.restaurantID){
         await db.collection('review').insertOne({
           author: details.author,
           text: details.text,

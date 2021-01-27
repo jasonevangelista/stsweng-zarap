@@ -6,19 +6,38 @@ import { useSession } from 'next-auth/client';
 const { Title } = Typography;
 const { TextArea } = Input;
 
-export default function Reviews({ reviews }) {
+export default function Reviews({ reviews, restaurantID }) {
   const [session, loading] = useSession();
   const [rating, setRating] = useState(0);
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [hasReview, setHasReview] = useState(false);
+  const [showReview, setShowReview] = useState(false);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (session) setHasReview(reviews.some((review) => review.author === session.user.email));
-  }, [session]);
+    if (session) setShowReview(reviews.some((review) => review.author === session.user.email));
+  }, []);
 
-  const postReview = () => {
+  const postReview = async () => {
     // console.log(form.getFieldValue('reviewText'));
+    setButtonLoading(true);
+    const textString = form.getFieldValue('reviewText');
+    if (textString !== null && textString !== '') {
+      const details = {};
+      details.author = session.user.email;
+      details.text = textString;
+      details.rating = rating;
+      details.restaurantID = restaurantID;
+
+      console.log(details);
+
+      const data = await fetchAPI(details);
+      if (data) {
+        setShowReview(true);
+      }
+      // methods.refreshData();
+    }
+
+    setButtonLoading(false);
   };
 
   return (
@@ -26,11 +45,23 @@ export default function Reviews({ reviews }) {
       <Title level={3}>Reviews</Title>
       {session && <Title level={4}>Your Review</Title>}
 
-      {session && hasReview && (
-        <Card review={reviews.find((review) => review.author === session.user.email)} />
-      )}
+      {session &&
+        showReview &&
+        (reviews.some((review) => review.author === session.user.email) ? (
+          <Card review={reviews.find((review) => review.author === session.user.email)} />
+        ) : (
+          <Card
+            review={{
+              firstName: session.user.firstName,
+              lastName: session.lastName,
+              text: form.getFieldValue('reviewText'),
+              rating: rating, 
+              upvoters: []
+            }}
+          />
+        ))}
 
-      {session && !hasReview && (
+      {session && !showReview && (
         // <Empty description="Write a review for this restaurant now!" />
         <div
           style={{
@@ -71,8 +102,9 @@ export default function Reviews({ reviews }) {
       ) : (
         reviews.map((review, index) => {
           if (session && session.user.email !== review.author)
-            return <Card review={review} key={index} session={session} loading={loading}/>;
-          else if (!session) return <Card review={review} key={index} session={session} loading={loading}/>;
+            return <Card review={review} key={index} session={session} loading={loading} />;
+          else if (!session)
+            return <Card review={review} key={index} session={session} loading={loading} />;
         })
       )}
 
@@ -105,3 +137,14 @@ export const checkReviews = (arr) => {
     }
   }
 };
+
+async function fetchAPI(details) {
+  const res = await fetch('/api/review/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  });
+  return res.json();
+}
