@@ -6,6 +6,16 @@ on:
 
 
 jobs:
+  setup-chromedriver:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: nanasess/setup-chromedriver@master
+      - run: |
+          export DISPLAY=:99
+          chromedriver --url-base=/wd/hub &
+          sudo Xvfb -ac :99 -screen 0 1280x1024x24 > /dev/null 2>&1 & # optional
+
   automated-test:
     runs-on: ubuntu-latest
     steps:
