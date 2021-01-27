@@ -25,15 +25,11 @@ jobs:
           python-version: 3.8
       - name: Install Dependencies
         run: python -m pip install --upgrade pip robotframework robotframework-seleniumlibrary robotframework-requests
-      # - name: Install Robot Dependencies
-      #   run: pip install -r requirements.txt
-      - name: Setup ChromeDriver
+      - name: Install Chrome and ChromeDriver
         run: |
-          wget http://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_mac64.zip
-          unzip chromedriver_mac64.zip
-          sudo mv chromedriver /usr/local/bin
-          sudo chown root:root /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
+          sudo apt install google-chrome-stable
+          pip install webdrivermanager
+          webdrivermanager firefox chrome --linkpath /usr/local/bin
       - name: Run Robot Tests
         run: robot automated_tests
          
