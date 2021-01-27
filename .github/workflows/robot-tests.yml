@@ -29,11 +29,11 @@ jobs:
       #   run: pip install -r requirements.txt
       - name: Setup ChromeDriver
           run: |
-          wget http://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_mac64.zip
-          unzip chromedriver_mac64.zip
-          sudo mv chromedriver /usr/local/bin
-          sudo chown root:root /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
+            wget http://chromedriver.storage.googleapis.com/81.0.4044.69/chromedriver_mac64.zip
+            unzip chromedriver_mac64.zip
+            sudo mv chromedriver /usr/local/bin
+            sudo chown root:root /usr/local/bin/chromedriver
+            sudo chmod +x /usr/local/bin/chromedriver
       - name: Run Robot Tests
         run: robot automated_tests
          
