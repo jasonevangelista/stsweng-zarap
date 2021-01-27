@@ -5,7 +5,7 @@ Documentation      This is a test suite for the Log In functionality
 Library            SeleniumLibrary
 
 *** Variables ***
-${EXECDIR}  executable_path=/home/runner/.local/share/WebDriverManager/bin/chromedriver
+${EXECDIR}  executable_path=/usr/local/bin/chromedriver
 ${URL}      https://zarap-develop.vercel.app/
 ${BROWSER}      Chrome
 ${Email}  rjd.reyes15@gmail.com
