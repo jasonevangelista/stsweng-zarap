@@ -50,11 +50,11 @@ const restoPicker = (results) => {
 
   const restaurants = [];
   let tracker = 0;
-
+  
   while (restaurants.length < 7) {
-    if (shuffledArray[tracker].averageRating >= 3.0) {
+    // if (shuffledArray[tracker].averageRating && shuffledArray[tracker].averageRating >= 3.0) {
       restaurants.push(shuffledArray[tracker]);
-    }
+    // }
 
     tracker++;
   }
