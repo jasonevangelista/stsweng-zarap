@@ -114,6 +114,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your first name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'First name is too long!'
               }
             ]}>
             {/* <Input placeholder="first name" defaultValue={props.user.firstName} style={{ borderRadius: '7px' }} /> */}
@@ -130,6 +134,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your last name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'Last name is too long!'
               }
             ]}>
             {/* <Input id="lastName" placeholder="last name" defaultValue={props.user.lastName} style={{ borderRadius: '7px' }} /> */}
@@ -162,7 +170,7 @@ export default function RegisterModal(props) {
             {/* <Checkbox checked={checked} onChange={onClickCheckbox}>Change Password</Checkbox> */}
             
             <Tooltip
-              title="Password must be at least 6 characters and must only be alphanumeric!"
+              title="Password must be 6-12 characters and must only be alphanumeric!"
               placement="top"
               name="newPassword"
               trigger={["focus"]}>
@@ -174,6 +182,10 @@ export default function RegisterModal(props) {
                   //   required: true,
                   //   message: 'Please input your current password!'
                   // },
+                  {
+                    max: 12,
+                    message: 'Password is too long!'
+                  },
                   () => ({
                     validator(rule, value) {
                       if (!value || value.length >= 6) {
