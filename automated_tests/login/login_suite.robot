@@ -5,7 +5,7 @@ Documentation      This is a test suite for the Log In functionality
 Library            SeleniumLibrary
 
 *** Variables ***
-# ${EXECDIR}  executable_path=/usr/local/bin/chromedriver
+${EXECDIR}  executable_path=/usr/local/bin/chromedriver.exe
 ${URL}      https://zarap-develop.vercel.app/
 ${BROWSER}      Chrome
 ${Email}  rjd.reyes15@gmail.com
@@ -70,8 +70,7 @@ Log in unsuccessfully with an unregistered email but incorrect password
 
 *** Keywords ****
 Open web page ${URL}
-    # Open Browser        ${URL}      ${BROWSER}      ${EXECDIR}
-    Open Browser        ${URL}      ${BROWSER}
+    Open Browser        ${URL}      ${BROWSER}      ${EXECDIR}
     Maximize Browser Window
 
 Click Log In
