@@ -3,10 +3,11 @@ import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
+import format from 'date-fns/format';
 import styles from '../../styles/restoprofile/reviews.module.css';
 import cardstyles from '../../styles/restoprofile/reviewcard.module.css';
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
 const { TabPane } = Tabs;
 const details = {};
@@ -119,33 +120,30 @@ export default function Reviews({ reviews, restaurantID }) {
       });
   };
 
+  const getUpdatedReview = (attribute) => {
+    return updatedReview.reviewID === null || updatedReview.reviewID === undefined
+      ? userReview[attribute]
+      : updatedReview[attribute];
+  };
+
   return (
     <div>
       <Title level={3}>Reviews</Title>
       {session && <Title level={4}>Your Review</Title>}
 
-      {session && showReview && reviews.some((review) => review.author === session.user.email) && (
+      {session && showReview && (updatedReview.reviewID || userReview._id) && (
         <>
           <Card>
             <div className={cardstyles.container}>
               <div className={cardstyles.detailsContainer}>
-                <Rate
-                  value={`${
-                    updatedReview.reviewID === null || updatedReview.reviewID === undefined
-                      ? userReview.rating
-                      : updatedReview.rating
-                  }`}
-                  disabled
-                />
-                <br />
+                <Rate value={`${getUpdatedReview('rating')}`} disabled />
                 <br />
                 <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                  {`${
-                    updatedReview.reviewID === null || updatedReview.reviewID === undefined
-                      ? userReview.text
-                      : updatedReview.text
-                  }`}
+                  {`${getUpdatedReview('text')}`}
                 </Paragraph>
+                <Text style={{ fontSize: '10px' }}>{` ${
+                  getUpdatedReview('edited') ? 'Updated on' : 'Posted on'
+                } ${format(new Date(), 'MMM d, yyyy')}`}</Text>
               </div>
               <div className={cardstyles.upvoteContainer}>
                 <div className={cardstyles.buttonContainer}>
@@ -199,7 +197,10 @@ export default function Reviews({ reviews, restaurantID }) {
 
       {session && <Title level={4}>Community Reviews</Title>}
 
-      {reviews.length === 0 ? (
+      {reviews.filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      }).length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
         <Tabs type="card">
