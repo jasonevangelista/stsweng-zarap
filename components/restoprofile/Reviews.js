@@ -1,5 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs, message, Modal } from 'antd';
+import {
+  Typography,
+  Empty,
+  Input,
+  Button,
+  Rate,
+  Form,
+  Card,
+  Tabs,
+  message,
+  Modal,
+  Pagination
+} from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
@@ -20,6 +32,8 @@ export default function Reviews({ reviews, restaurantID }) {
   const [form] = Form.useForm();
   const [userReview, setUserReview] = useState({});
   const [updatedReview, setUpdatedReview] = useState({});
+  const [popReviewRange, setPopReviewRange] = useState({ min: 0, max: 10 });
+  const [recentReviewRange, setRecentReviewRange] = useState({ min: 0, max: 10 });
 
   useEffect(() => {
     if (session) {
@@ -121,8 +135,9 @@ export default function Reviews({ reviews, restaurantID }) {
     setRating(0);
   };
 
-  const sortByPopular = (array) => {
-    return array
+  const sortByPopular = () => {
+    return reviews
+      .slice(popReviewRange.min, popReviewRange.max)
       .sort((a, b) =>
         a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
       )
@@ -135,8 +150,9 @@ export default function Reviews({ reviews, restaurantID }) {
       });
   };
 
-  const sortByRecent = (array) => {
-    return array
+  const sortByRecent = () => {
+    return reviews
+      .slice(recentReviewRange.min, recentReviewRange.max)
       .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
@@ -151,6 +167,23 @@ export default function Reviews({ reviews, restaurantID }) {
     return updatedReview.reviewID === null || updatedReview.reviewID === undefined
       ? userReview[attribute]
       : updatedReview[attribute];
+  };
+
+  const getCommunityReviewSize = () => {
+    reviews.filter((review) => {
+      if ((session && session.user.email !== review.author) || !session) return true;
+      else return false;
+    });
+
+    return reviews.length;
+  };
+
+  const handleChangePopular = (value) => {
+    setPopReviewRange({ min: (value - 1) * 10, max: value * 10 });
+  };
+
+  const handleChangeRecent = (value) => {
+    setRecentReviewRange({ min: (value - 1) * 10, max: value * 10 });
   };
 
   return (
@@ -232,10 +265,24 @@ export default function Reviews({ reviews, restaurantID }) {
       ) : (
         <Tabs type="card">
           <TabPane tab="Popular" key="1">
-            {sortByPopular(reviews)}
+            {sortByPopular()}
+            <br />
+            <Pagination
+              defaultCurrent={1}
+              defaultPageSize={10} //default size of page
+              onChange={handleChangePopular}
+              total={getCommunityReviewSize()} //total number of card data available
+            />
           </TabPane>
           <TabPane tab="Recent" key="2">
-            {sortByRecent(reviews)}
+            {sortByRecent()}
+            <br />
+            <Pagination
+              defaultCurrent={1}
+              defaultPageSize={10} //default size of page
+              onChange={handleChangeRecent}
+              total={getCommunityReviewSize()} //total number of card data available
+            />
           </TabPane>
         </Tabs>
       )}
