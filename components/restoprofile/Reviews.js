@@ -92,6 +92,32 @@ export default function Reviews({ reviews, restaurantID }) {
     setRating(0);
   };
 
+  const sortByPopular = (array) => {
+    return array
+      .sort((a, b) =>
+        a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
+      )
+      .filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      })
+      .map((review, index) => {
+        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+      });
+  };
+
+  const sortByRecent = (array) => {
+    return array
+      .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
+      .filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      })
+      .map((review, index) => {
+        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+      });
+  };
+
   return (
     <div>
       <Title level={3}>Reviews</Title>
@@ -174,34 +200,10 @@ export default function Reviews({ reviews, restaurantID }) {
       ) : (
         <Tabs type="card">
           <TabPane tab="Popular" key="1">
-            {reviews
-              .sort((a, b) =>
-                a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
-              )
-              .map((review, index) => {
-                if (session && session.user.email !== review.author)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-                else if (!session)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-              })}
+            {sortByPopular(reviews)}
           </TabPane>
           <TabPane tab="Recent" key="2">
-            {reviews
-              .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
-              .map((review, index) => {
-                if (session && session.user.email !== review.author)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-                else if (!session)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-              })}
+            {sortByRecent(reviews)}
           </TabPane>
         </Tabs>
       )}
