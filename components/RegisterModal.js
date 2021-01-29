@@ -82,7 +82,7 @@ export default function RegisterModal(props) {
                 whitespace: true
               }
             ]}>
-            <Input id="firstName" placeholder="first name" className={styles.formInput}/>
+            <Input id="firstName" placeholder="first name" className={"formInput"}/>
           </Form.Item>
 
           <Form.Item
@@ -95,7 +95,7 @@ export default function RegisterModal(props) {
                 whitespace: true
               }
             ]}>
-            <Input id="lastName" placeholder="last name" className={styles.formInput} />
+            <Input id="lastName" placeholder="last name" className={"formInput"} />
           </Form.Item>
 
           <Form.Item
@@ -120,7 +120,7 @@ export default function RegisterModal(props) {
                 }
               }
             ]}>
-            <Input id="email" placeholder="e-mail" className={styles.formInput} />
+            <Input id="email" placeholder="e-mail" className={"formInput"} />
           </Form.Item>
 
           <Tooltip
@@ -150,7 +150,7 @@ export default function RegisterModal(props) {
                   }
                 })
               ]}>
-              <Input.Password id="password" placeholder="password" className={styles.formInput} />
+              <Input.Password id="password" placeholder="password" className={"formInput"} />
             </Form.Item>
           </Tooltip>
           <Form.Item
@@ -175,7 +175,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="confirm"
               placeholder="confirm password"
-              className={styles.formInput}
+              className={"formInput"}
             />
           </Form.Item>
 
@@ -185,7 +185,7 @@ export default function RegisterModal(props) {
               type="primary"
               htmlType="submit"
               id="btnSubmit"
-              className={styles.btnSubmit}
+              className={[styles.btnSubmit, "btnSubmit"]}
               loading={loading}>
               SIGN UP
             </Button>
@@ -195,7 +195,7 @@ export default function RegisterModal(props) {
             Already a member?{' '}
             <Button
               type="text"
-              className={styles.btnRedirect}
+              className={[styles.btnRedirect, "btnRedirect"]}
               onClick={() => {
                 form.resetFields();
                 props.redirectToLoginModal();
