@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, Typography, Rate, Space } from 'antd';
 import { HeartOutlined } from '@ant-design/icons';
 import styles from '../../styles/userreview.module.css';
+import format from 'date-fns/format';
+
 
 import Link from 'next/link';
 
@@ -30,7 +32,11 @@ export default function UserReviewCard({review}) {
 
             <div>
               <div>
-                <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text><br/>
+                <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text>
+                <Text type="secondary">{` ${review.edited ? 'Updated on' : 'Posted on'} ${format(
+                  new Date(review.dateEdited),
+                  'MMM d, yyyy'
+                )}`}</Text>
                 <div className={styles.ratingDiv}>
                   <Rate disabled value={review.rating} />
                 </div>
