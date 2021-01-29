@@ -34,7 +34,8 @@ export default function Reviews({ reviews, restaurantID }) {
     }
   }, [loading]);
 
-  const postReview = async () => {
+  const postReview = async (e) => {
+    e.stopPropagation();
     setButtonLoading(true);
     const textString = form.getFieldValue('reviewText');
     if (textString !== null && textString !== '') {
@@ -96,52 +97,39 @@ export default function Reviews({ reviews, restaurantID }) {
       <Title level={3}>Reviews</Title>
       {session && <Title level={4}>Your Review</Title>}
 
-      {session &&
-        showReview &&
-        (reviews.some((review) => review.author === session.user.email) &&
-        (updatedReview.reviewID === null || updatedReview.reviewID === undefined) ? (
-          <>
-            <Card
-              actions={[
-                <EditOutlined
-                  onClick={() => {
-                    setShowReview(false);
-                  }}
-                  key="edit"
-                />,
-                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
-              ]}>
-              <Rate value={userReview.rating} disabled />
-              <br />
-              <br />
-              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                {userReview.text}
-              </Paragraph>
-            </Card>
+      {session && showReview && reviews.some((review) => review.author === session.user.email) && (
+        <>
+          <Card
+            actions={[
+              <EditOutlined
+                onClick={() => {
+                  setShowReview(false);
+                }}
+                key="edit"
+              />,
+              <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
+            ]}>
+            <Rate
+              value={`${
+                updatedReview.reviewID === null || updatedReview.reviewID === undefined
+                  ? userReview.rating
+                  : updatedReview.rating
+              }`}
+              disabled
+            />
             <br />
-          </>
-        ) : (
-          <>
-            <Card
-              actions={[
-                <EditOutlined
-                  onClick={() => {
-                    setShowReview(false);
-                  }}
-                  key="edit"
-                />,
-                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
-              ]}>
-              <Rate value={updatedReview.rating} disabled />
-              <br />
-              <br />
-              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                {updatedReview.text}
-              </Paragraph>
-            </Card>
             <br />
-          </>
-        ))}
+            <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+              {`${
+                updatedReview.reviewID === null || updatedReview.reviewID === undefined
+                  ? userReview.text
+                  : updatedReview.text
+              }`}
+            </Paragraph>
+          </Card>
+          <br />
+        </>
+      )}
 
       {session && !showReview && (
         <div
@@ -171,7 +159,7 @@ export default function Reviews({ reviews, restaurantID }) {
 
           <Button
             loading={buttonLoading}
-            onClick={(e) => postReview()}
+            onClick={(e) => postReview(e)}
             // style={{ width: '150px', alignSelf: 'end' }}
             className={styles.btnPost}>
             Post Review
