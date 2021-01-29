@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Empty, Input, Button, Rate, Form } from 'antd';
-import Card from './ReviewCard';
+import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs } from 'antd';
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
 import styles from '../../styles/restoprofile/reviews.module.css';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
+const { TabPane } = Tabs;
+const details = {};
 
 export default function Reviews({ reviews, restaurantID }) {
   const [session, loading] = useSession();
@@ -13,32 +16,79 @@ export default function Reviews({ reviews, restaurantID }) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [showReview, setShowReview] = useState(false);
   const [form] = Form.useForm();
+  const [userReview, setUserReview] = useState({});
+  const [updatedReview, setUpdatedReview] = useState({});
 
   useEffect(() => {
-    if (session) setShowReview(reviews.some((review) => review.author === session.user.email));
-  }, []);
+    if (session) {
+      if (reviews.some((review) => review.author === session.user.email)) {
+        const review = reviews.find((review) => review.author === session.user.email);
+        setShowReview(true);
+        setUserReview(review);
+        details.reviewID = review._id;
+        form.setFieldsValue({ reviewText: review.text });
+        setRating(review.rating);
+      } else {
+        setShowReview(false);
+      }
+    }
+  }, [loading]);
 
   const postReview = async () => {
-    // console.log(form.getFieldValue('reviewText'));
     setButtonLoading(true);
     const textString = form.getFieldValue('reviewText');
     if (textString !== null && textString !== '') {
-      const details = {};
       details.author = session.user.email;
       details.text = textString;
       details.rating = rating;
       details.restaurantID = restaurantID;
 
-      console.log(details);
-
-      const data = await fetchAPI(details);
-      if (data) {
-        setShowReview(true);
+      if (details.reviewID === undefined || details.reviewID === null) {
+        const data = await postAPI(details);
+        if (data) {
+          details.reviewID = data.result.insertedId;
+          setUpdatedReview(details);
+          setShowReview(true);
+        }
+      } else {
+        const data = await updatePostAPI(details);
+        if (data) {
+          setUpdatedReview(details);
+          setShowReview(true);
+        }
       }
-      // methods.refreshData();
     }
 
     setButtonLoading(false);
+  };
+
+  const deletePost = async (e) => {
+    e.stopPropagation();
+    setButtonLoading(true);
+    if (updatedReview.reviewID) {
+      const deleteDetail = { reviewID: updatedReview.reviewID };
+      const status = await deletePostAPI(deleteDetail);
+      if (status === 200) {
+        resetFields();
+        setShowReview(false);
+      }
+    } else if (userReview._id) {
+      const deleteDetail = { reviewID: userReview._id };
+      const status = await deletePostAPI(deleteDetail);
+      if (status === 200) {
+        resetFields();
+        setShowReview(false);
+      }
+    }
+    setButtonLoading(false);
+  };
+
+  const resetFields = () => {
+    setUpdatedReview({});
+    setUserReview({});
+    details.reviewID = null;
+    form.setFieldsValue({ reviewText: '' });
+    setRating(0);
   };
 
   return (
@@ -48,22 +98,52 @@ export default function Reviews({ reviews, restaurantID }) {
 
       {session &&
         showReview &&
-        (reviews.some((review) => review.author === session.user.email) ? (
-          <Card review={reviews.find((review) => review.author === session.user.email)} />
+        (reviews.some((review) => review.author === session.user.email) &&
+        (updatedReview.reviewID === null || updatedReview.reviewID === undefined) ? (
+          <>
+            <Card
+              actions={[
+                <EditOutlined
+                  onClick={() => {
+                    setShowReview(false);
+                  }}
+                  key="edit"
+                />,
+                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
+              ]}>
+              <Rate value={userReview.rating} disabled />
+              <br />
+              <br />
+              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+                {userReview.text}
+              </Paragraph>
+            </Card>
+            <br />
+          </>
         ) : (
-          <Card
-            review={{
-              firstName: session.user.firstName,
-              lastName: session.lastName,
-              text: form.getFieldValue('reviewText'),
-              rating: rating, 
-              upvoters: []
-            }}
-          />
+          <>
+            <Card
+              actions={[
+                <EditOutlined
+                  onClick={() => {
+                    setShowReview(false);
+                  }}
+                  key="edit"
+                />,
+                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
+              ]}>
+              <Rate value={updatedReview.rating} disabled />
+              <br />
+              <br />
+              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+                {updatedReview.text}
+              </Paragraph>
+            </Card>
+            <br />
+          </>
         ))}
 
       {session && !showReview && (
-        // <Empty description="Write a review for this restaurant now!" />
         <div
           className={styles.myReview}
           // style={{
@@ -75,7 +155,7 @@ export default function Reviews({ reviews, restaurantID }) {
           >
           <div>
             Your rating: &nbsp;
-            <Rate defaultValue={0} onChange={(val) => setRating(val)} />
+            <Rate defaultValue={rating} onChange={(val) => setRating(val)} />
           </div>
           <Form form={form}>
             <Form.Item name="reviewText">
@@ -105,24 +185,35 @@ export default function Reviews({ reviews, restaurantID }) {
       {reviews.length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
-        reviews.map((review, index) => {
-          if (session && session.user.email !== review.author)
-            return <Card review={review} key={index} session={session} loading={loading} />;
-          else if (!session)
-            return <Card review={review} key={index} session={session} loading={loading} />;
-        })
+        <Tabs type="card">
+          <TabPane tab="Popular" key="1">
+            {reviews
+              .sort((a, b) => (a.upvoters.length < b.upvoters.length ? 1 : 0))
+              .map((review, index) => {
+                if (session && session.user.email !== review.author)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+                else if (!session)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+              })}
+          </TabPane>
+          <TabPane tab="Recent" key="2">
+            {reviews.map((review, index) => {
+              if (session && session.user.email !== review.author)
+                return (
+                  <ReviewCard review={review} key={index} session={session} loading={loading} />
+                );
+              else if (!session)
+                return (
+                  <ReviewCard review={review} key={index} session={session} loading={loading} />
+                );
+            })}
+          </TabPane>
+        </Tabs>
       )}
-
-      {/* {reviews != null && } */}
-
-      {/* {checkReviews(reviews)} */}
-      {/* <Space direction="vertical" style={{ margin: "10px" }}>
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-      </Space> */}
     </div>
   );
 }
@@ -143,7 +234,7 @@ export const checkReviews = (arr) => {
   }
 };
 
-async function fetchAPI(details) {
+async function postAPI(details) {
   const res = await fetch('/api/review/', {
     method: 'POST',
     headers: {
@@ -152,4 +243,26 @@ async function fetchAPI(details) {
     body: JSON.stringify(details)
   });
   return res.json();
+}
+
+async function updatePostAPI(details) {
+  const res = await fetch('/api/review/', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  });
+  return res.json();
+}
+
+async function deletePostAPI(details) {
+  const res = await fetch('/api/review/', {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(details)
+  });
+  return res.status;
 }
