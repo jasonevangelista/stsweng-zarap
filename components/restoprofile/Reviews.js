@@ -152,7 +152,7 @@ export default function Reviews({ reviews, restaurantID }) {
           //   height: '270px',
           //   justifyContent: 'space-between'
           // }}
-          >
+        >
           <div>
             Your rating: &nbsp;
             <Rate defaultValue={rating} onChange={(val) => setRating(val)} />
@@ -173,8 +173,7 @@ export default function Reviews({ reviews, restaurantID }) {
             loading={buttonLoading}
             onClick={(e) => postReview()}
             // style={{ width: '150px', alignSelf: 'end' }}
-            className={styles.btnPost}
-            >
+            className={styles.btnPost}>
             Post Review
           </Button>
         </div>
@@ -188,7 +187,9 @@ export default function Reviews({ reviews, restaurantID }) {
         <Tabs type="card">
           <TabPane tab="Popular" key="1">
             {reviews
-              .sort((a, b) => (a.upvoters.length < b.upvoters.length ? 1 : 0))
+              .sort((a, b) =>
+                a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
+              )
               .map((review, index) => {
                 if (session && session.user.email !== review.author)
                   return (
@@ -201,16 +202,18 @@ export default function Reviews({ reviews, restaurantID }) {
               })}
           </TabPane>
           <TabPane tab="Recent" key="2">
-            {reviews.map((review, index) => {
-              if (session && session.user.email !== review.author)
-                return (
-                  <ReviewCard review={review} key={index} session={session} loading={loading} />
-                );
-              else if (!session)
-                return (
-                  <ReviewCard review={review} key={index} session={session} loading={loading} />
-                );
-            })}
+            {reviews
+              .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
+              .map((review, index) => {
+                if (session && session.user.email !== review.author)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+                else if (!session)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+              })}
           </TabPane>
         </Tabs>
       )}
