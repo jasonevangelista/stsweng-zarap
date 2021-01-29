@@ -34,7 +34,6 @@ export default function ReviewCard({ review, session, loading }) {
           details.upvoted = true;
 
           const res = await apiUpvote('/api/upvote/', details);
-          console.log(res);
           setUpvoted(false);
           router.replace(router.asPath);
         } else {
@@ -42,7 +41,6 @@ export default function ReviewCard({ review, session, loading }) {
           details.upvoted = false;
 
           const res = await apiUpvote('/api/upvote/', details);
-          console.log(res);
           setUpvoted(true);
           router.replace(router.asPath);
         }
