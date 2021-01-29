@@ -89,3 +89,39 @@ body {
 .ant-modal-content{
     border-radius: 10px;
 }
+
+/* Modal Style Overrides */
+.ant-btn-primary.btnSubmit {
+    background-color: #E23744;
+    border-color:#E23744;
+}
+
+.ant-btn.btnRedirect, .ant-btn.btnRedirect:hover{
+    color: #E23744;
+}
+
+/* .ant-input.formInput:hover, .ant-input.formInput:focus{
+    border: 1px solid #d9d9d9;
+} */
+
+ .ant-row:not(.ant-form-item-has-error) .ant-col .ant-form-item-control-input .ant-form-item-control-input-content .ant-input.formInput{
+    border: 1px solid #d9d9d9;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+.ant-row:not(.ant-form-item-has-error) .ant-col .ant-form-item-control-input .ant-form-item-control-input-content .ant-input-password.formInput{
+    border: 1px solid #d9d9d9;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border-radius: 7px;
+}
+
+.ant-form-item-has-error .ant-col .ant-form-item-control-input .ant-form-item-control-input-content .ant-input.formInput{
+    border-radius: 7px;
+}
+
+.ant-form-item-has-error .ant-col .ant-form-item-control-input .ant-form-item-control-input-content .ant-input-password.formInput{
+    border-radius: 7px;
+}
