@@ -158,8 +158,14 @@ async function getUserReviews(db, user){
     var reviewsArr = JSON.parse(JSON.stringify(userReviews));
 
     for(var i = 0; i < reviewsArr.length; i++){
-      var restaurantName = await getRestaurantNames(db, reviewsArr[i].restaurantID);
-      reviewsArr[i]["restaurantName"] = restaurantName
+      // var restaurantName = await getRestaurantNames(db, reviewsArr[i].restaurantID);
+      var restaurantDetails = await getRestaurantNames(db, reviewsArr[i].restaurantID);
+      reviewsArr[i]["restaurantName"] = restaurantDetails[0]
+      reviewsArr[i]["restaurantCoverPhotoURL"] = restaurantDetails[1]
+
+
+
+      // reviewsArr[i]["restaurantName"] = restaurantName
     }
     return reviewsArr;
   }
@@ -172,9 +178,12 @@ async function getRestaurantNames(db, restaurantID){
   .find({_id: ObjectId(restaurantID)})
   .limit(1)
   .toArray();
+  var name = restaurant[0].name;
+  var coverPhotoURL = restaurant[0].coverPhotoURL;
 
   if(restaurant.length > 0){
-    return JSON.parse(JSON.stringify(restaurant))[0].name;
+    // return JSON.parse(JSON.stringify(restaurant))[0].name;
+    return [name, coverPhotoURL]
   }
   return null;
 }

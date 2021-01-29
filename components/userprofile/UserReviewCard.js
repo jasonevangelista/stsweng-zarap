@@ -13,6 +13,21 @@ export default function UserReviewCard({review}) {
       <Link href={"/restaurant/" + review.restaurantID}>
         <Card>
           <Space>
+            <div
+              style={{
+                display: 'flex',
+                textAlign: 'center',
+                flexDirection: 'column',
+                // width: '75px',
+              }}>
+                <div className={styles.imageDiv}
+                style={{backgroundImage: `url(${review.restaurantCoverPhotoURL})`}}
+                >
+                </div>
+              {/* <HeartOutlined style={{ fontSize: '1.5rem' }} />
+              <Text>420 Likes</Text> */}
+            </div>
+
             <div>
               <div>
                 <Text strong>{review.restaurantName} &nbsp;&nbsp;</Text><br/>
@@ -30,16 +45,7 @@ export default function UserReviewCard({review}) {
               </div>
             </div>
 
-            {/* <div
-              style={{
-                display: 'flex',
-                textAlign: 'center',
-                flexDirection: 'column',
-                width: '75px',
-              }}>
-              <HeartOutlined style={{ fontSize: '1.5rem' }} />
-              <Text>420 Likes</Text>
-            </div> */}
+            
           </Space>
         
         </Card>
