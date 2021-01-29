@@ -12,13 +12,15 @@ export default function Reviews({ reviews, restaurantID }) {
   const [buttonLoading, setButtonLoading] = useState(false);
   const [showReview, setShowReview] = useState(false);
   const [form] = Form.useForm();
+  const [reviewDetails, setReviewDetails] = useState({});
 
   useEffect(() => {
-    if (session) setShowReview(reviews.some((review) => review.author === session.user.email));
-  }, []);
+    if (session) {
+      setShowReview(reviews.some((review) => review.author === session.user.email));
+    }
+  }, [loading]);
 
   const postReview = async () => {
-    // console.log(form.getFieldValue('reviewText'));
     setButtonLoading(true);
     const textString = form.getFieldValue('reviewText');
     if (textString !== null && textString !== '') {
@@ -28,13 +30,11 @@ export default function Reviews({ reviews, restaurantID }) {
       details.rating = rating;
       details.restaurantID = restaurantID;
 
-      console.log(details);
-
       const data = await fetchAPI(details);
       if (data) {
+        setReviewDetails(details);
         setShowReview(true);
       }
-      // methods.refreshData();
     }
 
     setButtonLoading(false);
@@ -53,9 +53,9 @@ export default function Reviews({ reviews, restaurantID }) {
           <Card
             review={{
               firstName: session.user.firstName,
-              lastName: session.lastName,
-              text: form.getFieldValue('reviewText'),
-              rating: rating, 
+              lastName: session.user.lastName,
+              text: reviewDetails.text,
+              rating: reviewDetails.rating, 
               upvoters: []
             }}
           />
