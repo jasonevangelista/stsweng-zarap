@@ -4,6 +4,7 @@ import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
 import styles from '../../styles/restoprofile/reviews.module.css';
+import cardstyles from '../../styles/restoprofile/reviewcard.module.css';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
@@ -125,33 +126,36 @@ export default function Reviews({ reviews, restaurantID }) {
 
       {session && showReview && reviews.some((review) => review.author === session.user.email) && (
         <>
-          <Card
-            actions={[
-              <EditOutlined
-                onClick={() => {
-                  setShowReview(false);
-                }}
-                key="edit"
-              />,
-              <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
-            ]}>
-            <Rate
-              value={`${
-                updatedReview.reviewID === null || updatedReview.reviewID === undefined
-                  ? userReview.rating
-                  : updatedReview.rating
-              }`}
-              disabled
-            />
-            <br />
-            <br />
-            <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-              {`${
-                updatedReview.reviewID === null || updatedReview.reviewID === undefined
-                  ? userReview.text
-                  : updatedReview.text
-              }`}
-            </Paragraph>
+          <Card>
+            <div className={cardstyles.container}>
+              <div className={cardstyles.detailsContainer}>
+                <Rate
+                  value={`${
+                    updatedReview.reviewID === null || updatedReview.reviewID === undefined
+                      ? userReview.rating
+                      : updatedReview.rating
+                  }`}
+                  disabled
+                />
+                <br />
+                <br />
+                <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+                  {`${
+                    updatedReview.reviewID === null || updatedReview.reviewID === undefined
+                      ? userReview.text
+                      : updatedReview.text
+                  }`}
+                </Paragraph>
+              </div>
+              <div className={cardstyles.upvoteContainer}>
+                <div className={cardstyles.buttonContainer}>
+                  <EditOutlined onClick={() => setShowReview(false)} style={{ fontSize: '20px' }} />
+                </div>
+                <div className={cardstyles.buttonContainer}>
+                  <DeleteOutlined onClick={(e) => deletePost(e)} style={{ fontSize: '20px' }} />
+                </div>
+              </div>
+            </div>
           </Card>
           <br />
         </>
