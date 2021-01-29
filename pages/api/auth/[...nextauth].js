@@ -42,6 +42,21 @@ const options = {
     })
   ],
 
+  callbacks:{
+    jwt: async (token, user, account, profile, isNewUser) => {
+      // set user object from custom user in Provider to token user object
+      if (user) {
+        token.user = user;
+      }
+      return Promise.resolve(token);
+    },
+    session: async(session, user) =>{
+      // overwrite session user to custom user set in token
+      session.user = user.user;
+      return Promise.resolve(session);
+    },
+  },
+
   secret: process.env.SECRET_KEY,
 
   session: {

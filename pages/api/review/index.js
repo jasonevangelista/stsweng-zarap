@@ -24,12 +24,12 @@ export default async (req, res) => {
   
   */
 
-  try{
-    if(req.method == "POST"){
-      console.log("creating post request...")
+  try {
+    if (req.method == 'POST') {
+      console.log('creating post request...');
       console.log(details);
-      if(details.author && details.text && details.restaurantID){
-        await db.collection('review').insertOne({
+      if (details.author && details.text && details.restaurantID) {
+        const result = await db.collection('review').insertOne({
           author: details.author,
           text: details.text,
           rating: details.rating,
@@ -38,51 +38,44 @@ export default async (req, res) => {
           edited: false,
           dateCreated: new Date(),
           dateEdited: new Date()
-        })
-        res.status(200).json({"message": "POST Request successful"})
-      }
-      else{
-        res.status(400).json({"message": "POST Request failed! Some values are undefined"})
-      }
-      
-    }
-    else if(req.method == "PUT"){
-      if(details.text && details.rating && details.reviewID){
-        await db.collection('review').updateOne({ _id: ObjectId(details.reviewID) }, 
-        {
-          $set: {
-            text: details.text,
-            rating: details.rating,
-            upvoters: [],
-            edited: true,
-            dateEdited: new Date()
-          }
         });
-        res.status(200).json({"message": "PUT Request successful"})
+        
+        res.status(200).json({ message: 'POST Request successful', result: result });
+      } else {
+        res.status(400).json({ message: 'POST Request failed! Some values are undefined' });
       }
-      else{
-        res.status(400).json({"message": "PUT Request failed! Some values are undefined"})
+    } else if (req.method == 'PUT') {
+      if (details.text && details.reviewID) {
+        await db.collection('review').updateOne(
+          { _id: ObjectId(details.reviewID) },
+          {
+            $set: {
+              text: details.text,
+              rating: details.rating,
+              upvoters: [],
+              edited: true,
+              dateEdited: new Date()
+            }
+          }
+        );
+        res.status(200).json({ message: 'PUT Request successful' });
+      } else {
+        res.status(400).json({ message: 'PUT Request failed! Some values are undefined' });
       }
-
-    }
-    else if (req.method == "DELETE"){
-      if(details.reviewID){
+    } else if (req.method == 'DELETE') {
+      if (details.reviewID) {
         await db.collection('review').deleteOne({ _id: ObjectId(details.reviewID) });
-        res.status(200).json({"message": "DELETE Request successful"})
+        res.status(200).json({ message: 'DELETE Request successful' });
+      } else {
+        res.status(400).json({ message: 'PUT Request failed! reviewID is undefined' });
       }
-      else{
-        res.status(400).json({"message": "PUT Request failed! reviewID is undefined"})
-      }
-      
+    } else {
+      res
+        .status(400)
+        .json({ message: 'Invalid Request method! Only POST, PUT, and DELETE are allowed!' });
     }
-    else{
-      res.status(400).json({"message": "Invalid Request method! Only POST, PUT, and DELETE are allowed!"})
-    }
-    
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ error: err });
   }
-  catch(err){
-    console.log(err)
-    res.status(400).json({"error": err})
-  }
-  
 };
