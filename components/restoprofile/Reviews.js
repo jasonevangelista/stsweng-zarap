@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Empty, Input, Button, Rate, Form, Card } from 'antd';
+import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
 
 const { Title, Paragraph } = Typography;
 const { TextArea } = Input;
+const { TabPane } = Tabs;
 const details = {};
 
 export default function Reviews({ reviews, restaurantID }) {
@@ -67,22 +68,26 @@ export default function Reviews({ reviews, restaurantID }) {
       const deleteDetail = { reviewID: updatedReview.reviewID };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
-        setUpdatedReview({});
-        setUserReview({});
-        details.reviewID = null;
+        resetFields();
         setShowReview(false);
       }
     } else if (userReview._id) {
       const deleteDetail = { reviewID: userReview._id };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
-        setUpdatedReview({});
-        setUserReview({});
-        details.reviewID = null;
+        resetFields();
         setShowReview(false);
       }
     }
     setButtonLoading(false);
+  };
+
+  const resetFields = () => {
+    setUpdatedReview({});
+    setUserReview({});
+    details.reviewID = null;
+    form.setFieldsValue({ reviewText: '' });
+    setRating(0);
   };
 
   return (
@@ -93,8 +98,7 @@ export default function Reviews({ reviews, restaurantID }) {
       {session &&
         showReview &&
         (reviews.some((review) => review.author === session.user.email) &&
-        (updatedReview.reviewID !== null || updatedReview.reviewID !== undefined) ? (
-          // <ReviewCard review={reviews.find((review) => review.author === session.user.email)} />
+        (updatedReview.reviewID === null || updatedReview.reviewID === undefined) ? (
           <>
             <Card
               actions={[
@@ -176,12 +180,34 @@ export default function Reviews({ reviews, restaurantID }) {
       {reviews.length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
-        reviews.map((review, index) => {
-          if (session && session.user.email !== review.author)
-            return <ReviewCard review={review} key={index} session={session} loading={loading} />;
-          else if (!session)
-            return <ReviewCard review={review} key={index} session={session} loading={loading} />;
-        })
+        <Tabs type="card">
+          <TabPane tab="Popular" key="1">
+            {reviews
+              .sort((a, b) => (a.upvoters.length < b.upvoters.length ? 1 : 0))
+              .map((review, index) => {
+                if (session && session.user.email !== review.author)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+                else if (!session)
+                  return (
+                    <ReviewCard review={review} key={index} session={session} loading={loading} />
+                  );
+              })}
+          </TabPane>
+          <TabPane tab="Recent" key="2">
+            {reviews.map((review, index) => {
+              if (session && session.user.email !== review.author)
+                return (
+                  <ReviewCard review={review} key={index} session={session} loading={loading} />
+                );
+              else if (!session)
+                return (
+                  <ReviewCard review={review} key={index} session={session} loading={loading} />
+                );
+            })}
+          </TabPane>
+        </Tabs>
       )}
     </div>
   );
