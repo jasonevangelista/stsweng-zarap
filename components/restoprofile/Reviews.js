@@ -50,6 +50,7 @@ export default function Reviews({ reviews, restaurantID }) {
         const res = await postAPI(details);
         const data = await res.json();
         if (res.status === 200 && data) {
+          message.success('Review added!');
           details.reviewID = data.result.insertedId;
           setUpdatedReview(details);
           setShowReview(true);
@@ -60,6 +61,7 @@ export default function Reviews({ reviews, restaurantID }) {
         const res = await updatePostAPI(details);
         const data = await res.json();
         if (res.status === 200 && data) {
+          message.success('Review edited!');
           setUpdatedReview(details);
           setShowReview(true);
         } else {
@@ -82,7 +84,7 @@ export default function Reviews({ reviews, restaurantID }) {
       const deleteDetail = { reviewID: updatedReview.reviewID };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
-        message.success('Post deleted!');
+        message.success('Review deleted!');
         resetFields();
         setShowReview(false);
       } else {
@@ -92,7 +94,7 @@ export default function Reviews({ reviews, restaurantID }) {
       const deleteDetail = { reviewID: userReview._id };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
-        message.success('Post deleted!');
+        message.success('Review deleted!');
         resetFields();
         setShowReview(false);
       } else {
