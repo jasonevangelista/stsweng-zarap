@@ -82,15 +82,21 @@ export default function Reviews({ reviews, restaurantID }) {
       const deleteDetail = { reviewID: updatedReview.reviewID };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
+        message.success('Post deleted!');
         resetFields();
         setShowReview(false);
+      } else {
+        message.error('Server error, please try again later.');
       }
     } else if (userReview._id) {
       const deleteDetail = { reviewID: userReview._id };
       const status = await deletePostAPI(deleteDetail);
       if (status === 200) {
+        message.success('Post deleted!');
         resetFields();
         setShowReview(false);
+      } else {
+        message.error('Server error, please try again later.');
       }
     }
     setButtonLoading(false);
