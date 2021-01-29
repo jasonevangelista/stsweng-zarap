@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Typography, Empty, Input, Button, Rate, Form } from 'antd';
 import Card from './ReviewCard';
 import { useSession } from 'next-auth/client';
+import styles from '../../styles/restoprofile/reviews.module.css';
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -64,12 +65,14 @@ export default function Reviews({ reviews, restaurantID }) {
       {session && !showReview && (
         // <Empty description="Write a review for this restaurant now!" />
         <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            height: '270px',
-            justifyContent: 'space-between'
-          }}>
+          className={styles.myReview}
+          // style={{
+          //   display: 'flex',
+          //   flexDirection: 'column',
+          //   height: '270px',
+          //   justifyContent: 'space-between'
+          // }}
+          >
           <div>
             Your rating: &nbsp;
             <Rate defaultValue={0} onChange={(val) => setRating(val)} />
@@ -89,7 +92,9 @@ export default function Reviews({ reviews, restaurantID }) {
           <Button
             loading={buttonLoading}
             onClick={(e) => postReview()}
-            style={{ width: '150px', alignSelf: 'end' }}>
+            // style={{ width: '150px', alignSelf: 'end' }}
+            className={styles.btnPost}
+            >
             Post Review
           </Button>
         </div>

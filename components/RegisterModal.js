@@ -52,7 +52,7 @@ export default function RegisterModal(props) {
 
       {registered &&
         <div className={styles.registeredMessage}>
-          <CheckCircleTwoTone style={{ fontSize: '50px'}} twoToneColor="#52c41a"/>
+          <CheckCircleTwoTone className={styles.checkCircle} twoToneColor="#52c41a"/>
           <h1>Success!</h1>
           <p>Your account has been registered!</p>
           <Button type="primary" className={styles.btnSuccess} onClick={()=>{
@@ -82,7 +82,7 @@ export default function RegisterModal(props) {
                 whitespace: true
               }
             ]}>
-            <Input id="firstName" placeholder="first name" style={{ borderRadius: '7px' }} />
+            <Input id="firstName" placeholder="first name" className={styles.formInput}/>
           </Form.Item>
 
           <Form.Item
@@ -95,7 +95,7 @@ export default function RegisterModal(props) {
                 whitespace: true
               }
             ]}>
-            <Input id="lastName" placeholder="last name" style={{ borderRadius: '7px' }} />
+            <Input id="lastName" placeholder="last name" className={styles.formInput} />
           </Form.Item>
 
           <Form.Item
@@ -120,7 +120,7 @@ export default function RegisterModal(props) {
                 }
               }
             ]}>
-            <Input id="email" placeholder="e-mail" style={{ borderRadius: '7px' }} />
+            <Input id="email" placeholder="e-mail" className={styles.formInput} />
           </Form.Item>
 
           <Tooltip
@@ -150,7 +150,7 @@ export default function RegisterModal(props) {
                   }
                 })
               ]}>
-              <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
+              <Input.Password id="password" placeholder="password" className={styles.formInput} />
             </Form.Item>
           </Tooltip>
           <Form.Item
@@ -175,7 +175,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="confirm"
               placeholder="confirm password"
-              style={{ borderRadius: '7px' }}
+              className={styles.formInput}
             />
           </Form.Item>
 

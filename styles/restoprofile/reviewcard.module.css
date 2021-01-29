@@ -1,0 +1,29 @@
+.container{
+  display: flex;
+  justify-content: space-between;
+}
+
+.detailsContainer{
+  overflow: hidden;
+}
+
+.upvoteContainer{
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 75px;
+}
+
+.heartIcon{
+  font-size: 1.5rem;
+}
+
+/* style={{
+  display: 'flex',
+  textAlign: 'center',
+  flexDirection: 'column',
+  justifyContent: 'center',
+  minWidth: '75px'
+}} */
+/* style={{ display: 'flex', justifyContent: 'space-between' }} */

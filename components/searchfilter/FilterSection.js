@@ -208,22 +208,6 @@ export default function FilterSection(props) {
           See all locations
         </Menu.Item>
 
-        {/* <SubMenu key="sub1" title="See all locations">
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-          <Menu.Item>City 1</Menu.Item>
-
-        </SubMenu> */}
-
         <Modal
           visible={locationModalVisible}
           onCancel={() => {

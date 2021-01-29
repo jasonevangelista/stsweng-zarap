@@ -1,0 +1,20 @@
+.myReview{
+  display: flex;
+  flex-direction: column;
+  height: 270px;
+  justify-content: space-between;
+}
+
+.btnPost{
+  width: 150px;
+  align-self: end;
+}
+
+/* style={{
+  display: 'flex',
+  flexDirection: 'column',
+  height: '270px',
+  justifyContent: 'space-between'
+}} */
+
+/* style={{ width: '150px', alignSelf: 'end' }} */

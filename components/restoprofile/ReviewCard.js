@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Card, Typography, Rate, Space, Button } from 'antd';
 import { HeartOutlined, HeartTwoTone } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import styles from '../../styles/restoprofile/reviewcard.module.css';
+
 
 const { Text, Paragraph } = Typography;
 
@@ -57,8 +59,8 @@ export default function ReviewCard({ review, session, loading }) {
   return (
     <div>
       <Card>
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <div style={{ overflow: 'hidden' }}>
+        <div className={styles.container}>
+          <div className={styles.detailsContainer}>
             <Text ellipsis strong>{`${review.firstName} ${review.lastName}`}</Text>
             <br />
             <Rate value={review.rating} disabled />
@@ -69,19 +71,21 @@ export default function ReviewCard({ review, session, loading }) {
           </div>
 
           <div
-            style={{
-              display: 'flex',
-              textAlign: 'center',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              minWidth: '75px'
-            }}>
+            className={styles.upvoteContainer}
+            // style={{
+            //   display: 'flex',
+            //   textAlign: 'center',
+            //   flexDirection: 'column',
+            //   justifyContent: 'center',
+            //   minWidth: '75px'
+            // }}
+            >
               
             {!upvoted && 
-              <HeartOutlined style={{ fontSize: '1.5rem' }}  onClick={()=> {reviewLiked()}} />
+              <HeartOutlined className={styles.heartIcon}   onClick={()=> {reviewLiked()}} />
             }
             {upvoted && 
-              <HeartTwoTone style={{ fontSize: '1.5rem' }} twoToneColor="#eb2f96" onClick={()=> {reviewLiked()}} />
+              <HeartTwoTone className={styles.heartIcon} twoToneColor="#eb2f96" onClick={()=> {reviewLiked()}} />
             }
           
             <Text>{review.upvoters.length + ' likes'}</Text>

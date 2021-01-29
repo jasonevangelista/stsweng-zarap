@@ -1,0 +1,12 @@
+.imageDiv{
+  max-height: 250px;
+  overflow: hidden;
+}
+
+.image{
+  margin-top: -180px;
+  position: relative;
+}
+
+/* style={{ maxHeight: '250px', overflow: 'hidden' }} */
+/* style={{ marginTop: '-180px', position: 'relative' }} */
