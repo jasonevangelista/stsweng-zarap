@@ -137,7 +137,6 @@ export default function Reviews({ reviews, restaurantID }) {
 
   const sortByPopular = () => {
     return reviews
-      .slice(popReviewRange.min, popReviewRange.max)
       .sort((a, b) =>
         a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
       )
@@ -145,6 +144,7 @@ export default function Reviews({ reviews, restaurantID }) {
         if ((session && session.user.email !== review.author) || !session) return true;
         else return false;
       })
+      .slice(popReviewRange.min, popReviewRange.max)
       .map((review, index) => {
         return <ReviewCard review={review} key={index} session={session} loading={loading} />;
       });
@@ -152,12 +152,12 @@ export default function Reviews({ reviews, restaurantID }) {
 
   const sortByRecent = () => {
     return reviews
-      .slice(recentReviewRange.min, recentReviewRange.max)
       .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
         else return false;
       })
+      .slice(recentReviewRange.min, recentReviewRange.max)
       .map((review, index) => {
         return <ReviewCard review={review} key={index} session={session} loading={loading} />;
       });
