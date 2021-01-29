@@ -43,8 +43,8 @@ Search for a restaurant that is in the database from search results page
     Type restaurant name ${ExistingRestaurant}
     Click Search Button Search Results Page
     Wait Until Page Contains Element  id=SearchRestoCard_stars__htMVF  
-    Wait Until Page Contains  Starbucks  
-    Wait Until Location Is Not  ${SearchResultsURL} 
+    Wait Until Page Contains  Starbucks  timeout=15
+    Wait Until Location Is Not  ${SearchResultsURL}  timeout=15
     ${url}  Log Location
     Location Should Be  ${url}
 
