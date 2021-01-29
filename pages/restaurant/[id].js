@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
-import { Typography, Divider } from 'antd';
+import { Typography, Divider, Rate } from 'antd';
 import Head from 'next/head';
 
 import BasicInfo from '../../components/restoprofile/BasicInfo';
@@ -13,6 +13,8 @@ import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 const { Title } = Typography;
 
 export default function RestaurantProfile({ resto, reviews }) {
+  const rating = FormatRating(resto.averageRating, resto.reviewCount);
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -25,9 +27,9 @@ export default function RestaurantProfile({ resto, reviews }) {
         <div className={styles.contentBody}>
           <div>
             <Title>{resto.name}</Title>
-            {/* <Rate allowHalf value={resto.averageRating} disabled />
+            <Rate allowHalf value={resto.averageRating} disabled />
              &nbsp;&nbsp;&nbsp;
-             {resto.averageRating} */}
+             <span className="ant-rate-text">{rating}</span>
           </div>
           <Divider />
           <BasicInfo resto={resto} />
@@ -95,6 +97,10 @@ export async function getServerSideProps(context) {
       }
       return review;
     });
+    var resto = restoResult[0];
+    // var reviews = await db.collection('review').find({ restaurantID: ObjectId(resto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    resto.averageRating = computeAverageScore(reviews)
+    resto.reviewCount = reviews.length
 
     return {
       props: {
@@ -113,4 +119,44 @@ export async function getServerSideProps(context) {
       }
     };
   }
+}
+
+function FormatRating(rating, reviewCount) {
+  var ratingString = '';
+  ratingString = Math.floor(rating * 2) / 2;
+  ratingString = ratingString.toFixed(1);
+
+  if (reviewCount > 0) {
+    if(reviewCount == 1){
+      return (
+        <p>
+          {ratingString} ({reviewCount} review)
+        </p>
+      );
+    }
+    return (
+      <p>
+        {ratingString} ({reviewCount} reviews)
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        {ratingString} (No reviews)
+      </p>
+    );
+  }
+}
+
+function computeAverageScore(reviews){
+  var total = 0;
+  var average = 0;
+  if(reviews.length > 0){
+    for(var i = 0; i < reviews.length; i++){
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
 }
