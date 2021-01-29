@@ -3,9 +3,11 @@ import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
+import format from 'date-fns/format';
 import styles from '../../styles/restoprofile/reviews.module.css';
+import cardstyles from '../../styles/restoprofile/reviewcard.module.css';
 
-const { Title, Paragraph } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
 const { TabPane } = Tabs;
 const details = {};
@@ -34,7 +36,8 @@ export default function Reviews({ reviews, restaurantID }) {
     }
   }, [loading]);
 
-  const postReview = async () => {
+  const postReview = async (e) => {
+    e.stopPropagation();
     setButtonLoading(true);
     const textString = form.getFieldValue('reviewText');
     if (textString !== null && textString !== '') {
@@ -91,57 +94,70 @@ export default function Reviews({ reviews, restaurantID }) {
     setRating(0);
   };
 
+  const sortByPopular = (array) => {
+    return array
+      .sort((a, b) =>
+        a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
+      )
+      .filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      })
+      .map((review, index) => {
+        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+      });
+  };
+
+  const sortByRecent = (array) => {
+    return array
+      .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
+      .filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      })
+      .map((review, index) => {
+        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+      });
+  };
+
+  const getUpdatedReview = (attribute) => {
+    return updatedReview.reviewID === null || updatedReview.reviewID === undefined
+      ? userReview[attribute]
+      : updatedReview[attribute];
+  };
+
   return (
     <div>
       <Title level={3}>Reviews</Title>
       {session && <Title level={4}>Your Review</Title>}
 
-      {session &&
-        showReview &&
-        (reviews.some((review) => review.author === session.user.email) &&
-        (updatedReview.reviewID === null || updatedReview.reviewID === undefined) ? (
-          <>
-            <Card
-              actions={[
-                <EditOutlined
-                  onClick={() => {
-                    setShowReview(false);
-                  }}
-                  key="edit"
-                />,
-                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
-              ]}>
-              <Rate value={userReview.rating} disabled />
-              <br />
-              <br />
-              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                {userReview.text}
-              </Paragraph>
-            </Card>
-            <br />
-          </>
-        ) : (
-          <>
-            <Card
-              actions={[
-                <EditOutlined
-                  onClick={() => {
-                    setShowReview(false);
-                  }}
-                  key="edit"
-                />,
-                <DeleteOutlined onClick={(e) => deletePost(e)} key="delete" />
-              ]}>
-              <Rate value={updatedReview.rating} disabled />
-              <br />
-              <br />
-              <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
-                {updatedReview.text}
-              </Paragraph>
-            </Card>
-            <br />
-          </>
-        ))}
+      {session && showReview && (updatedReview.reviewID || userReview._id) && (
+        <>
+          <Card>
+            <div className={cardstyles.container}>
+              <div className={cardstyles.detailsContainer}>
+                <Rate value={`${getUpdatedReview('rating')}`} disabled />
+                <br />
+                <Paragraph ellipsis={{ rows: 4, expandable: true, symbol: 'more' }}>
+                  {`${getUpdatedReview('text')}`}
+                </Paragraph>
+                <Text style={{ fontSize: '10px' }}>{` ${
+                  getUpdatedReview('edited') ? 'Updated on' : 'Posted on'
+                } ${format(new Date(), 'MMM d, yyyy')}`}</Text>
+              </div>
+              <div className={cardstyles.upvoteContainer}>
+                <div className={cardstyles.buttonContainer}>
+                  <EditOutlined onClick={() => setShowReview(false)} style={{ fontSize: '20px' }} />
+                </div>
+                <div className={cardstyles.buttonContainer}>
+                  <DeleteOutlined onClick={(e) => deletePost(e)} style={{ fontSize: '20px' }} />
+                </div>
+              </div>
+            </div>
+          </Card>
+          <br />
+        </>
+      )}
 
       {session && !showReview && (
         <div
@@ -171,7 +187,7 @@ export default function Reviews({ reviews, restaurantID }) {
 
           <Button
             loading={buttonLoading}
-            onClick={(e) => postReview()}
+            onClick={(e) => postReview(e)}
             // style={{ width: '150px', alignSelf: 'end' }}
             className={styles.btnPost}>
             Post Review
@@ -181,39 +197,18 @@ export default function Reviews({ reviews, restaurantID }) {
 
       {session && <Title level={4}>Community Reviews</Title>}
 
-      {reviews.length === 0 ? (
+      {reviews.filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      }).length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
         <Tabs type="card">
           <TabPane tab="Popular" key="1">
-            {reviews
-              .sort((a, b) =>
-                a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
-              )
-              .map((review, index) => {
-                if (session && session.user.email !== review.author)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-                else if (!session)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-              })}
+            {sortByPopular(reviews)}
           </TabPane>
           <TabPane tab="Recent" key="2">
-            {reviews
-              .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
-              .map((review, index) => {
-                if (session && session.user.email !== review.author)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-                else if (!session)
-                  return (
-                    <ReviewCard review={review} key={index} session={session} loading={loading} />
-                  );
-              })}
+            {sortByRecent(reviews)}
           </TabPane>
         </Tabs>
       )}
