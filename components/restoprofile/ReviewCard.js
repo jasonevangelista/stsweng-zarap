@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Typography, Rate, Space, Button } from 'antd';
+import { Card, Typography, Rate, message } from 'antd';
 import { HeartOutlined, HeartTwoTone } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import styles from '../../styles/restoprofile/reviewcard.module.css';
@@ -18,15 +18,11 @@ export default function ReviewCard({ review, session, loading }) {
   }, [session]);
 
   async function reviewLiked() {
-    console.log('button clicked!');
     if (!loading && session) {
       // user is logged in
       const userEmail = session.user.email;
 
-      if (review.author === userEmail) {
-        // user is trying to like his/her own post
-        console.log('cannot like your own review!');
-      } else {
+      if (review.author !== userEmail) {
         // user is trying to upvote another user's post
         const details = {
           email: userEmail,
@@ -53,7 +49,7 @@ export default function ReviewCard({ review, session, loading }) {
       }
     } else {
       // user is not logged in
-      console.log('you need to login before upvoting!');
+      message.error('You need to log in before upvoting!');
     }
   }
 

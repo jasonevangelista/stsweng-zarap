@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs } from 'antd';
+import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs, message } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
@@ -40,26 +40,36 @@ export default function Reviews({ reviews, restaurantID }) {
     e.stopPropagation();
     setButtonLoading(true);
     const textString = form.getFieldValue('reviewText');
-    if (textString !== null && textString !== '') {
+    if (textString !== null && textString !== '' && /\S/.test(textString) && rating > 0) {
       details.author = session.user.email;
       details.text = textString;
       details.rating = rating;
       details.restaurantID = restaurantID;
 
       if (details.reviewID === undefined || details.reviewID === null) {
-        const data = await postAPI(details);
-        if (data) {
+        const res = await postAPI(details);
+        const data = await res.json();
+        if (res.status === 200 && data) {
           details.reviewID = data.result.insertedId;
           setUpdatedReview(details);
           setShowReview(true);
+        } else {
+          message.error('Server error, please try again later.');
         }
       } else {
-        const data = await updatePostAPI(details);
-        if (data) {
+        const res = await updatePostAPI(details);
+        const data = await res.json();
+        if (res.status === 200 && data) {
           setUpdatedReview(details);
           setShowReview(true);
+        } else {
+          message.error('Server error, please try again later.');
         }
       }
+    } else if (rating === 0) {
+      message.error('Rating cannot be zero!');
+    } else {
+      message.error('Review cannot be blank!');
     }
 
     setButtonLoading(false);
@@ -240,7 +250,8 @@ async function postAPI(details) {
     },
     body: JSON.stringify(details)
   });
-  return res.json();
+
+  return res;
 }
 
 async function updatePostAPI(details) {
@@ -251,7 +262,7 @@ async function updatePostAPI(details) {
     },
     body: JSON.stringify(details)
   });
-  return res.json();
+  return res;
 }
 
 async function deletePostAPI(details) {
