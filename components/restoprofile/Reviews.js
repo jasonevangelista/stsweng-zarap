@@ -12,7 +12,7 @@ const { TextArea } = Input;
 const { TabPane } = Tabs;
 const details = {};
 
-export default function Reviews({ reviews, restaurantID }) {
+export default function Reviews({ reviews, restaurantID, updateRating, setUpdateRating }) {
   const [session, loading] = useSession();
   const [rating, setRating] = useState(0);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -54,6 +54,7 @@ export default function Reviews({ reviews, restaurantID }) {
           details.reviewID = data.result.insertedId;
           setUpdatedReview(details);
           setShowReview(true);
+          setUpdateRating(!updateRating);
         } else {
           message.error('Server error, please try again later.');
         }
@@ -64,6 +65,7 @@ export default function Reviews({ reviews, restaurantID }) {
           message.success('Review edited!');
           setUpdatedReview(details);
           setShowReview(true);
+          setUpdateRating(!updateRating);
         } else {
           message.error('Server error, please try again later.');
         }
@@ -96,6 +98,7 @@ export default function Reviews({ reviews, restaurantID }) {
         message.success('Review deleted!');
         resetFields();
         setShowReview(false);
+        setUpdateRating(!updateRating);
       } else {
         message.error('Server error, please try again later.');
       }
@@ -106,6 +109,7 @@ export default function Reviews({ reviews, restaurantID }) {
         message.success('Review deleted!');
         resetFields();
         setShowReview(false);
+        setUpdateRating(!updateRating);
       } else {
         message.error('Server error, please try again later.');
       }

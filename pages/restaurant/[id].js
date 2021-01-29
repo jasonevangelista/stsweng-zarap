@@ -10,10 +10,20 @@ import Gallery from '../../components/restoprofile/Gallery';
 
 import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
+import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+
+
 const { Title } = Typography;
 
 export default function RestaurantProfile({ resto, reviews }) {
+  const router = useRouter();
   const rating = FormatRating(resto.averageRating, resto.reviewCount);
+  const [updateRating, setUpdateRating] = useState(false);
+
+  useEffect(() => {
+    router.push("/restaurant/" + resto._id)
+  }, [updateRating]);
 
   return (
     <div className={styles.wrapper}>
@@ -36,7 +46,7 @@ export default function RestaurantProfile({ resto, reviews }) {
           <Divider />
           <Gallery imageArray={resto.menuURLs} />
           <Divider />
-          <Reviews reviews={reviews} restaurantID={resto._id} />
+          <Reviews reviews={reviews} restaurantID={resto._id} updateRating={updateRating} setUpdateRating={setUpdateRating}/>
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
             <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
             <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>
