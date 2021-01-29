@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs, message } from 'antd';
+import { Typography, Empty, Input, Button, Rate, Form, Card, Tabs, message, Modal } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import ReviewCard from './ReviewCard';
 import { useSession } from 'next-auth/client';
@@ -75,6 +75,15 @@ export default function Reviews({ reviews, restaurantID }) {
     }
 
     setButtonLoading(false);
+  };
+
+  const promptDelete = (e) => {
+    Modal.confirm({
+      content: 'Are you sure you want to delete this review?',
+      onOk() {
+        deletePost(e);
+      }
+    });
   };
 
   const deletePost = async (e) => {
@@ -168,7 +177,7 @@ export default function Reviews({ reviews, restaurantID }) {
                   <EditOutlined onClick={() => setShowReview(false)} style={{ fontSize: '20px' }} />
                 </div>
                 <div className={cardstyles.buttonContainer}>
-                  <DeleteOutlined onClick={(e) => deletePost(e)} style={{ fontSize: '20px' }} />
+                  <DeleteOutlined onClick={(e) => promptDelete(e)} style={{ fontSize: '20px' }} />
                 </div>
               </div>
             </div>
