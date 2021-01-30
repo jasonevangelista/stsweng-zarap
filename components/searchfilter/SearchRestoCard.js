@@ -82,11 +82,11 @@ export default function SearchRestoCard({ resto }) {
 }
 
 export function FormatDetails(details, symbol) {
-  var detailsString = '';
+  let detailsString = '';
 
   if (details.length > 1) {
-    const list = [];
-    for (var i = 0; i < details.length; i++) {
+    // const list = [];
+    for (let i = 0; i < details.length; i++) {
       detailsString += details[i];
       if (i + 1 < details.length) detailsString += symbol;
     }
@@ -98,7 +98,7 @@ export function FormatDetails(details, symbol) {
 }
 
 function FormatRating(rating, reviewCount) {
-  var ratingString = '';
+  let ratingString = '';
   ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 

@@ -1,6 +1,6 @@
 import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
-import { Button, Divider, Typography } from 'antd';
+import { Button, Divider } from 'antd';
 import React, { useState } from 'react';
 import EditProfileModal from '../../components/EditProfileModal';
 import styles from '../../styles/userprofile.module.css';
@@ -9,7 +9,6 @@ import UserReviews from '../../components/userprofile/UserReviews';
 
 
 import Head from 'next/head';
-const { Title } = Typography;
 
 
 import { useSession } from 'next-auth/client';
@@ -65,7 +64,6 @@ export default function UserProfile({user, reviews}) {
               <span className={styles.editButtonSpan}>
                 <Button size="large" type="primary" className="btnEditProfile"
                 onClick={()=>{
-                  console.log("edit profile!")
                   showModal()
                 }}>
                   Edit Profile
@@ -122,11 +120,9 @@ export async function getServerSideProps(context) {
     .limit(1)
     .toArray();
 
-    console.log(user)
-
   if (user.length > 0) {
-    var results = JSON.parse(JSON.stringify(user));
-    var userReviews = await getUserReviews(db, results[0]);
+    const results = JSON.parse(JSON.stringify(user));
+    const userReviews = await getUserReviews(db, results[0]);
     return {
       props: {
         user: results[0],
@@ -148,18 +144,18 @@ export async function getServerSideProps(context) {
 }
 
 async function getUserReviews(db, user){
-  var userReviews = await db
+  const userReviews = await db
     .collection('review')
     .find({ author: user.email })
     // .sort({date: -1})
     .toArray();
   
   if (userReviews.length > 0){
-    var reviewsArr = JSON.parse(JSON.stringify(userReviews));
+    const reviewsArr = JSON.parse(JSON.stringify(userReviews));
 
-    for(var i = 0; i < reviewsArr.length; i++){
-      // var restaurantName = await getRestaurantNames(db, reviewsArr[i].restaurantID);
-      var restaurantDetails = await getRestaurantNames(db, reviewsArr[i].restaurantID);
+    for(let i = 0; i < reviewsArr.length; i++){
+      // const restaurantName = await getRestaurantNames(db, reviewsArr[i].restaurantID);
+      const restaurantDetails = await getRestaurantNames(db, reviewsArr[i].restaurantID);
       reviewsArr[i]["restaurantName"] = restaurantDetails[0]
       reviewsArr[i]["restaurantCoverPhotoURL"] = restaurantDetails[1]
 
@@ -173,13 +169,13 @@ async function getUserReviews(db, user){
 }
 
 async function getRestaurantNames(db, restaurantID){
-  var restaurant = await db
+  const restaurant = await db
   .collection('restaurant')
   .find({_id: ObjectId(restaurantID)})
   .limit(1)
   .toArray();
-  var name = restaurant[0].name;
-  var coverPhotoURL = restaurant[0].coverPhotoURL;
+  const name = restaurant[0].name;
+  const coverPhotoURL = restaurant[0].coverPhotoURL;
 
   if(restaurant.length > 0){
     // return JSON.parse(JSON.stringify(restaurant))[0].name;

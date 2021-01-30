@@ -2,7 +2,6 @@ import styles from '../../styles/searchfilter/FilterSection.module.css';
 import { Card, Menu, Button, Modal, Row, Col, Divider } from 'antd';
 
 import React, { useState, useEffect, useRef } from 'react';
-const { SubMenu } = Menu;
 
 export default function FilterSection(props) {
   const firstTimeRender = useRef(true);
@@ -14,8 +13,8 @@ export default function FilterSection(props) {
   const [locationFilter, setLocationFilter] = useState(null);
   const [cuisineFilter, setCuisineFilter] = useState(null);
 
-  var selectedCuisineFromModal;
-  var selectedLocationFromModal;
+  let selectedCuisineFromModal;
+  let selectedLocationFromModal;
   if (
     locationFilter &&
     locationFilter != 'Manila' &&

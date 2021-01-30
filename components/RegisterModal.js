@@ -113,7 +113,7 @@ export default function RegisterModal(props) {
               {
                 validator: async (rule, value) => {
                   if (value) {
-                    var emailStatus = await checkEmailDuplicate(value);
+                    const emailStatus = await checkEmailDuplicate(value);
                     return emailStatus;
                   }
                   return Promise.resolve();
@@ -215,7 +215,7 @@ async function checkEmailDuplicate(emailInput) {
   console.log('results');
   console.log(results);
 
-  var emailAlreadyRegistered = false;
+  let emailAlreadyRegistered = false;
   results.forEach((user) => {
     if (user.email == emailInput) {
       emailAlreadyRegistered = true;
@@ -230,7 +230,7 @@ async function checkEmailDuplicate(emailInput) {
 
 async function addAccount(newAccount){
   // insert new account info in db
-  var accountString = JSON.stringify(newAccount);
+  const accountString = JSON.stringify(newAccount);
 
   const res = await fetch('/api/register/' + accountString);
   const results = await res.json();

@@ -13,7 +13,7 @@ const { Search } = Input;
 
 export default function Header() {
   const router = useRouter();
-  var pathname = null;
+  let pathname = null;
 
   const [session, loading] = useSession();
 

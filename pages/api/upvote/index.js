@@ -7,7 +7,7 @@ export default async (req, res) => {
 
   try{
     // before updating, check review upvoters array if email is already there to prevent duplication
-    var currentUserUpvotes = await db.collection('review').find(
+    const currentUserUpvotes = await db.collection('review').find(
       { 
         _id: ObjectId(details.reviewID),
         upvoters: {$in: [details.email]}

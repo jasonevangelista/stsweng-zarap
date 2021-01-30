@@ -6,10 +6,10 @@ export default async (req, res) => {
     query: { id, sort, filter },
   } = req;
 
-  var filterQuery = JSON.parse(filter);
+  const filterQuery = JSON.parse(filter);
   
   const { db } = await connectToDatabase();
-  var restaurants;
+  let restaurants;
 
   // no sort and filter
   if (sort == 'none' && filterQuery.location == null && filterQuery.cuisine == null) {
@@ -18,10 +18,10 @@ export default async (req, res) => {
       .find({ name: { $regex: id, $options: 'i' } })
       .toArray();
   } else {
-    var filterOption = {
+    const filterOption = {
       name: { $regex: id, $options: 'i' }
     };
-    var sortOption = {};
+    const sortOption = {};
 
     // SORTING OPTION
     // averageRating - high to low (-1)
@@ -54,9 +54,9 @@ export default async (req, res) => {
       .toArray();
   }
 
-  for(var i = 0; i < restaurants.length; i++){
-    var currentResto = restaurants[i]
-    var reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
+  for(let i = 0; i < restaurants.length; i++){
+    let currentResto = restaurants[i]
+    let reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
     restaurants[i].averageRating = computeAverageScore(reviews)
     restaurants[i].reviewCount = reviews.length
     }
@@ -66,10 +66,10 @@ export default async (req, res) => {
 
 
 function computeAverageScore(reviews){
-  var total = 0;
-  var average = 0;
+  let total = 0;
+  let average = 0;
   if(reviews.length > 0){
-    for(var i = 0; i < reviews.length; i++){
+    for(let i = 0; i < reviews.length; i++){
       total += reviews[i].rating;
     }
     average = total / reviews.length;

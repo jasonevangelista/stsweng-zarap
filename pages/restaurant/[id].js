@@ -107,8 +107,8 @@ export async function getServerSideProps(context) {
       }
       return review;
     });
-    var resto = restoResult[0];
-    // var reviews = await db.collection('review').find({ restaurantID: ObjectId(resto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    const resto = restoResult[0];
+    // const reviews = await db.collection('review').find({ restaurantID: ObjectId(resto._id) }).project({ rating: 1, _id: 0 }).toArray();
     resto.averageRating = computeAverageScore(reviews)
     resto.reviewCount = reviews.length
 
@@ -132,7 +132,7 @@ export async function getServerSideProps(context) {
 }
 
 function FormatRating(rating, reviewCount) {
-  var ratingString = '';
+  let ratingString = '';
   ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 
@@ -159,10 +159,10 @@ function FormatRating(rating, reviewCount) {
 }
 
 function computeAverageScore(reviews){
-  var total = 0;
-  var average = 0;
+  let total = 0;
+  let average = 0;
   if(reviews.length > 0){
-    for(var i = 0; i < reviews.length; i++){
+    for(let i = 0; i < reviews.length; i++){
       total += reviews[i].rating;
     }
     average = total / reviews.length;

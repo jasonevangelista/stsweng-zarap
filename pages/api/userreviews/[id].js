@@ -7,7 +7,7 @@ export default async (req, res) => {
   } = req;
 
   const { db } = await connectToDatabase();
-  var userReviews;
+  const userReviews;
 
   try{
     userReviews = await db

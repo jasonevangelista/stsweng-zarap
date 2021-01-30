@@ -7,7 +7,6 @@ import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 import { ObjectId } from 'mongodb';
 
-
 const { Title } = Typography;
 
 import { useRouter } from 'next/router';
@@ -20,13 +19,13 @@ const RoundSearch = styled(Input.Search)`
 
 const WhiteTitle = styled(Title)`
   &.ant-typography {
-      color: white;
-    }
+    color: white;
+  }
 `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
 function shuffle(array) {
-  var currentIndex = array.length,
+  let currentIndex = array.length,
     temporaryValue,
     randomIndex;
 
@@ -50,10 +49,10 @@ const restoPicker = (results) => {
 
   const restaurants = [];
   let tracker = 0;
-  
+
   while (restaurants.length < 7) {
     // if (shuffledArray[tracker].averageRating && shuffledArray[tracker].averageRating >= 3.0) {
-      restaurants.push(shuffledArray[tracker]);
+    restaurants.push(shuffledArray[tracker]);
     // }
 
     tracker++;
@@ -68,7 +67,7 @@ export default function Home({ results }) {
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
-  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -79,21 +78,21 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <div className={styles.landingTitle}>
             {' '}
-            <WhiteTitle style={{fontSize:'64px'}}>Find what you like</WhiteTitle>
+            <WhiteTitle style={{ fontSize: '64px' }}>Find what you like</WhiteTitle>
             {/* {profile && <h1>LOGGED IN</h1>}
             {profile && 
             <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
             {!profile && <h1>NOT LOGGED IN</h1>} */}
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
-                <RoundSearch size="large"
+                <RoundSearch
+                  size="large"
                   id="searchbar"
-                  className={["searchBar", "landingSearchBar"]}
+                  className={['searchBar', 'landingSearchBar']}
                   placeholder="Search for restaurants"
                   enterButton
                   onSearch={(value) => {
                     if (value && value.trim()) {
-                      console.log(value);
                       router.push('searchfilter/' + value);
                     }
                   }}
@@ -120,27 +119,30 @@ export async function getServerSideProps(context) {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();
-  
-  for(var i = 0; i < restaurants.length; i++){
-    var currentResto = restaurants[i]
-    var reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
-    restaurants[i].averageRating = computeAverageScore(reviews)
-    restaurants[i].reviewCount = reviews.length
-  }
 
+  for (let i = 0; i < restaurants.length; i++) {
+    const currentResto = restaurants[i];
+    const reviews = await db
+      .collection('review')
+      .find({ restaurantID: ObjectId(currentResto._id) })
+      .project({ rating: 1, _id: 0 })
+      .toArray();
+    restaurants[i].averageRating = computeAverageScore(reviews);
+    restaurants[i].reviewCount = reviews.length;
+  }
 
   return {
     props: {
-      results: JSON.parse(JSON.stringify(restaurants)),
-    },
+      results: JSON.parse(JSON.stringify(restaurants))
+    }
   };
 }
 
-function computeAverageScore(reviews){
-  var total = 0;
-  var average = 0;
-  if(reviews.length > 0){
-    for(var i = 0; i < reviews.length; i++){
+function computeAverageScore(reviews) {
+  let total = 0;
+  let average = 0;
+  if (reviews.length > 0) {
+    for (let i = 0; i < reviews.length; i++) {
       total += reviews[i].rating;
     }
     average = total / reviews.length;

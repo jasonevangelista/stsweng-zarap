@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-var errorMessage = (
+const errorMessage = (
 
   <div className={styles.errorContainer}>
     <h2>No restaurants were found</h2>
@@ -60,7 +60,7 @@ export default function SearchFilter({ results }) {
 
   useEffect(() => {
     if (!firstTimeRender.current) {
-      var filter = {
+      const filter = {
         location: locationFilter,
         cuisine: cuisineFilter
       };
@@ -70,7 +70,7 @@ export default function SearchFilter({ results }) {
 
   function searchResults(value, sort, filter) {
     getSearchResults(value, sort, filter).then((result) => {
-      var restoList = result.data;
+      const restoList = result.data;
       if (restoList.length == 0) {
         setResultStatus(errorMessage);
       } else {
@@ -131,7 +131,7 @@ export default function SearchFilter({ results }) {
 
 // generate each restaurant card based on results
 function generateRestaurantCards(restaurants) {
-  var cards = [];
+  const cards = [];
   for (const [index, value] of restaurants.entries()) {
     cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
   }
@@ -148,17 +148,12 @@ function getDefaultResultStatus(restaurants) {
 
 export async function getServerSideProps(context) {
   const searchItem = context.params.searchitem;
-  console.log('search item: ' + searchItem);
   const { db } = await connectToDatabase();
 
   const restaurants = await db
     .collection('restaurant')
     .find({ name: { $regex: searchItem, $options: 'i' } })
     .toArray();
-
-  // console.log("getServerSideProps")
-  // console.log(restaurants)
-  // getReviewScore(restaurants)
 
   return {
     props: {
@@ -169,16 +164,14 @@ export async function getServerSideProps(context) {
 
 // get restaurants based on search string
 async function getSearchResults(searchString, sort, filter) {
-  // var filter = 'none' // {"location":"none", "cuisine":"none"}
+  // const filter = 'none' // {"location":"none", "cuisine":"none"}
   if (!sort) {
     sort = 'none';
   }
-  console.log('SEARCH STRING: ' + searchString);
-  console.log('SORT OPTION: ' + sort);
-  console.log('FILTER OPTION: ' + JSON.stringify(filter));
-  var queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
 
-  var searchRoute = '/api/search/' + searchString + queryParams;
+  const queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
+
+  const searchRoute = '/api/search/' + searchString + queryParams;
   const res = await fetch(searchRoute);
   const data = await res.json();
 

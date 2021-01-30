@@ -5,7 +5,7 @@ import { FaUtensils, FaCoffee, FaHamburger } from 'react-icons/fa';
 import { useRouter } from 'next/router';
 
 function FormatRating(rating, reviewCount) {
-  var ratingString = '';
+  let ratingString = '';
   ratingString = Math.floor(rating * 2) / 2;
   ratingString = ratingString.toFixed(1);
 

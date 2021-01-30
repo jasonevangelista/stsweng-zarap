@@ -7,7 +7,7 @@ export default async (req, res) => {
   const {
     query: { details }
   } = req;
-  var updatedDetails = JSON.parse(details);
+  const updatedDetails = JSON.parse(details);
 
   if(updatedDetails["newPassword"]){
     updatedDetails.newPassword = bcrypt.hashSync(updatedDetails.newPassword, 10)
