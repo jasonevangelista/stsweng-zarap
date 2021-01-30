@@ -547,40 +547,40 @@ describe('Register Modal Inputs',  () => {
 });
 
 // /** @test {LoginModal Component} */
-// describe('LoginModal Component', () => {
-//   let wrapper;
-//   beforeEach(() => {
-//     wrapper = mount(
-//       <LoginModal
-//       closeModal={jest.fn()}
-//       visible={true}
-//       redirect={jest.fn()}
-//       />
-//     );
-//   });
+describe('LoginModal Component', () => {
+  let wrapper;
+  beforeEach(() => {
+    wrapper = mount(
+      <LoginModal
+      closeModal={jest.fn()}
+      visible={true}
+      redirect={jest.fn()}
+      />
+    );
+  });
 
-//   afterEach(() => {
-//     wrapper.unmount();
-//   });
+  afterEach(() => {
+    wrapper.unmount();
+  });
 
-//   it('should render without crashing', () => {
-//     // Expect a LoginModal
-//     expect(wrapper.find(LoginModal)).toHaveLength(1);
-//   });
+  it('should render without crashing', () => {
+    // Expect a LoginModal
+    expect(wrapper.find(LoginModal)).toHaveLength(1);
+  });
 
-//   it('should have proper input fields', () => {
-//     var receivedNamesList = wrapper
-//       .find(LoginModal)
-//       .find('form')
-//       .children()
-//       .map((node) => node.props().name);
-//     var updatedReceivedNamesList = []
-//     receivedNamesList.forEach((value)=>{
-//       if(value){
-//         updatedReceivedNamesList.push(value);
-//       }
-//     })
-//     const expectedNamesList = ['e-mail', 'password'];
-//     expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
-//   });
-// });
+  it('should have proper input fields', () => {
+    var receivedNamesList = wrapper
+      .find(LoginModal)
+      .find('form')
+      .children()
+      .map((node) => node.props().name);
+    var updatedReceivedNamesList = []
+    receivedNamesList.forEach((value)=>{
+      if(value){
+        updatedReceivedNamesList.push(value);
+      }
+    })
+    const expectedNamesList = ['e-mail', 'password'];
+    expect(receivedNamesList).toEqual(expect.arrayContaining(expectedNamesList));
+  });
+});

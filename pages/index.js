@@ -77,7 +77,7 @@ export default function Home({ results }) {
       </Head>
       <div className={styles.topContainer}>
         <div className={styles.topBG}>
-          <h2 className={styles.landingTitle}>
+          <div className={styles.landingTitle}>
             {' '}
             <WhiteTitle style={{fontSize:'64px'}}>Find what you like</WhiteTitle>
             {/* {profile && <h1>LOGGED IN</h1>}
@@ -100,7 +100,7 @@ export default function Home({ results }) {
                 />
               </Col>
             </Row>
-          </h2>
+          </div>
         </div>
       </div>
 
