@@ -59,7 +59,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
               message: 'Please input your e-mail!'
             }
           ]}>
-          <Input placeholder="e-mail" className="formInput" style={{ borderRadius: '7px' }} />
+          <Input id="email" placeholder="e-mail" className="formInput" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
         <Form.Item
