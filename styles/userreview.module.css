@@ -1,0 +1,35 @@
+.restoRedirectDiv :hover{
+  cursor: pointer;
+}
+
+.ratingDiv{
+  pointer-events: none;
+}
+
+.ratingDiv :hover{
+  cursor: pointer;
+}
+
+.userReviewPagination {
+  margin-top: 30px;
+}
+
+.paginationDiv {
+  /* text-align: center; */
+}
+
+.imageDiv{
+  min-width:14em;
+  height: 9em;
+  margin-right: 1em;
+  background: maroon;
+  overflow: hidden;
+  border-radius: 10px;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.imageSection{
+  width: 50%;
+}
