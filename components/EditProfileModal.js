@@ -27,11 +27,11 @@ export default function RegisterModal(props) {
     setUpdated(true);
 
     // force re-sign in to update session
-    signOut();
+    await signOut();
     if (values['newPassword']) {
-      signIn('credentials', { email: props.user.email, password: values.newPassword });
+      await signIn('credentials', { email: props.user.email, password: values.newPassword });
     } else {
-      signIn('credentials', { email: props.user.email, password: values.oldPassword });
+      await signIn('credentials', { email: props.user.email, password: values.oldPassword });
     }
   };
 
