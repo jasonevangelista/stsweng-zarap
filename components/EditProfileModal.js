@@ -109,7 +109,7 @@ export default function RegisterModal(props) {
               }
             ]}>
             {/* <Input placeholder="first name" defaultValue={props.user.firstName} style={{ borderRadius: '7px' }} /> */}
-            <Input placeholder="first name" style={{ borderRadius: '7px' }} />
+            <Input placeholder="first name" className={"formInput"} />
           </Form.Item>
 
           <Form.Item
@@ -123,7 +123,7 @@ export default function RegisterModal(props) {
               }
             ]}>
             {/* <Input id="lastName" placeholder="last name" defaultValue={props.user.lastName} style={{ borderRadius: '7px' }} /> */}
-            <Input id="lastName" placeholder="last name" style={{ borderRadius: '7px' }} />
+            <Input id="lastName" placeholder="last name" className={"formInput"} />
           </Form.Item>
           <Form.Item
             name="oldPassword"
@@ -149,7 +149,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="oldPassword"
               placeholder="password"
-              style={{ borderRadius: '7px' }}
+              className={"formInput"}
             />
           </Form.Item>
           {/* <Checkbox checked={checked} onChange={onClickCheckbox}>Change Password</Checkbox> */}
@@ -194,7 +194,7 @@ export default function RegisterModal(props) {
               <Input.Password
                 id="newPassword"
                 placeholder="new password"
-                style={{ borderRadius: '7px' }}
+                className={"formInput"}
               />
             </Form.Item>
           </Tooltip>
@@ -229,7 +229,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="confirm"
               placeholder="confirm new password"
-              style={{ borderRadius: '7px' }}
+              className={"formInput"}
             />
           </Form.Item>
 
@@ -239,7 +239,7 @@ export default function RegisterModal(props) {
               type="primary"
               htmlType="submit"
               id="btnSubmit"
-              className={styles.btnSubmit}
+              className={[styles.btnSubmit, "btnSubmit"]}
               loading={loading}>
               UPDATE
             </Button>
