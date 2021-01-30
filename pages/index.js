@@ -115,7 +115,7 @@ export default function Home({ results }) {
 }
 
 // get all restaurants info when page is loaded
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();

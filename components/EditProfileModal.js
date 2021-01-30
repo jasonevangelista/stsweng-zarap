@@ -4,7 +4,7 @@ import { Input, Button, Form, Modal, Tooltip } from 'antd';
 import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useState } from 'react';
 import bcrypt from 'bcryptjs';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 
 import { signIn, signOut } from 'next-auth/client';
 
@@ -12,7 +12,7 @@ export default function RegisterModal(props) {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const [updated, setUpdated] = useState(false);
-  const router = useRouter();
+  // const router = useRouter();
 
   // called when form content is valid
   const onFinish = async (values) => {
