@@ -10,7 +10,7 @@ import Gallery from '../../components/restoprofile/Gallery';
 
 import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 

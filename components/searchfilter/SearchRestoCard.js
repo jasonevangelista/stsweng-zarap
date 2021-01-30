@@ -1,5 +1,5 @@
 import styles from '../../styles/searchfilter/SearchRestoCard.module.css';
-import { Card, Divider, Rate, Row, Col, Image } from 'antd';
+import { Card, Divider, Rate, Row, Col } from 'antd';
 import {
   ShopOutlined,
   ClockCircleOutlined,

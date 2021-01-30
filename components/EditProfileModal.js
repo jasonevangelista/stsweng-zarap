@@ -21,18 +21,19 @@ export default function RegisterModal(props) {
     values['_id'] = props.user._id;
     // console.log("updated profile values:")
     // console.log(values)
-    await updateAccount(values);
+    const res = await updateAccount(values);
+    if (res.status === 200) {
+      setUpdated(true);
+      // force re-sign in to update session
+      await signOut();
+      if (values['newPassword']) {
+        await signIn('credentials', { email: props.user.email, password: values.newPassword });
+      } else {
+        await signIn('credentials', { email: props.user.email, password: values.oldPassword });
+      }
+    }
     // onClose();
     setLoading(false);
-    setUpdated(true);
-
-    // force re-sign in to update session
-    await signOut();
-    if (values['newPassword']) {
-      await signIn('credentials', { email: props.user.email, password: values.newPassword });
-    } else {
-      await signIn('credentials', { email: props.user.email, password: values.oldPassword });
-    }
   };
 
   const onClose = () => {
@@ -49,15 +50,15 @@ export default function RegisterModal(props) {
     }
   };
 
-  const reloadAfterUpdate = () => {
-    onClose();
-    router.reload();
-  };
+  // const reloadAfterUpdate = () => {
+  //   onClose();
+  //   router.reload();
+  // };
 
-  const onClickCheckbox = (e) => {
-    // console.log('checked = ', e.target.checked);
-    setChecked(e.target.checked);
-  };
+  // const onClickCheckbox = (e) => {
+  //   // console.log('checked = ', e.target.checked);
+  //   setChecked(e.target.checked);
+  // };
 
   function isAlphaNumeric(str) {
     return /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/.test(str);
@@ -109,7 +110,7 @@ export default function RegisterModal(props) {
               }
             ]}>
             {/* <Input placeholder="first name" defaultValue={props.user.firstName} style={{ borderRadius: '7px' }} /> */}
-            <Input placeholder="first name" className={"formInput"} />
+            <Input placeholder="first name" className={'formInput'} />
           </Form.Item>
 
           <Form.Item
@@ -123,7 +124,7 @@ export default function RegisterModal(props) {
               }
             ]}>
             {/* <Input id="lastName" placeholder="last name" defaultValue={props.user.lastName} style={{ borderRadius: '7px' }} /> */}
-            <Input id="lastName" placeholder="last name" className={"formInput"} />
+            <Input id="lastName" placeholder="last name" className={'formInput'} />
           </Form.Item>
           <Form.Item
             name="oldPassword"
@@ -146,11 +147,7 @@ export default function RegisterModal(props) {
                 }
               })
             ]}>
-            <Input.Password
-              id="oldPassword"
-              placeholder="password"
-              className={"formInput"}
-            />
+            <Input.Password id="oldPassword" placeholder="password" className={'formInput'} />
           </Form.Item>
           {/* <Checkbox checked={checked} onChange={onClickCheckbox}>Change Password</Checkbox> */}
 
@@ -191,11 +188,7 @@ export default function RegisterModal(props) {
                   }
                 })
               ]}>
-              <Input.Password
-                id="newPassword"
-                placeholder="new password"
-                className={"formInput"}
-              />
+              <Input.Password id="newPassword" placeholder="new password" className={'formInput'} />
             </Form.Item>
           </Tooltip>
 
@@ -229,7 +222,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="confirm"
               placeholder="confirm new password"
-              className={"formInput"}
+              className={'formInput'}
             />
           </Form.Item>
 
@@ -239,7 +232,7 @@ export default function RegisterModal(props) {
               type="primary"
               htmlType="submit"
               id="btnSubmit"
-              className={[styles.btnSubmit, "btnSubmit"]}
+              className={[styles.btnSubmit, 'btnSubmit']}
               loading={loading}>
               UPDATE
             </Button>
@@ -255,8 +248,8 @@ async function updateAccount(updatedDetails) {
   const detailsString = JSON.stringify(updatedDetails);
 
   const res = await fetch('/api/update/' + detailsString);
-  const results = await res.json();
 
+  return res;
   // console.log('results');
   // console.log(results);
 }

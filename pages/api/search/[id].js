@@ -21,7 +21,7 @@ export default async (req, res) => {
     const filterOption = {
       name: { $regex: id, $options: 'i' }
     };
-    const sortOption = {};
+    let sortOption = {};
 
     // SORTING OPTION
     // averageRating - high to low (-1)

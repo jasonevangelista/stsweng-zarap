@@ -31,7 +31,7 @@ export default function carouselItem({ restoSet }) {
   const router = useRouter();
 
   //set up icons for the restaurants
-  restoSet.map((card, index) => {
+  restoSet.map((card) => {
     switch (card.establishmentType) {
       case 'Casual Dining':
         card.icon = <FaUtensils size="12px" />;

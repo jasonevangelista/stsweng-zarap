@@ -34,15 +34,19 @@ export default function ReviewCard({ review, session, loading }) {
           details.upvoted = true;
 
           const res = await apiUpvote('/api/upvote/', details);
-          setUpvoted(false);
-          router.replace(router.asPath);
+          if (res.status === 200) {
+            setUpvoted(false);
+            router.replace(router.asPath);
+          }
         } else {
           // user has not yet upvoted the post previously
           details.upvoted = false;
 
           const res = await apiUpvote('/api/upvote/', details);
-          setUpvoted(true);
-          router.replace(router.asPath);
+          if (res.status === 200) {
+            setUpvoted(true);
+            router.replace(router.asPath);
+          }
         }
       }
     } else {
@@ -113,5 +117,5 @@ async function apiUpvote(url, details) {
     },
     body: JSON.stringify(details)
   });
-  return res.json();
+  return res;
 }

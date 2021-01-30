@@ -11,7 +11,7 @@ import LoginModal from '../components/LoginModal';
 import SearchRestoCard, { FormatDetails } from '../components/searchfilter/SearchRestoCard';
 import BasicInfo from '../components/restoprofile/BasicInfo';
 import Gallery from '../components/restoprofile/Gallery';
-import GalleryItem from '../components/restoprofile/GalleryItem';
+// import GalleryItem from '../components/restoprofile/GalleryItem';
 import ImageHeader from '../components/restoprofile/ImageHeader';
 import ReviewCard from '../components/restoprofile/ReviewCard';
 import Reviews, { countReviews, checkReviews } from '../components/restoprofile/Reviews';

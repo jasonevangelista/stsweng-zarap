@@ -3,20 +3,19 @@ import { ObjectId } from 'mongodb';
 
 export default async (req, res) => {
   const {
-    query: { id },
+    query: { id }
   } = req;
 
   const { db } = await connectToDatabase();
-  const userReviews;
+  let userReviews;
 
-  try{
+  try {
     userReviews = await db
-    .collection('reviews')
-    .find({ userID: ObjectId(id) })
-    .sort({date: -1})
-    .toArray();
-  }
-  catch(err){
-    res.status(400).json(err)
+      .collection('reviews')
+      .find({ userID: ObjectId(id) })
+      .sort({ date: -1 })
+      .toArray();
+  } catch (err) {
+    res.status(400).json(err);
   }
 };
