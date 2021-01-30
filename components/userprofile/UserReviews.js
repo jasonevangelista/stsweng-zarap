@@ -3,8 +3,6 @@ import { Typography, Empty, Space, Pagination } from 'antd';
 import Card from "./UserReviewCard";
 import styles from '../../styles/userreview.module.css';
 
-const { Title } = Typography;
-
 export default function UserReviews({ reviews }) {
   const [cardSetIndex, setCardSetIndex] = useState(0);
   const pageSize = 4;
@@ -40,8 +38,8 @@ export default function UserReviews({ reviews }) {
 }
 
 const generateUserReviewCards = (reviews, pageSize) => {
-  var cards = [];
-  var groupedCards = [];
+  let cards = [];
+  let groupedCards = [];
   for (const [index, value] of reviews.entries()) {
     cards.push(<Card key={index} review={value}></Card>);
   }
