@@ -86,7 +86,6 @@ export default function Header() {
               aria-hidden="true"
               // className={`${pathname === '/' ? '' : styles.majorButton}`}
               onClick={() => {
-                console.log("go to profile!")
                 router.push("/user/" + session.user.id);
               }}>
               <Title

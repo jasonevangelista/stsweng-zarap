@@ -123,11 +123,3 @@ function FormatRating(rating, reviewCount) {
     );
   }
 }
-
-// async function getReviews(resto) {
-//   const res = await fetch('/api/reviews/' + resto._id);
-//   const resJSON = await res.json();
-//   console.log(res)
-
-//   return resJSON;
-// }
