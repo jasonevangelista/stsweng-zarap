@@ -2,7 +2,7 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Typography, Button } from 'antd';
+import { Input, Row, Col, Typography } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
 import { ObjectId } from 'mongodb';
@@ -78,7 +78,7 @@ export default function Home({ results }) {
         <div className={styles.topBG}>
           <div className={styles.landingTitle}>
             {' '}
-            <WhiteTitle style={{ fontSize: '64px' }}>Find what you like</WhiteTitle>
+            <WhiteTitle style={{ color: 'white', fontSize: '64px' }}>Find what you like</WhiteTitle>
             {/* {profile && <h1>LOGGED IN</h1>}
             {profile && 
             <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
