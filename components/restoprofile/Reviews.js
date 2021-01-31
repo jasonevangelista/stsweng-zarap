@@ -18,7 +18,6 @@ import { useSession } from 'next-auth/client';
 import format from 'date-fns/format';
 import styles from '../../styles/restoprofile/reviews.module.css';
 import cardstyles from '../../styles/restoprofile/reviewcard.module.css';
-import { useRouter } from 'next/router';
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -26,7 +25,6 @@ const { TabPane } = Tabs;
 const details = {};
 
 export default function Reviews({ reviews, restaurantID, updateRating, setUpdateRating }) {
-  const router = useRouter();
   const [session, loading] = useSession();
   const [rating, setRating] = useState(0);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -36,10 +34,10 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const [updatedReview, setUpdatedReview] = useState({});
   const [popReviewRange, setPopReviewRange] = useState({ min: 0, max: 10 });
   const [recentReviewRange, setRecentReviewRange] = useState({ min: 0, max: 10 });
-
-  const [reviewPane, setReviewPane] = useState(false);
+  const [allReviews, setAllReviews] = useState([]);
 
   useEffect(() => {
+    setAllReviews(reviews);
     if (session) {
       if (reviews.some((review) => review.author === session.user.email)) {
         const review = reviews.find((review) => review.author === session.user.email);
@@ -144,7 +142,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   };
 
   const sortByPopular = () => {
-    return reviews
+    return allReviews
       .sort((a, b) =>
         a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
       )
@@ -154,12 +152,12 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       })
       .slice(popReviewRange.min, popReviewRange.max)
       .map((review, index) => {
-        return <ReviewCard review={review} key={index} session={session} loading={loading} reviewPane={reviewPane} />;
+        return <ReviewCard review={review} key={index} setUpvoters={setUpvoters} />;
       });
   };
 
   const sortByRecent = () => {
-    return reviews
+    return allReviews
       .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
@@ -167,7 +165,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       })
       .slice(recentReviewRange.min, recentReviewRange.max)
       .map((review, index) => {
-        return <ReviewCard review={review} key={index} session={session} loading={loading} reviewPane={reviewPane} />;
+        return <ReviewCard review={review} key={index} setUpvoters={setUpvoters} />;
       });
   };
 
@@ -194,11 +192,22 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
     setRecentReviewRange({ min: (value - 1) * 10, max: value * 10 });
   };
 
-  function refresh(){
-    console.log("refresh")
-    setReviewPane(!reviewPane);
-    router.replace(router.asPath);
-  }
+  const setUpvoters = (affectedReview, decision) => {
+    const newAllReviews = allReviews.map((review) => {
+      if (affectedReview === review) {
+        if (decision === 'liked') {
+          review.upvoters.push(session.user.email);
+          return review;
+        } else if (decision === 'disliked') {
+          const newUpvoters = review.upvoters.filter((upvoter) => upvoter !== session.user.email);
+          review.upvoters = newUpvoters;
+          return review;
+        }
+      } else return review;
+    });
+
+    setAllReviews(newAllReviews);
+  };
 
   return (
     <div>
@@ -234,15 +243,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       )}
 
       {session && !showReview && (
-        <div
-          className={styles.myReview}
-          // style={{
-          //   display: 'flex',
-          //   flexDirection: 'column',
-          //   height: '270px',
-          //   justifyContent: 'space-between'
-          // }}
-        >
+        <div className={styles.myReview}>
           <div>
             Your rating: &nbsp;
             <Rate defaultValue={rating} onChange={(val) => setRating(val)} />
@@ -262,7 +263,6 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
           <Button
             loading={buttonLoading}
             onClick={(e) => postReview(e)}
-            // style={{ width: '150px', alignSelf: 'end' }}
             className={styles.btnPost}>
             Post Review
           </Button>
@@ -277,10 +277,8 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       }).length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
-        <Tabs type="card" onTabClick={()=>{
-          refresh();
-        }}>
-          <TabPane tab="Popular" key="1" >
+        <Tabs type="card">
+          <TabPane tab="Popular" key="1">
             {sortByPopular()}
             <br />
             <Pagination

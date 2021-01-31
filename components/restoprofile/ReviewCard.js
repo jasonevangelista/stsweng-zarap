@@ -1,30 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Card, Typography, Rate, message } from 'antd';
 import { HeartOutlined, HeartTwoTone } from '@ant-design/icons';
-import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/client';
 import styles from '../../styles/restoprofile/reviewcard.module.css';
 import format from 'date-fns/format';
 
 const { Text, Paragraph } = Typography;
 
-export default function ReviewCard({ review, session, loading, reviewPane }) {
-  const router = useRouter();
-  const [upvoted, setUpvoted] = useState(false);
+export default function ReviewCard({ review, setUpvoters }) {
+  const [session, loading] = useSession();
 
-  useEffect(() => {
-    if (session) {
-      console.log("review card useEffect")
-      // console.log("upvote status: " + review.upvoters.includes(session.user.email))
-      setUpvoted(review.upvoters.includes(session.user.email));
-    }
-  }, [session, reviewPane]);
-
-  useEffect(()=> {
-    console.log("upvoted: " + upvoted)
-    router.replace(router.asPath);
-  }, [upvoted])
-
-  async function reviewLiked() {
+  const reviewLiked = async () => {
     if (!loading && session) {
       // user is logged in
       const userEmail = session.user.email;
@@ -42,9 +28,7 @@ export default function ReviewCard({ review, session, loading, reviewPane }) {
 
           const res = await apiUpvote('/api/upvote/', details);
           if (res.status === 200) {
-            setUpvoted(false);
-            // console.log(upvoted)
-            // router.replace(router.asPath);
+            setUpvoters(review, 'disliked');
           }
         } else {
           // user has not yet upvoted the post previously
@@ -52,9 +36,7 @@ export default function ReviewCard({ review, session, loading, reviewPane }) {
 
           const res = await apiUpvote('/api/upvote/', details);
           if (res.status === 200) {
-            setUpvoted(true);
-            // console.log(upvoted)
-            // router.replace(router.asPath);
+            setUpvoters(review, 'liked');
           }
         }
       }
@@ -62,11 +44,11 @@ export default function ReviewCard({ review, session, loading, reviewPane }) {
       // user is not logged in
       message.error('You need to log in before upvoting!');
     }
-  }
+  };
 
   return (
     <div>
-      <Card>
+      <Card loading={loading}>
         <div className={styles.container}>
           <div className={styles.detailsContainer}>
             <Text ellipsis strong>{`${review.firstName} ${review.lastName}`}</Text>
@@ -82,26 +64,17 @@ export default function ReviewCard({ review, session, loading, reviewPane }) {
             </Paragraph>
           </div>
 
-          <div
-            className={styles.upvoteContainer}
-            // style={{
-            //   display: 'flex',
-            //   textAlign: 'center',
-            //   flexDirection: 'column',
-            //   justifyContent: 'center',
-            //   minWidth: '75px'
-            // }}
-          >
-            {/* {!upvoted && ( */}
-              {!upvoted && (
-              <HeartOutlined
-                className={styles.heartIcon}
-                onClick={() => {
-                  reviewLiked();
-                }}
-              />
-            )}
-            {upvoted && (
+          <div className={styles.upvoteContainer}>
+            {!session ||
+              (session && !review.upvoters.includes(session.user.email) && (
+                <HeartOutlined
+                  className={styles.heartIcon}
+                  onClick={() => {
+                    reviewLiked();
+                  }}
+                />
+              ))}
+            {session && review.upvoters.includes(session.user.email) && (
               <HeartTwoTone
                 className={styles.heartIcon}
                 twoToneColor="#eb2f96"
