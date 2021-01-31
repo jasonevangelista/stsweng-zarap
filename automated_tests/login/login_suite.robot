@@ -78,7 +78,7 @@ Click Log In
     Click Element  //*[contains(text(),'Login')]
 
 Enter Email ${Email}
-    Input Text  id=e-mail  ${Email}
+    Input Text  id=email  ${Email}
 
 Enter Password
     Input Password  id=password  ${Password}
