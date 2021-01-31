@@ -72,7 +72,14 @@ export default function Header() {
           placeholder="Search for restaurants"
           allowClear
           className={[styles.searchBar, 'searchBar']}
-          onSearch={(value) => (value ? router.push(`/searchfilter/${value}`) : '')}
+          onSearch={(value) => {
+            if(value){
+              const encodedValue = encodeURIComponent(value)
+              // console.log("encoded: " + encodedValue)
+              // router.push('searchfilter/' + encodedValue);
+              router.push(`/searchfilter/${encodedValue}`)
+            }
+          }}
         />
       ) : (
         ''

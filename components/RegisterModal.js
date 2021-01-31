@@ -80,6 +80,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your first name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'First name is too long!'
               }
             ]}>
             <Input id="firstName" placeholder="first name" style={{ borderRadius: '7px' }} />
@@ -93,6 +97,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your last name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'Last name is too long!'
               }
             ]}>
             <Input id="lastName" placeholder="last name" style={{ borderRadius: '7px' }} />
@@ -111,6 +119,10 @@ export default function RegisterModal(props) {
                 message: 'Please input your e-mail!'
               },
               {
+                max: 320,
+                message: 'E-mail is too long!'
+              },
+              {
                 validator: async (rule, value) => {
                   if (value) {
                     var emailStatus = await checkEmailDuplicate(value);
@@ -124,7 +136,7 @@ export default function RegisterModal(props) {
           </Form.Item>
 
           <Tooltip
-            title="Password must be at least 6 characters and must only be alphanumeric!"
+            title="Password must be 6-12 characters and must only be alphanumeric!"
             placement="top"
             name="password"
             trigger={["focus"]}>
@@ -135,6 +147,10 @@ export default function RegisterModal(props) {
                 {
                   required: true,
                   message: 'Please input your password!'
+                },
+                {
+                  max: 12,
+                  message: 'Password is too long!'
                 },
                 () => ({
                   validator(rule, value) {
@@ -212,8 +228,6 @@ export default function RegisterModal(props) {
 async function checkEmailDuplicate(emailInput) {
   const res = await fetch('/api/emails/');
   const results = await res.json();
-  console.log('results');
-  console.log(results);
 
   var emailAlreadyRegistered = false;
   results.forEach((user) => {

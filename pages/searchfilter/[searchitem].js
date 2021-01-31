@@ -77,7 +77,9 @@ export default function SearchFilter({ results }) {
         setResultStatus('');
       }
       setRestaurants(restoList);
-      router.push('/searchfilter/' + value, undefined, {
+      var encodedValue = encodeURIComponent(value)
+      // router.push('/searchfilter/' + value, undefined, {
+      router.push('/searchfilter/' + encodedValue, undefined, {
         shallow: true
       });
     });
@@ -147,14 +149,12 @@ function getDefaultResultStatus(restaurants) {
 
 export async function getServerSideProps(context) {
   const searchItem = context.params.searchitem;
-  console.log('search item: ' + searchItem);
   const { db } = await connectToDatabase();
-
+  const escapedItem = searchItem.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, "\\$&");
   const restaurants = await db
     .collection('restaurant')
-    .find({ name: { $regex: searchItem, $options: 'i' } })
+    .find({ name: { $regex: escapedItem, $options: 'i' } })
     .toArray();
-
   return {
     props: {
       results: JSON.parse(JSON.stringify(restaurants)),
@@ -168,6 +168,7 @@ async function getSearchResults(searchString, sort, filter) {
   if (!sort) {
     sort = 'none';
   }
+  searchString = encodeURIComponent(searchString)
   console.log('SEARCH STRING: ' + searchString);
   console.log('SORT OPTION: ' + sort);
   console.log('FILTER OPTION: ' + JSON.stringify(filter));

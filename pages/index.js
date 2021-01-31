@@ -92,7 +92,8 @@ export default function Home({ results }) {
                   onSearch={(value) => {
                     if (value && value.trim()) {
                       console.log(value);
-                      router.push('searchfilter/' + value);
+                      const encodedValue = encodeURIComponent(value)
+                      router.push('searchfilter/' + encodedValue);
                     }
                   }}
                 />
