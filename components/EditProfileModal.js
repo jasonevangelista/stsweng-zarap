@@ -107,6 +107,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your first name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'First name is too long!'
               }
             ]}>
             {/* <Input placeholder="first name" defaultValue={props.user.firstName} style={{ borderRadius: '7px' }} /> */}
@@ -121,6 +125,10 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your last name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'Last name is too long!'
               }
             ]}>
             {/* <Input id="lastName" placeholder="last name" defaultValue={props.user.lastName} style={{ borderRadius: '7px' }} /> */}
