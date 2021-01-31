@@ -144,7 +144,8 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const sortByPopular = () => {
     return allReviews
       .sort((a, b) =>
-        a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : 0
+        // a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : -1
+        b.upvoters.length - a.upvoters.length || b.dateEdited - a.dateEdited
       )
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
@@ -158,7 +159,8 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
 
   const sortByRecent = () => {
     return allReviews
-      .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : 0))
+      .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : -1))
+      // .sort((a, b) => (b.dateEdited - a.dateEdited))
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
         else return false;
