@@ -1,91 +1,197 @@
 html,
 body {
-    padding: 0;
-    margin: 0;
-    height: 100%;
-    position: relative;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  position: relative;
 }
 
 .ant-card-head-title {
-    display: inline-block;
-    flex: 1 1;
-    padding: 16px 0;
-    overflow: hidden;
-    white-space: normal;
-    text-overflow: ellipsis;
+  display: inline-block;
+  flex: 1 1;
+  padding: 16px 0;
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
 }
-
 
 /* Search Filter Page Style Overrides */
 .ant-menu .ant-menu-item-active.menuOption {
-    color: #272727;
+  color: #272727;
 }
 
 .ant-menu .ant-menu-item-selected.menuOption {
-    /* color: #1890ff; */
-    color:#E23744;
+  /* color: #1890ff; */
+  color: #e23744;
 }
 
 .ant-btn.modalBtnSelected {
-    /* color: #1890ff; */
-    color:  #E23744;
+  /* color: #1890ff; */
+  color: #e23744;
 }
 
 /* SearchFilter Menu Overrides */
-.ant-menu{
-    border-right-color: white;
+.ant-menu {
+  border-right-color: white;
 }
 
 .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-    background: #e769741e;
+  background: #e769741e;
 }
 
-.ant-menu-vertical .ant-menu-item::after, .ant-menu-vertical-left .ant-menu-item::after, .ant-menu-vertical-right .ant-menu-item::after, .ant-menu-inline .ant-menu-item::after {
-    border-right-color: white;
+.ant-menu-vertical .ant-menu-item::after,
+.ant-menu-vertical-left .ant-menu-item::after,
+.ant-menu-vertical-right .ant-menu-item::after,
+.ant-menu-inline .ant-menu-item::after {
+  border-right-color: white;
 }
 
-.ant-menu-item:hover{
-    color:red;
+.ant-menu-item:hover {
+  color: red;
 }
 
-.ant-btn.btnSearchFilter:hover, .ant-btn.btnSearchFilter:focus{
-    color: #E23744;
-    border-color: #E23744;
+.ant-btn.btnSearchFilter:hover,
+.ant-btn.btnSearchFilter:focus {
+  color: #e23744;
+  border-color: #e23744;
 }
 
 /* Search Bar Text Box Style Overrides */
-.searchBar .ant-input-affix-wrapper:hover{
-    border-color:#E23744;
+.searchBar .ant-input-affix-wrapper:hover {
+  border-color: #e23744;
 }
 
-.searchBar .ant-input-affix-wrapper:focus, .searchBar .ant-input-affix-wrapper-focused{
-    border-color:#E23744;
-    /* border-color: white; */
-    -webkit-box-shadow: 0 0 5px #e65662;
-    box-shadow: 0 0 5px #e65662;
+.searchBar .ant-input-affix-wrapper:focus,
+.searchBar .ant-input-affix-wrapper-focused {
+  border-color: #e23744;
+  /* border-color: white; */
+  -webkit-box-shadow: 0 0 5px #e65662;
+  box-shadow: 0 0 5px #e65662;
 }
 
-.searchBar .ant-input-search .ant-input:hover, .searchBar .ant-input-search .ant-input:focus{
-    border-color:#E23744;
+.searchBar .ant-input-search .ant-input:hover,
+.searchBar .ant-input-search .ant-input:focus {
+  border-color: #e23744;
 }
 
 /* Search Bar Button Style Overrides */
-.searchBar .ant-btn:hover,.searchBar .ant-btn:focus,.searchBar .ant-btn:active{
-    border-color:#E23744;
+.searchBar .ant-btn:hover,
+.searchBar .ant-btn:focus,
+.searchBar .ant-btn:active {
+  border-color: #e23744;
 }
 
-.searchBar .ant-btn-primary, .searchBar .ant-btn-primary:hover, .searchBar .ant-btn-primary:focus,.searchBar .ant-btn-primary:active{
-    background: #E23744;
-    border-color:#E23744;
+.searchBar .ant-btn-primary,
+.searchBar .ant-btn-primary:hover,
+.searchBar .ant-btn-primary:focus,
+.searchBar .ant-btn-primary:active {
+  background: #e23744;
+  border-color: #e23744;
 }
 
 /* Landing Page-Specific Style Overrides */
-.landingSearchBar .ant-input:hover, .landingSearchBar .ant-input:active, .landingSearchBar .ant-input:focus{
-    border-color: #E23744 !important;
-    -webkit-box-shadow: 0 0 5px #e65662;
-    box-shadow: 0 0 5px #e65662;
+.landingSearchBar .ant-input:hover,
+.landingSearchBar .ant-input:active,
+.landingSearchBar .ant-input:focus {
+  border-color: #e23744 !important;
+  -webkit-box-shadow: 0 0 5px #e65662;
+  box-shadow: 0 0 5px #e65662;
 }
 
+.ant-modal-content {
+  border-radius: 10px;
+}
+
+/* Modal Style Overrides */
+.ant-btn-primary.btnSubmit {
+  background-color: #e23744;
+  border-color: #e23744;
+}
+
+.ant-btn.btnRedirect,
+.ant-btn.btnRedirect:hover {
+  color: #e23744;
+}
+
+/* .ant-input.formInput:hover, .ant-input.formInput:focus{
+    border: 1px solid #d9d9d9;
+} */
+
+.ant-row:not(.ant-form-item-has-error)
+  .ant-col
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input.formInput {
+  border: 1px solid #d9d9d9;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 7px;
+}
+
+.ant-row:not(.ant-form-item-has-error)
+  .ant-col
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input-password.formInput {
+  border: 1px solid #d9d9d9;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 7px;
+}
+
+.ant-form-item-has-error
+  .ant-col
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input.formInput {
+  border-radius: 7px;
+}
+
+.ant-form-item-has-error
+  .ant-col
+  .ant-form-item-control-input
+  .ant-form-item-control-input-content
+  .ant-input-password.formInput {
+  border-radius: 7px;
+}
+
+/* tab color overrides */
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: black;
+}
+
+.ant-tabs-tab-btn:focus,
+.ant-tabs-tab-remove:focus,
+.ant-tabs-tab-btn:active,
+.ant-tabs-tab-remove:active {
+  color: #e23744;
+}
+
+.ant-tabs-tab:hover {
+  color: #e23744;
+}
+
+/* pagination color overrides */
+.ant-pagination-item:focus a, .ant-pagination-item-active:hover a {
+    color: #e23744;
+    border-color: #e23744;
+}
+
+.ant-pagination-item-active, .ant-pagination-item-active a {
+    color: #e23744;
+    border-color: #e23744;
+}
+
+.ant-pagination-item:focus, .ant-pagination-item:hover, .ant-pagination-item:hover a {
+    color: #e23744;
+    border-color: #e23744;
+}
+
+.ant-pagination-prev:focus .ant-pagination-item-link, .ant-pagination-next:focus .ant-pagination-item-link, .ant-pagination-prev:hover .ant-pagination-item-link, .ant-pagination-next:hover .ant-pagination-item-link {
+    color: #e23744;
+    border-color: #e23744;
+}
 .ant-modal-content{
     border-radius: 10px;
 }

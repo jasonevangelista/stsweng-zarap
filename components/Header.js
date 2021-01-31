@@ -13,7 +13,7 @@ const { Search } = Input;
 
 export default function Header() {
   const router = useRouter();
-  var pathname = null;
+  let pathname = null;
 
   const [session, loading] = useSession();
 
@@ -93,7 +93,6 @@ export default function Header() {
               aria-hidden="true"
               // className={`${pathname === '/' ? '' : styles.majorButton}`}
               onClick={() => {
-                console.log("go to profile!")
                 router.push("/user/" + session.user.id);
               }}>
               <Title

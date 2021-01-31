@@ -43,7 +43,7 @@ const options = {
   ],
 
   callbacks:{
-    jwt: async (token, user, account, profile, isNewUser) => {
+    jwt: async (token, user) => {
       // set user object from custom user in Provider to token user object
       if (user) {
         token.user = user;

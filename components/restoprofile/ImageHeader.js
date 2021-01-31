@@ -1,12 +1,15 @@
 import React from 'react';
 import { Image } from 'antd';
+import styles from '../../styles/restoprofile/imageheader.module.css';
+
 
 export default function ImageHeader({ imageURL }) {
   return (
-    <div style={{ maxHeight: '250px', overflow: 'hidden' }}>
+    <div className={styles.imageDiv}>
       <Image
         width="100%"
-        style={{ marginTop: '-180px', position: 'relative' }}
+        className={styles.image}
+        // style={{ marginTop: '-180px', position: 'relative' }}
         preview={false}
         src={imageURL}
         fallback=""

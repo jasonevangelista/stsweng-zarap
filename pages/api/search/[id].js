@@ -1,4 +1,5 @@
 import { connectToDatabase } from '../../../util/mongodb';
+import { ObjectId } from 'mongodb';
 
 export default async (req, res) => {
   const {
@@ -7,21 +8,9 @@ export default async (req, res) => {
   // escapes special characters for regex
   var newId = id.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, "\\$&");
   var filterQuery = JSON.parse(filter);
-  // console.log('=== QUERIES ===');
-  // console.log('ID: ' + id);
-  // if (sort != '') {
-  //     console.log('SORT: ' + sort);
-  // } else {
-  //     console.log('NO SORT OPTION');
-  // }
-  // if (filter != '') {
-  //     console.log('FILTER: ' + filter);
-  // } else {
-  //     console.log('NO FILTER OPTION');
-  // }
   
   const { db } = await connectToDatabase();
-  var restaurants;
+  let restaurants;
 
   // no sort and filter
   if (sort == 'none' && filterQuery.location == null && filterQuery.cuisine == null) {
@@ -37,7 +26,7 @@ export default async (req, res) => {
       name: { $regex: newId, $options: 'i' }
 
     };
-    var sortOption = {};
+    let sortOption = {};
 
     // SORTING OPTION
     // averageRating - high to low (-1)
@@ -69,5 +58,32 @@ export default async (req, res) => {
       .sort(sortOption)
       .toArray();
   }
+
+  for(let i = 0; i < restaurants.length; i++){
+    let currentResto = restaurants[i]
+    let reviews = await db.collection('review').find({ restaurantID: ObjectId(currentResto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    restaurants[i].averageRating = computeAverageScore(reviews)
+    restaurants[i].reviewCount = reviews.length
+    }
+
+  if (sort == 'rating-hl') {
+    // sortOption = { averageRating: -1 };
+    restaurants.sort((a,b) => b.averageRating - a.averageRating);
+  }
+
   res.json(restaurants);
 };
+
+
+function computeAverageScore(reviews){
+  let total = 0;
+  let average = 0;
+  if(reviews.length > 0){
+    for(let i = 0; i < reviews.length; i++){
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
+}

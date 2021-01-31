@@ -9,7 +9,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 
-var errorMessage = (
+const errorMessage = (
 
   <div className={styles.errorContainer}>
     <h2>No restaurants were found</h2>
@@ -21,6 +21,7 @@ var errorMessage = (
 
 export default function SearchFilter({ results }) {
   const firstTimeRender = useRef(true);
+
   const router = useRouter();
   const { searchitem } = router.query;
 
@@ -47,8 +48,7 @@ export default function SearchFilter({ results }) {
 
   useEffect(() => {
     if (!firstTimeRender.current) {
-      searchResults(searchitem, sortOption, filterOption);
-      // window.scrollTo(0, 0);
+        searchResults(searchitem, sortOption, filterOption);
     }
   }, [filterOption]);
 
@@ -60,7 +60,7 @@ export default function SearchFilter({ results }) {
 
   useEffect(() => {
     if (!firstTimeRender.current) {
-      var filter = {
+      const filter = {
         location: locationFilter,
         cuisine: cuisineFilter
       };
@@ -70,7 +70,7 @@ export default function SearchFilter({ results }) {
 
   function searchResults(value, sort, filter) {
     getSearchResults(value, sort, filter).then((result) => {
-      var restoList = result.data;
+      const restoList = result.data;
       if (restoList.length == 0) {
         setResultStatus(errorMessage);
       } else {
@@ -92,11 +92,12 @@ export default function SearchFilter({ results }) {
 
   return (
     <div className={styles.pageLayout}>
-      <Head>
-        <title>Restaurant Search</title>
-      </Head>
-      <h1>Search Results on &quot;{searchitem}&quot;</h1>
-
+      <div className={styles.pageHeader}>
+        <Head>
+          <title>Restaurant Search</title>
+        </Head>
+        <h1>Search Results on &quot;{searchitem}&quot;</h1>
+      </div>
       <Search
         id="searchbar"
         className={[styles.searchBar, "searchBar"]}
@@ -132,7 +133,7 @@ export default function SearchFilter({ results }) {
 
 // generate each restaurant card based on results
 function generateRestaurantCards(restaurants) {
-  var cards = [];
+  const cards = [];
   for (const [index, value] of restaurants.entries()) {
     cards.push(<SearchRestoCard key={index} resto={value}></SearchRestoCard>);
   }
@@ -164,17 +165,15 @@ export async function getServerSideProps(context) {
 
 // get restaurants based on search string
 async function getSearchResults(searchString, sort, filter) {
-  // var filter = 'none' // {"location":"none", "cuisine":"none"}
+  // const filter = 'none' // {"location":"none", "cuisine":"none"}
   if (!sort) {
     sort = 'none';
   }
-  searchString = encodeURIComponent(searchString)
-  console.log('SEARCH STRING: ' + searchString);
-  console.log('SORT OPTION: ' + sort);
-  console.log('FILTER OPTION: ' + JSON.stringify(filter));
-  var queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
+  searchString = encodeURIComponent(searchString);
 
-  var searchRoute = '/api/search/' + searchString + queryParams;
+  const queryParams = '?sort=' + sort + '&filter=' + JSON.stringify(filter);
+
+  const searchRoute = '/api/search/' + searchString + queryParams;
   const res = await fetch(searchRoute);
   const data = await res.json();
 
@@ -184,5 +183,6 @@ async function getSearchResults(searchString, sort, filter) {
     };
   }
 }
+
 
 // url param format: http://localhost:3000/api/search/SEARCHSTRING?sort=SORT&filter=
