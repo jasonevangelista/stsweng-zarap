@@ -7,15 +7,22 @@ import format from 'date-fns/format';
 
 const { Text, Paragraph } = Typography;
 
-export default function ReviewCard({ review, session, loading }) {
+export default function ReviewCard({ review, session, loading, reviewPane }) {
   const router = useRouter();
   const [upvoted, setUpvoted] = useState(false);
 
   useEffect(() => {
     if (session) {
+      console.log("review card useEffect")
+      // console.log("upvote status: " + review.upvoters.includes(session.user.email))
       setUpvoted(review.upvoters.includes(session.user.email));
     }
-  }, [session]);
+  }, [session, reviewPane]);
+
+  useEffect(()=> {
+    console.log("upvoted: " + upvoted)
+    router.replace(router.asPath);
+  }, [upvoted])
 
   async function reviewLiked() {
     if (!loading && session) {
@@ -36,7 +43,8 @@ export default function ReviewCard({ review, session, loading }) {
           const res = await apiUpvote('/api/upvote/', details);
           if (res.status === 200) {
             setUpvoted(false);
-            router.replace(router.asPath);
+            // console.log(upvoted)
+            // router.replace(router.asPath);
           }
         } else {
           // user has not yet upvoted the post previously
@@ -45,7 +53,8 @@ export default function ReviewCard({ review, session, loading }) {
           const res = await apiUpvote('/api/upvote/', details);
           if (res.status === 200) {
             setUpvoted(true);
-            router.replace(router.asPath);
+            // console.log(upvoted)
+            // router.replace(router.asPath);
           }
         }
       }
@@ -83,7 +92,8 @@ export default function ReviewCard({ review, session, loading }) {
             //   minWidth: '75px'
             // }}
           >
-            {!upvoted && (
+            {/* {!upvoted && ( */}
+              {!upvoted && (
               <HeartOutlined
                 className={styles.heartIcon}
                 onClick={() => {

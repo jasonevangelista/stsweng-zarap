@@ -18,6 +18,7 @@ import { useSession } from 'next-auth/client';
 import format from 'date-fns/format';
 import styles from '../../styles/restoprofile/reviews.module.css';
 import cardstyles from '../../styles/restoprofile/reviewcard.module.css';
+import { useRouter } from 'next/router';
 
 const { Title, Paragraph, Text } = Typography;
 const { TextArea } = Input;
@@ -25,6 +26,7 @@ const { TabPane } = Tabs;
 const details = {};
 
 export default function Reviews({ reviews, restaurantID, updateRating, setUpdateRating }) {
+  const router = useRouter();
   const [session, loading] = useSession();
   const [rating, setRating] = useState(0);
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -34,6 +36,8 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const [updatedReview, setUpdatedReview] = useState({});
   const [popReviewRange, setPopReviewRange] = useState({ min: 0, max: 10 });
   const [recentReviewRange, setRecentReviewRange] = useState({ min: 0, max: 10 });
+
+  const [reviewPane, setReviewPane] = useState(false);
 
   useEffect(() => {
     if (session) {
@@ -150,7 +154,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       })
       .slice(popReviewRange.min, popReviewRange.max)
       .map((review, index) => {
-        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+        return <ReviewCard review={review} key={index} session={session} loading={loading} reviewPane={reviewPane} />;
       });
   };
 
@@ -163,7 +167,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       })
       .slice(recentReviewRange.min, recentReviewRange.max)
       .map((review, index) => {
-        return <ReviewCard review={review} key={index} session={session} loading={loading} />;
+        return <ReviewCard review={review} key={index} session={session} loading={loading} reviewPane={reviewPane} />;
       });
   };
 
@@ -189,6 +193,12 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const handleChangeRecent = (value) => {
     setRecentReviewRange({ min: (value - 1) * 10, max: value * 10 });
   };
+
+  function refresh(){
+    console.log("refresh")
+    setReviewPane(!reviewPane);
+    router.replace(router.asPath);
+  }
 
   return (
     <div>
@@ -267,8 +277,10 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       }).length === 0 ? (
         <Empty description="There are no reviews for this resturant." />
       ) : (
-        <Tabs type="card">
-          <TabPane tab="Popular" key="1">
+        <Tabs type="card" onTabClick={()=>{
+          refresh();
+        }}>
+          <TabPane tab="Popular" key="1" >
             {sortByPopular()}
             <br />
             <Pagination
