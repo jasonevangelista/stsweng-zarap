@@ -65,15 +65,14 @@ export default function ReviewCard({ review, setUpvoters }) {
           </div>
 
           <div className={styles.upvoteContainer}>
-            {!session ||
-              (session && !review.upvoters.includes(session.user.email) && (
-                <HeartOutlined
-                  className={styles.heartIcon}
-                  onClick={() => {
-                    reviewLiked();
-                  }}
-                />
-              ))}
+            {(!session || (session && !review.upvoters.includes(session.user.email))) && (
+              <HeartOutlined
+                className={styles.heartIcon}
+                onClick={() => {
+                  reviewLiked();
+                }}
+              />
+            )}
             {session && review.upvoters.includes(session.user.email) && (
               <HeartTwoTone
                 className={styles.heartIcon}
