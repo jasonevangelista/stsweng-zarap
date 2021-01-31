@@ -66,6 +66,11 @@ export default async (req, res) => {
     restaurants[i].reviewCount = reviews.length
     }
 
+  if (sort == 'rating-hl') {
+    // sortOption = { averageRating: -1 };
+    restaurants.sort((a,b) => b.averageRating - a.averageRating);
+  }
+
   res.json(restaurants);
 };
 
