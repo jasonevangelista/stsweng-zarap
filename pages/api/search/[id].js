@@ -5,8 +5,9 @@ export default async (req, res) => {
   const {
     query: { id, sort, filter },
   } = req;
-
-  const filterQuery = JSON.parse(filter);
+  // escapes special characters for regex
+  var newId = id.replace(/[-[\]{}()*+?.,\\/^$|#\s]/g, "\\$&");
+  var filterQuery = JSON.parse(filter);
   
   const { db } = await connectToDatabase();
   let restaurants;
@@ -15,11 +16,15 @@ export default async (req, res) => {
   if (sort == 'none' && filterQuery.location == null && filterQuery.cuisine == null) {
     restaurants = await db
       .collection('restaurant')
-      .find({ name: { $regex: id, $options: 'i' } })
+      .find({ name: { $regex: newId, $options: 'i' } })
+      // .find({ name: { $regex: id, $options: 'i' } })
+
       .toArray();
   } else {
-    const filterOption = {
-      name: { $regex: id, $options: 'i' }
+    var filterOption = {
+      // name: { $regex: id, $options: 'i' }
+      name: { $regex: newId, $options: 'i' }
+
     };
     let sortOption = {};
 
