@@ -36,6 +36,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const [recentReviewRange, setRecentReviewRange] = useState({ min: 0, max: 10 });
   const [allReviews, setAllReviews] = useState([]);
   const [comReviewSize, setCReviewSize] = useState(0);
+  const [pageNumber, setPageNumber] = useState({ popular: 1, recent: 1 });
 
   useEffect(() => {
     setAllReviews(reviews);
@@ -47,16 +48,16 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
         details.reviewID = review._id;
         form.setFieldsValue({ reviewText: review.text });
         setRating(review.rating);
-        setCReviewSize(
-          reviews.filter((review) => {
-            if ((session && session.user.email !== review.author) || !session) return true;
-            else return false;
-          }).length
-        );
       } else {
         setShowReview(false);
       }
     }
+    setCReviewSize(
+      reviews.filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      }).length
+    );
   }, [loading]);
 
   const postReview = async (e) => {
@@ -199,10 +200,16 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   // };
 
   const handleChangePopular = (value) => {
+    const changedPageNumber = pageNumber;
+    changedPageNumber.popular = value;
+    setPageNumber(changedPageNumber)
     setPopReviewRange({ min: (value - 1) * 10, max: value * 10 });
   };
 
   const handleChangeRecent = (value) => {
+    const changedPageNumber = pageNumber;
+    changedPageNumber.recent = value;
+    setPageNumber(changedPageNumber)
     setRecentReviewRange({ min: (value - 1) * 10, max: value * 10 });
   };
 
@@ -293,6 +300,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
             {sortByPopular()}
             <br />
             <Pagination
+              current={pageNumber.popular}
               defaultCurrent={1}
               defaultPageSize={10} //default size of page
               onChange={handleChangePopular}
@@ -303,6 +311,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
             {sortByRecent()}
             <br />
             <Pagination
+              current={pageNumber.recent}
               defaultCurrent={1}
               defaultPageSize={10} //default size of page
               onChange={handleChangeRecent}
