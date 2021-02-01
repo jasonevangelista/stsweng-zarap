@@ -35,6 +35,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   const [popReviewRange, setPopReviewRange] = useState({ min: 0, max: 10 });
   const [recentReviewRange, setRecentReviewRange] = useState({ min: 0, max: 10 });
   const [allReviews, setAllReviews] = useState([]);
+  const [comReviewSize, setCReviewSize] = useState(0);
 
   useEffect(() => {
     setAllReviews(reviews);
@@ -46,6 +47,12 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
         details.reviewID = review._id;
         form.setFieldsValue({ reviewText: review.text });
         setRating(review.rating);
+        setCReviewSize(
+          reviews.filter((review) => {
+            if ((session && session.user.email !== review.author) || !session) return true;
+            else return false;
+          }).length
+        );
       } else {
         setShowReview(false);
       }
@@ -63,6 +70,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       details.restaurantID = restaurantID;
 
       if (details.reviewID === undefined || details.reviewID === null) {
+        details.edited = false;
         const res = await postAPI(details);
         const data = await res.json();
         if (res.status === 200 && data) {
@@ -78,6 +86,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
         const res = await updatePostAPI(details);
         const data = await res.json();
         if (res.status === 200 && data) {
+          details.edited = true;
           message.success('Review edited!');
           setUpdatedReview(details);
           setShowReview(true);
@@ -143,9 +152,10 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
 
   const sortByPopular = () => {
     return allReviews
-      .sort((a, b) =>
-        // a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : -1
-        b.upvoters.length - a.upvoters.length || b.dateEdited - a.dateEdited
+      .sort(
+        (a, b) =>
+          // a.upvoters.length < b.upvoters.length ? 1 : a.dateEdited < b.dateEdited ? 1 : -1
+          b.upvoters.length - a.upvoters.length || b.dateEdited - a.dateEdited
       )
       .filter((review) => {
         if ((session && session.user.email !== review.author) || !session) return true;
@@ -158,17 +168,19 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
   };
 
   const sortByRecent = () => {
-    return allReviews
-      .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : -1))
-      // .sort((a, b) => (b.dateEdited - a.dateEdited))
-      .filter((review) => {
-        if ((session && session.user.email !== review.author) || !session) return true;
-        else return false;
-      })
-      .slice(recentReviewRange.min, recentReviewRange.max)
-      .map((review, index) => {
-        return <ReviewCard review={review} key={index} setUpvoters={setUpvoters} />;
-      });
+    return (
+      allReviews
+        .sort((a, b) => (a.dateEdited < b.dateEdited ? 1 : -1))
+        // .sort((a, b) => (b.dateEdited - a.dateEdited))
+        .filter((review) => {
+          if ((session && session.user.email !== review.author) || !session) return true;
+          else return false;
+        })
+        .slice(recentReviewRange.min, recentReviewRange.max)
+        .map((review, index) => {
+          return <ReviewCard review={review} key={index} setUpvoters={setUpvoters} />;
+        })
+    );
   };
 
   const getUpdatedReview = (attribute) => {
@@ -177,14 +189,14 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
       : updatedReview[attribute];
   };
 
-  const getCommunityReviewSize = () => {
-    reviews.filter((review) => {
-      if ((session && session.user.email !== review.author) || !session) return true;
-      else return false;
-    });
+  // const getCommunityReviewSize = () => {
+  //   reviews.filter((review) => {
+  //     if ((session && session.user.email !== review.author) || !session) return true;
+  //     else return false;
+  //   });
 
-    return reviews.length;
-  };
+  //   return reviews.length;
+  // };
 
   const handleChangePopular = (value) => {
     setPopReviewRange({ min: (value - 1) * 10, max: value * 10 });
@@ -262,10 +274,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
             </Form.Item>
           </Form>
 
-          <Button
-            loading={buttonLoading}
-            onClick={(e) => postReview(e)}
-            className={styles.btnPost}>
+          <Button loading={buttonLoading} onClick={(e) => postReview(e)} className={styles.btnPost}>
             Post Review
           </Button>
         </div>
@@ -287,7 +296,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
               defaultCurrent={1}
               defaultPageSize={10} //default size of page
               onChange={handleChangePopular}
-              total={getCommunityReviewSize()} //total number of card data available
+              total={comReviewSize} //total number of card data available
             />
           </TabPane>
           <TabPane tab="Recent" key="2">
@@ -297,7 +306,7 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
               defaultCurrent={1}
               defaultPageSize={10} //default size of page
               onChange={handleChangeRecent}
-              total={getCommunityReviewSize()} //total number of card data available
+              total={comReviewSize} //total number of card data available
             />
           </TabPane>
         </Tabs>
