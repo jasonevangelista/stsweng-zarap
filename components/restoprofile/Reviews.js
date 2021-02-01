@@ -47,16 +47,16 @@ export default function Reviews({ reviews, restaurantID, updateRating, setUpdate
         details.reviewID = review._id;
         form.setFieldsValue({ reviewText: review.text });
         setRating(review.rating);
-        setCReviewSize(
-          reviews.filter((review) => {
-            if ((session && session.user.email !== review.author) || !session) return true;
-            else return false;
-          }).length
-        );
       } else {
         setShowReview(false);
       }
     }
+    setCReviewSize(
+      reviews.filter((review) => {
+        if ((session && session.user.email !== review.author) || !session) return true;
+        else return false;
+      }).length
+    );
   }, [loading]);
 
   const postReview = async (e) => {
