@@ -6,8 +6,8 @@ Zarap is a restaurant viewing platform that connects users to relevant culinary 
 [https://zarap.vercel.app/](https://zarap.vercel.app/)
 
 ### Sample Login Credentials
-e-mail: zarapuser1@gmail.com
-password: password1
+- e-mail: zarapuser1@gmail.com
+- password: password1
 
 ### Run Locally
 ```bash
