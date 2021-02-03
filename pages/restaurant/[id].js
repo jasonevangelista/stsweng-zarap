@@ -1,8 +1,7 @@
 import { connectToDatabase } from '../../util/mongodb';
 import { ObjectId } from 'mongodb';
-import { Typography, Divider } from 'antd';
+import { Typography, Divider, Rate } from 'antd';
 import Head from 'next/head';
-import Link from 'next/link';
 
 import BasicInfo from '../../components/restoprofile/BasicInfo';
 import ImageHeader from '../../components/restoprofile/ImageHeader';
@@ -11,9 +10,21 @@ import Gallery from '../../components/restoprofile/Gallery';
 
 import styles from '../../styles/restoprofile/restaurantprofile.module.css';
 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
+
+
 const { Title } = Typography;
 
-export default function RestaurantProfile({ resto }) {
+export default function RestaurantProfile({ resto, reviews }) {
+  const router = useRouter();
+  const rating = FormatRating(resto.averageRating, resto.reviewCount);
+  const [updateRating, setUpdateRating] = useState(false);
+
+  useEffect(() => {
+    router.push("/restaurant/" + resto._id)
+  }, [updateRating]);
+
   return (
     <div className={styles.wrapper}>
       <Head>
@@ -26,16 +37,16 @@ export default function RestaurantProfile({ resto }) {
         <div className={styles.contentBody}>
           <div>
             <Title>{resto.name}</Title>
-            {/* <Rate allowHalf value={resto.averageRating} disabled />
+            <Rate allowHalf value={resto.averageRating} disabled />
              &nbsp;&nbsp;&nbsp;
-             {resto.averageRating} */}
+             <span className="ant-rate-text">{rating}</span>
           </div>
           <Divider />
           <BasicInfo resto={resto} />
           <Divider />
           <Gallery imageArray={resto.menuURLs} />
           <Divider />
-          <Reviews reviews={resto.reviews} />
+          <Reviews reviews={reviews} restaurantID={resto._id} updateRating={updateRating} setUpdateRating={setUpdateRating}/>
           {/* <Tabs style={{ marginTop: "20px" }} defaultActiveKey="1">
             <Tabs.TabPane tab="Basic Information" key="1"></Tabs.TabPane>
             <Tabs.TabPane tab="Reviews" key="2"></Tabs.TabPane>
@@ -72,10 +83,39 @@ export async function getServerSideProps(context) {
     .toArray();
 
   if (restaurant.length > 0) {
-    var results = JSON.parse(JSON.stringify(restaurant));
+    const restoResult = JSON.parse(JSON.stringify(restaurant));
+
+    const reviews = await db
+      .collection('review')
+      .find({ restaurantID: ObjectId(restoResult[0]._id) })
+      .toArray();
+
+    const reviewsResult = JSON.parse(JSON.stringify(reviews));
+
+    const users = await db.collection('user').find({}).toArray();
+
+    const userList = JSON.parse(JSON.stringify(users));
+
+    // add firstname and lastname of collection 'user' to list of reviews
+    const newReviews = reviewsResult.map((review) => {
+      const author = userList.find((user) => {
+        return user.email === review.author;
+      });
+      if (author) {
+        review.lastName = author.lastName;
+        review.firstName = author.firstName;
+      }
+      return review;
+    });
+    const resto = restoResult[0];
+    // const reviews = await db.collection('review').find({ restaurantID: ObjectId(resto._id) }).project({ rating: 1, _id: 0 }).toArray();
+    resto.averageRating = computeAverageScore(reviews)
+    resto.reviewCount = reviews.length
+
     return {
       props: {
-        resto: results[0]
+        resto: restoResult[0],
+        reviews: newReviews
       }
     };
   }
@@ -89,4 +129,44 @@ export async function getServerSideProps(context) {
       }
     };
   }
+}
+
+function FormatRating(rating, reviewCount) {
+  let ratingString = '';
+  ratingString = Math.floor(rating * 2) / 2;
+  ratingString = ratingString.toFixed(1);
+
+  if (reviewCount > 0) {
+    if(reviewCount == 1){
+      return (
+        <p>
+          {ratingString} ({reviewCount} review)
+        </p>
+      );
+    }
+    return (
+      <p>
+        {ratingString} ({reviewCount} reviews)
+      </p>
+    );
+  } else {
+    return (
+      <p>
+        {ratingString} (No reviews)
+      </p>
+    );
+  }
+}
+
+function computeAverageScore(reviews){
+  let total = 0;
+  let average = 0;
+  if(reviews.length > 0){
+    for(let i = 0; i < reviews.length; i++){
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
 }

@@ -18,7 +18,8 @@ const options = {
             const profile = {
               id: foundAccount._id,
               email: foundAccount.email,
-              name: foundAccount.firstName
+              firstName: foundAccount.firstName,
+              lastName: foundAccount.lastName
             };
 
             if (isMatch) {
@@ -40,6 +41,21 @@ const options = {
       }
     })
   ],
+
+  callbacks:{
+    jwt: async (token, user) => {
+      // set user object from custom user in Provider to token user object
+      if (user) {
+        token.user = user;
+      }
+      return Promise.resolve(token);
+    },
+    session: async(session, user) =>{
+      // overwrite session user to custom user set in token
+      session.user = user.user;
+      return Promise.resolve(session);
+    },
+  },
 
   secret: process.env.SECRET_KEY,
 

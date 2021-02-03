@@ -6,7 +6,7 @@ export default async (req, res) => {
   const {
     query: { account }
   } = req;
-  var newAccount = JSON.parse(account);
+  const newAccount = JSON.parse(account);
 
   // encrypt password
   newAccount.password = bcrypt.hashSync(newAccount.password, 10)

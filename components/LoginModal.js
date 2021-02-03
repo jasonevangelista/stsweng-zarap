@@ -59,7 +59,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
               message: 'Please input your e-mail!'
             }
           ]}>
-          <Input placeholder="e-mail" style={{ borderRadius: '7px' }} />
+          <Input id="email" placeholder="e-mail" className="formInput" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
         <Form.Item
@@ -70,7 +70,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
               message: 'Please input your password!'
             }
           ]}>
-          <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
+          <Input.Password id="password" className="formInput" placeholder="password" style={{ borderRadius: '7px' }} />
         </Form.Item>
 
         {isError && <p style={{ color: 'red' }}> Account not found or password is wrong. </p>}
@@ -80,7 +80,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
             type="primary"
             htmlType="submit"
             id="btnSubmit"
-            className={formstyles.btnSubmit}
+            className={[formstyles.btnSubmit, "btnSubmit"]}
             loading={loading}>
             SIGN IN
           </Button>
@@ -90,7 +90,7 @@ export default function LoginModal({ visible, closeModal, redirect }) {
           Not a member?{' '}
           <Button
             type="text"
-            className={formstyles.btnRedirect}
+            className={[formstyles.btnRedirect, "btnRedirect"]}
             onClick={() => {
               form.resetFields();
               redirect();

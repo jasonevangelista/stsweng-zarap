@@ -52,7 +52,7 @@ export default function RegisterModal(props) {
 
       {registered &&
         <div className={styles.registeredMessage}>
-          <CheckCircleTwoTone style={{ fontSize: '50px'}} twoToneColor="#52c41a"/>
+          <CheckCircleTwoTone className={styles.checkCircle} twoToneColor="#52c41a"/>
           <h1>Success!</h1>
           <p>Your account has been registered!</p>
           <Button type="primary" className={styles.btnSuccess} onClick={()=>{
@@ -80,9 +80,13 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your first name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'First name is too long!'
               }
             ]}>
-            <Input placeholder="first name" style={{ borderRadius: '7px' }} />
+            <Input id="firstName" placeholder="first name" className={"formInput"}/>
           </Form.Item>
 
           <Form.Item
@@ -93,9 +97,13 @@ export default function RegisterModal(props) {
                 required: true,
                 message: 'Please input your last name!',
                 whitespace: true
+              },
+              {
+                max: 35,
+                message: 'Last name is too long!'
               }
             ]}>
-            <Input id="lastName" placeholder="last name" style={{ borderRadius: '7px' }} />
+            <Input id="lastName" placeholder="last name" className={"formInput"} />
           </Form.Item>
 
           <Form.Item
@@ -111,20 +119,24 @@ export default function RegisterModal(props) {
                 message: 'Please input your e-mail!'
               },
               {
+                max: 320,
+                message: 'E-mail is too long!'
+              },
+              {
                 validator: async (rule, value) => {
                   if (value) {
-                    var emailStatus = await checkEmailDuplicate(value);
+                    const emailStatus = await checkEmailDuplicate(value);
                     return emailStatus;
                   }
                   return Promise.resolve();
                 }
               }
             ]}>
-            <Input id="email" placeholder="e-mail" style={{ borderRadius: '7px' }} />
+            <Input id="email" placeholder="e-mail" className={"formInput"} />
           </Form.Item>
 
           <Tooltip
-            title="Password must be at least 6 characters and must only be alphanumeric!"
+            title="Password must be 6-12 characters and must only be alphanumeric!"
             placement="top"
             name="password"
             trigger={["focus"]}>
@@ -135,6 +147,10 @@ export default function RegisterModal(props) {
                 {
                   required: true,
                   message: 'Please input your password!'
+                },
+                {
+                  max: 12,
+                  message: 'Password is too long!'
                 },
                 () => ({
                   validator(rule, value) {
@@ -150,7 +166,7 @@ export default function RegisterModal(props) {
                   }
                 })
               ]}>
-              <Input.Password id="password" placeholder="password" style={{ borderRadius: '7px' }} />
+              <Input.Password id="password" placeholder="password" className={"formInput"} />
             </Form.Item>
           </Tooltip>
           <Form.Item
@@ -175,7 +191,7 @@ export default function RegisterModal(props) {
             <Input.Password
               id="confirm"
               placeholder="confirm password"
-              style={{ borderRadius: '7px' }}
+              className={"formInput"}
             />
           </Form.Item>
 
@@ -185,7 +201,7 @@ export default function RegisterModal(props) {
               type="primary"
               htmlType="submit"
               id="btnSubmit"
-              className={styles.btnSubmit}
+              className={[styles.btnSubmit, "btnSubmit"]}
               loading={loading}>
               SIGN UP
             </Button>
@@ -195,7 +211,7 @@ export default function RegisterModal(props) {
             Already a member?{' '}
             <Button
               type="text"
-              className={styles.btnRedirect}
+              className={[styles.btnRedirect, "btnRedirect"]}
               onClick={() => {
                 form.resetFields();
                 props.redirectToLoginModal();
@@ -212,10 +228,8 @@ export default function RegisterModal(props) {
 async function checkEmailDuplicate(emailInput) {
   const res = await fetch('/api/emails/');
   const results = await res.json();
-  console.log('results');
-  console.log(results);
 
-  var emailAlreadyRegistered = false;
+  let emailAlreadyRegistered = false;
   results.forEach((user) => {
     if (user.email == emailInput) {
       emailAlreadyRegistered = true;
@@ -230,7 +244,7 @@ async function checkEmailDuplicate(emailInput) {
 
 async function addAccount(newAccount){
   // insert new account info in db
-  var accountString = JSON.stringify(newAccount);
+  const accountString = JSON.stringify(newAccount);
 
   const res = await fetch('/api/register/' + accountString);
   const results = await res.json();

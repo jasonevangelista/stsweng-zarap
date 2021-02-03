@@ -2,9 +2,10 @@ import Head from 'next/head';
 import { connectToDatabase } from '../util/mongodb';
 import styles from '../styles/landingpage.module.css';
 import styled from 'styled-components';
-import { Input, Row, Col, Typography, Button } from 'antd';
+import { Input, Row, Col, Typography } from 'antd';
 import CarouselItem from '../components/CarouselItem';
 import { useState, useEffect } from 'react';
+import { ObjectId } from 'mongodb';
 
 const { Title } = Typography;
 
@@ -18,13 +19,13 @@ const RoundSearch = styled(Input.Search)`
 
 const WhiteTitle = styled(Title)`
   &.ant-typography {
-      color: white;
-    }
+    color: white;
+  }
 `;
 
 //Code from de-facto unbiased shuffle algorithm is the Fisher-Yates (aka Knuth) Shuffle.
 function shuffle(array) {
-  var currentIndex = array.length,
+  let currentIndex = array.length,
     temporaryValue,
     randomIndex;
 
@@ -50,9 +51,9 @@ const restoPicker = (results) => {
   let tracker = 0;
 
   while (restaurants.length < 7) {
-    if (shuffledArray[tracker].averageRating >= 3.0) {
-      restaurants.push(shuffledArray[tracker]);
-    }
+    // if (shuffledArray[tracker].averageRating && shuffledArray[tracker].averageRating >= 3.0) {
+    restaurants.push(shuffledArray[tracker]);
+    // }
 
     tracker++;
   }
@@ -66,7 +67,7 @@ export default function Home({ results }) {
   useEffect(() => {
     setCards(restoPicker(results));
   }, []);
-  
+
   return (
     <div className={styles.container}>
       <Head>
@@ -75,29 +76,32 @@ export default function Home({ results }) {
       </Head>
       <div className={styles.topContainer}>
         <div className={styles.topBG}>
-          <h2 className={styles.landingTitle}>
+          <div className={styles.landingTitle}>
             {' '}
-            <WhiteTitle style={{fontSize:'5vw'}}>Find what you like</WhiteTitle>
+            <WhiteTitle style={{ color: 'white', fontSize: '64px' }}>Find what you like</WhiteTitle>
             {/* {profile && <h1>LOGGED IN</h1>}
             {profile && 
             <Button onClick={e => handleOnClickLogout(e)}>LOG OUT</Button>}
             {!profile && <h1>NOT LOGGED IN</h1>} */}
             <Row className={styles.searchBar} type="flex">
               <Col span={12} height="100%">
-                <RoundSearch size="large"
-                  className={["searchBar", "landingSearchBar"]}
+                <RoundSearch
+                  size="large"
+                  id="searchbar"
+                  className={['searchBar', 'landingSearchBar']}
                   placeholder="Search for restaurants"
                   enterButton
                   onSearch={(value) => {
                     if (value && value.trim()) {
                       console.log(value);
-                      router.push('searchfilter/' + value);
+                      const encodedValue = encodeURIComponent(value)
+                      router.push('searchfilter/' + encodedValue);
                     }
                   }}
                 />
               </Col>
             </Row>
-          </h2>
+          </div>
         </div>
       </div>
 
@@ -113,14 +117,38 @@ export default function Home({ results }) {
 }
 
 // get all restaurants info when page is loaded
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const { db } = await connectToDatabase();
 
   const restaurants = await db.collection('restaurant').find({}).toArray();
 
+  for (let i = 0; i < restaurants.length; i++) {
+    const currentResto = restaurants[i];
+    const reviews = await db
+      .collection('review')
+      .find({ restaurantID: ObjectId(currentResto._id) })
+      .project({ rating: 1, _id: 0 })
+      .toArray();
+    restaurants[i].averageRating = computeAverageScore(reviews);
+    restaurants[i].reviewCount = reviews.length;
+  }
+
   return {
     props: {
-      results: JSON.parse(JSON.stringify(restaurants)),
-    },
+      results: JSON.parse(JSON.stringify(restaurants))
+    }
   };
+}
+
+function computeAverageScore(reviews) {
+  let total = 0;
+  let average = 0;
+  if (reviews.length > 0) {
+    for (let i = 0; i < reviews.length; i++) {
+      total += reviews[i].rating;
+    }
+    average = total / reviews.length;
+    return average;
+  }
+  return 0;
 }

@@ -41,3 +41,14 @@
   width:80%;
   border-radius: 7px;
 }
+
+.checkCircle{
+  font-size: 50px;
+}
+
+.formInput{
+  border-radius: 7px;
+}
+
+/* style={{ fontSize: '50px'}}  */
+/* style={{ borderRadius: '7px' }}  */

@@ -40,3 +40,7 @@
     padding-right: 12vw;
     margin-top: 8em;
 }
+
+.pageHeader{
+    word-wrap: break-word;
+}

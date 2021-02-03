@@ -13,7 +13,7 @@ const { Search } = Input;
 
 export default function Header() {
   const router = useRouter();
-  var pathname = null;
+  let pathname = null;
 
   const [session, loading] = useSession();
 
@@ -66,12 +66,20 @@ export default function Header() {
       </Link>
 
       {/* search bar for specific pages */}
-      {router && router.pathname.includes('/restaurant/') ? (
+      {router && (router.pathname.includes('/restaurant/') || router.pathname.includes('/user/')) ? (
         <Search
+          id="searchbar"
           placeholder="Search for restaurants"
           allowClear
           className={[styles.searchBar, 'searchBar']}
-          onSearch={(value) => (value ? router.push(`/searchfilter/${value}`) : '')}
+          onSearch={(value) => {
+            if(value){
+              const encodedValue = encodeURIComponent(value)
+              // console.log("encoded: " + encodedValue)
+              // router.push('searchfilter/' + encodedValue);
+              router.push(`/searchfilter/${encodedValue}`)
+            }
+          }}
         />
       ) : (
         ''
@@ -80,22 +88,38 @@ export default function Header() {
       {/* login logout and register */}
       <div className={styles.navLinks}>
         {!loading && session && (
-          <div
-            aria-hidden="true"
-            onClick={() => {
-              signOut({ callbackUrl: '/' });
-            }}>
-            <Title
-              level={4}
-              // className={`${pathname === '/' ? styles.white : ''}`}
-              className={[styles.white, styles.login]}>
-              Log Out
-            </Title>
-          </div>
+          <>
+            <div
+              aria-hidden="true"
+              // className={`${pathname === '/' ? '' : styles.majorButton}`}
+              onClick={() => {
+                router.push("/user/" + session.user.id);
+              }}>
+              <Title
+                level={4}
+                // className={[styles.signup, `${pathname === '/' ? styles.white : ''}`]}>
+                className={[styles.signup, styles.white]}>
+                My Profile
+              </Title>
+            </div>
+            <div
+              aria-hidden="true"
+              onClick={() => {
+                signOut({ callbackUrl: '/' });
+              }}>
+              <Title
+                level={4}
+                // className={`${pathname === '/' ? styles.white : ''}`}
+                className={[styles.white, styles.login]}>
+                Log Out
+              </Title>
+            </div>
+          </>
         )}
         {!loading && !session && (
           <>
             <div
+              id="login"
               aria-hidden="true"
               onClick={() => {
                 showLoginModal();
@@ -108,6 +132,7 @@ export default function Header() {
               </Title>
             </div>
             <div
+              id="signup"
               aria-hidden="true"
               className={`${pathname === '/' ? '' : styles.majorButton}`}
               onClick={() => {
